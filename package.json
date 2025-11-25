@@ -1,0 +1,33 @@
+{
+  "name": "stac-liability-claims",
+  "version": "1.0.0",
+  "description": "STAC Extension for Liability and Claims Management",
+  "main": "json-schema/schema.json",
+  "scripts": {
+    "test": "npm run check-markdown && npm run check-examples",
+    "check-markdown": "remark . -qf --no-stdout",
+    "check-examples": "node scripts/validate-examples.js",
+    "format-examples": "prettier --write examples/*.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/stac-extension-liability-claims.git"
+  },
+  "keywords": [
+    "stac",
+    "geospatial",
+    "liability",
+    "claims",
+    "insurance",
+    "stac-extension"
+  ],
+  "author": "Your Name",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@stac-extensions/validate": "^1.0.0",
+    "ajv": "^8.12.0",
+    "prettier": "^3.0.0",
+    "remark-cli": "^11.0.0",
+    "remark-preset-lint-recommended": "^6.1.3"
+  }
+}

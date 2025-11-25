@@ -1,0 +1,353 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json#",
+  "title": "Liability and Claims Extension",
+  "description": "STAC Liability and Claims Extension for Items and Collections",
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
+          "properties": {
+            "type": {
+              "const": "Feature"
+            },
+            "properties": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/require_any_field"
+                },
+                {
+                  "$ref": "#/definitions/fields"
+                }
+              ]
+            },
+            "assets": {
+              "type": "object",
+              "additionalProperties": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/fields"
+                  },
+                  {
+                    "$ref": "#/definitions/asset_fields"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "Collection"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "$ref": "#/definitions/require_any_field"
+        },
+        {
+          "$ref": "#/definitions/fields"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "stac_extensions": {
+      "type": "object",
+      "required": [
+        "stac_extensions"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "contains": {
+            "const": "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+          }
+        }
+      }
+    },
+    "require_any_field": {
+      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
+      "anyOf": [
+        {"required": ["liability:responsible_party"]},
+        {"required": ["liability:claim_status"]},
+        {"required": ["liability:claim_id"]},
+        {"required": ["liability:claim_date"]},
+        {"required": ["liability:claim_type"]},
+        {"required": ["liability:coverage_area"]},
+        {"required": ["liability:affected_parties"]},
+        {"required": ["liability:damages_estimated"]},
+        {"required": ["liability:damages_currency"]},
+        {"required": ["liability:legal_jurisdiction"]},
+        {"required": ["liability:incident_date"]},
+        {"required": ["liability:resolution_date"]},
+        {"required": ["liability:resolution_status"]},
+        {"required": ["liability:insurance_provider"]},
+        {"required": ["liability:policy_number"]},
+        {"required": ["liability:evidence_refs"]},
+        {"required": ["liability:notes"]}
+      ]
+    },
+    "fields": {
+      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
+      "type": "object",
+      "properties": {
+        "liability:responsible_party": {
+          "type": "string",
+          "description": "Name or identifier of the party responsible for the liability or claim"
+        },
+        "liability:claim_status": {
+          "type": "string",
+          "enum": ["pending", "under_investigation", "accepted", "rejected", "settled", "closed"],
+          "description": "Current status of the liability claim"
+        },
+        "liability:claim_id": {
+          "type": "string",
+          "description": "Unique identifier for the liability claim"
+        },
+        "liability:claim_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the claim was filed (RFC 3339 format)"
+        },
+        "liability:claim_type": {
+          "type": "string",
+          "enum": ["environmental", "property_damage", "personal_injury", "financial", "operational", "other"],
+          "description": "Type or category of the liability claim"
+        },
+        "liability:coverage_area": {
+          "type": "object",
+          "description": "GeoJSON geometry representing the geographic area affected by the claim",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["Point", "LineString", "Polygon", "MultiPoint", "MultiLineString", "MultiPolygon"]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "liability:affected_parties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the affected party"
+              },
+              "role": {
+                "type": "string",
+                "description": "Role or relationship to the claim (e.g., claimant, witness, third_party)"
+              },
+              "contact": {
+                "type": "string",
+                "description": "Contact information for the affected party"
+              }
+            }
+          },
+          "description": "List of parties affected by or involved in the claim"
+        },
+        "liability:damages_estimated": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Estimated monetary value of damages"
+        },
+        "liability:damages_currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "Currency code for damages (ISO 4217, e.g., USD, EUR, GBP)"
+        },
+        "liability:legal_jurisdiction": {
+          "type": "string",
+          "description": "Legal jurisdiction under which the claim falls"
+        },
+        "liability:incident_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the incident occurred that led to the claim (RFC 3339 format)"
+        },
+        "liability:resolution_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the claim was resolved (RFC 3339 format)"
+        },
+        "liability:resolution_status": {
+          "type": "string",
+          "enum": ["in_favor", "against", "partial_settlement", "dismissed", "withdrawn"],
+          "description": "Final resolution outcome of the claim"
+        },
+        "liability:insurance_provider": {
+          "type": "string",
+          "description": "Name of the insurance provider covering the claim"
+        },
+        "liability:policy_number": {
+          "type": "string",
+          "description": "Insurance policy number associated with the claim"
+        },
+        "liability:evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": "References to evidence documents, images, or other supporting materials (URIs or STAC Asset keys)"
+        },
+        "liability:notes": {
+          "type": "string",
+          "description": "Additional notes or comments about the claim"
+        },
+        "liability:origin": {
+          "type": "string",
+          "description": "Origin or source organization of the claim data"
+        }
+      },
+      "patternProperties": {
+        "^(?!liability:)": {}
+      },
+      "additionalProperties": false
+    },
+    "asset_fields": {
+      "$comment": "Asset-level fields for authentication and access control",
+      "type": "object",
+      "properties": {
+        "liability:access_control": {
+          "type": "object",
+          "description": "Access control configuration for liability-related assets",
+          "properties": {
+            "required_auth": {
+              "type": "boolean",
+              "description": "Whether authentication is required to access this asset"
+            },
+            "auth_methods": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["apiKey", "oauth2", "cookie", "certificate"]
+              },
+              "description": "Available authentication methods"
+            },
+            "auth_schemes": {
+              "type": "object",
+              "description": "Detailed authentication scheme configurations",
+              "patternProperties": {
+                ".*": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["apiKey", "oauth2", "http", "openIdConnect"]
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "in": {
+                      "type": "string",
+                      "enum": ["header", "query", "cookie"]
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "flows": {
+                      "type": "object",
+                      "description": "OAuth2 flow configurations"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "liability:alternate": {
+          "type": "object",
+          "description": "Alternative access methods for the asset with different authentication requirements",
+          "patternProperties": {
+            ".*": {
+              "type": "object",
+              "properties": {
+                "href": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Alternative URL for accessing the asset"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Title for the alternative access method"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the alternative access method"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Media type of the alternative asset"
+                },
+                "auth": {
+                  "type": "object",
+                  "description": "Authentication configuration for this alternative",
+                  "properties": {
+                    "refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "References to authentication schemes"
+                    },
+                    "roles": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Roles required for this access method"
+                    },
+                    "schemes": {
+                      "type": "object",
+                      "description": "Inline authentication scheme definition"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "liability:security_classification": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted", "classified"],
+          "description": "Security classification level of the asset"
+        },
+        "liability:access_restrictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
+        }
+      }
+    }
+  }
+}
