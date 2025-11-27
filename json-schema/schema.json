@@ -34,14 +34,7 @@
             "assets": {
               "type": "object",
               "additionalProperties": {
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/fields"
-                  },
-                  {
-                    "$ref": "#/definitions/asset_fields"
-                  }
-                ]
+                "$ref": "#/definitions/asset_all_fields"
               }
             }
           }
@@ -108,7 +101,9 @@
         {"required": ["liability:insurance_provider"]},
         {"required": ["liability:policy_number"]},
         {"required": ["liability:evidence_refs"]},
-        {"required": ["liability:notes"]}
+        {"required": ["liability:notes"]},
+        {"required": ["liability:origin"]},
+        {"required": ["liability:quality"]}
       ]
     },
     "fields": {
@@ -358,7 +353,55 @@
           },
           "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
         }
-      }
+      },
+      "patternProperties": {
+        "^(?!liability:)": {}
+      },
+      "additionalProperties": false
+    },
+    "asset_all_fields": {
+      "$comment": "Combined fields for asset objects - includes both item-level and asset-specific fields",
+      "type": "object",
+      "properties": {
+        "liability:origin": {
+          "type": "string",
+          "description": "Origin or source organization of the claim data"
+        },
+        "liability:quality": {
+          "oneOf": [
+            {"$ref": "#/definitions/iso19115_quality_report"},
+            {
+              "type": "array",
+              "items": {"$ref": "#/definitions/iso19115_quality_report"}
+            }
+          ],
+          "description": "ISO 19115-like data quality report(s)"
+        },
+        "liability:access_control": {
+          "type": "object",
+          "description": "Access control configuration for liability-related assets"
+        },
+        "liability:alternate": {
+          "type": "object",
+          "description": "Alternative access methods for the asset"
+        },
+        "liability:security_classification": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted", "classified"],
+          "description": "Security classification level of the asset"
+        },
+        "liability:access_restrictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of access restrictions"
+        }
+      },
+      "patternProperties": {
+        "^(?!liability:)": {}
+      },
+      "additionalProperties": false
     },
     "iso19115_dq_conformance_result": {
       "$comment": "Conformance result for ISO 19115 DQ assessments",

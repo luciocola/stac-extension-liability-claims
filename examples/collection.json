@@ -15,6 +15,7 @@
     "environmental"
   ],
   "license": "proprietary",
+  "liability:origin": "NationalClaimsRegistry",
   "extent": {
     "spatial": {
       "bbox": [[-180, -90, 180, 90]]

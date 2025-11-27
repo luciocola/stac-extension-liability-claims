@@ -5,38 +5,57 @@
     "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
   ],
   "id": "collection-with-quality-001",
-  "properties": {
-    "liability:origin": "NationalClaimsRegister",
-    "liability:quality": [
-      {
-        "reportId": "QR-2025-COLL-01",
-        "scope": "dataset",
-        "date": "2025-11-01T00:00:00Z",
-        "summary": "Dataset-level quality summary",
-        "elements": [
-          {
-            "elementType": "lineage",
-            "summary": "Provenance summary",
-            "detail": {
-              "type": "lineage",
-              "statement": "Compiled from regional reports and satellite imagery",
-              "sources": ["regional-reports-2019","satellite-imagery-2024"]
-            }
-          },
-          {
-            "elementType": "thematicAccuracy",
-            "summary": "Thematic accuracy for damage classification",
-            "detail": {
-              "type": "thematicAccuracy",
-              "measure": {
-                "description": "Overall classification accuracy",
-                "value": 0.87,
-                "valueType": "fraction"
-              }
+  "title": "Claims Collection with Quality Metadata",
+  "description": "Collection demonstrating quality reporting at collection level",
+  "license": "proprietary",
+  "liability:origin": "NationalClaimsRegister",
+  "liability:quality": [
+    {
+      "reportId": "QR-2025-COLL-01",
+      "scope": "dataset",
+      "date": "2025-11-01T00:00:00Z",
+      "summary": "Dataset-level quality summary",
+      "elements": [
+        {
+          "elementType": "lineage",
+          "summary": "Provenance summary",
+          "detail": {
+            "type": "lineage",
+            "statement": "Compiled from regional reports and satellite imagery",
+            "sources": ["regional-reports-2019", "satellite-imagery-2024"]
+          }
+        },
+        {
+          "elementType": "thematicAccuracy",
+          "summary": "Thematic accuracy for damage classification",
+          "detail": {
+            "type": "thematicAccuracy",
+            "measure": {
+              "description": "Overall classification accuracy",
+              "value": 0.87,
+              "valueType": "fraction"
             }
           }
-        ]
-      }
-    ]
-  }
+        }
+      ]
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2024-01-01T00:00:00Z", null]]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.com/stac/collections/collection-with-quality-001.json"
+    },
+    {
+      "rel": "root",
+      "href": "https://example.com/stac/catalog.json"
+    }
+  ]
 }
