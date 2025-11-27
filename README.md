@@ -19,6 +19,16 @@ This extension supports several important use cases:
 4. **Damage Assessment**: Record estimated damages and affected geographic areas
 5. **Evidence Management**: Reference supporting documentation and evidence for claims
 
+## Data Quality Support
+
+This extension includes comprehensive support for data quality reporting based on international standards:
+
+- **ISO 19115** - Core data quality elements (completeness, logical consistency, positional accuracy, temporal accuracy, thematic accuracy, attribute accuracy, topological consistency, lineage)
+- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, processing level, usability assessment)
+- **DGIWG** - Defence Geospatial Information Working Group quality elements (absolute/relative positional accuracy, gridded data accuracy, quantitative/non-quantitative attribute correctness, format/domain consistency, temporal validity)
+
+Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts ISO 19115-compliant quality reports. A standalone JSON Schema for quality reports is provided at `json-schema/iso19115-quality.json`.
+
 ## Fields
 
 The fields in the table below can be used in these parts of STAC documents:
@@ -49,6 +59,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | liability:evidence_refs           | \[string\]                | References to evidence documents, images, or other supporting materials (URIs or STAC Asset keys) |
 | liability:notes                   | string                    | Additional notes or comments about the claim |
 | liability:origin                  | string                    | Origin or source organization of the claim data |
+| liability:quality                 | Quality Report Object or \[Quality Report Object\] | ISO 19115/19115-4/DGIWG-compliant data quality report(s). See [Quality Schema](json-schema/iso19115-quality.json) |
 
 ### Asset-Level Fields
 
@@ -336,7 +347,80 @@ This example demonstrates the use of asset-level security and authentication fie
 }
 ```
 
-See the [examples directory](examples/) for complete examples.
+### Example 4: Data Quality Reporting (ISO 19115-4 and DGIWG)
+
+This example demonstrates quality reporting for satellite imagery and defence geospatial data:
+
+```json
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "quality-report-example",
+  "properties": {
+    "datetime": "2025-11-27T10:30:00Z",
+    "liability:claim_id": "CLM-SAT-0001",
+    "liability:claim_type": "environmental",
+    "liability:quality": {
+      "reportId": "QR-2025-0001",
+      "scope": "feature",
+      "date": "2025-11-27T12:00:00Z",
+      "summary": "Quality assessment for satellite imagery",
+      "elements": [
+        {
+          "elementType": "processingLevel",
+          "summary": "Satellite data processing level",
+          "detail": {
+            "type": "processingLevel",
+            "level": "L2A",
+            "description": "Surface reflectance with atmospheric correction",
+            "processingDate": "2025-11-27T08:00:00Z",
+            "processor": "Sen2Cor v2.10"
+          }
+        },
+        {
+          "elementType": "cloudCoverage",
+          "summary": "Cloud coverage assessment",
+          "detail": {
+            "type": "cloudCoverage",
+            "coveragePercentage": 12.5,
+            "assessmentMethod": "Automated scene classification"
+          }
+        },
+        {
+          "elementType": "absoluteExternalPositionalAccuracy",
+          "summary": "Absolute positional accuracy",
+          "detail": {
+            "type": "absoluteExternalPositionalAccuracy",
+            "horizontalAccuracy": 5.0,
+            "verticalAccuracy": 3.0,
+            "units": "m",
+            "method": "GNSS survey with ground control points"
+          },
+          "conformance": {
+            "specification": "DGIWG-500",
+            "pass": true,
+            "explanation": "Meets DGIWG accuracy requirements"
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [12.0, 45.0]
+  },
+  "assets": {}
+}
+```
+
+See the [examples directory](examples/) for complete examples including:
+- `item-with-quality.json` - ISO 19115 quality elements
+- `item-with-imagery-quality.json` - ISO 19115-4 imagery quality
+- `item-with-dgiwg-quality.json` - DGIWG defence geospatial quality
+- `collection-with-quality.json` - Collection-level quality reporting
 
 ## Contributing
 
