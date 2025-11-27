@@ -29,6 +29,13 @@ This extension includes comprehensive support for data quality reporting based o
 
 Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts ISO 19115-compliant quality reports. A standalone JSON Schema for quality reports is provided at `json-schema/iso19115-quality.json`.
 
+### Interoperability with Metadata Standards
+
+The extension's ISO 19115 foundation provides high compatibility with major geospatial metadata frameworks:
+
+- **NASA UMM (Unified Metadata Model)** - 5/5 compatibility rating through ISO 19115 alignment. See [UMM Compatibility Assessment](UMM-COMPATIBILITY.md) for detailed crosswalk.
+- **OGC TrainingDML-AI** - 4/5 compatibility rating for ML training data quality/provenance metadata. See [TrainingDML-AI Compatibility Assessment](TRAININGDML-AI-COMPATIBILITY.md) for use cases and mapping guidance.
+
 ## Fields
 
 The fields in the table below can be used in these parts of STAC documents:
