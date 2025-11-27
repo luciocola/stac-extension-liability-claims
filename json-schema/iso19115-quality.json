@@ -182,6 +182,99 @@
       "required": ["type"],
       "additionalProperties": true
     },
+    "dgiwg_absolute_external_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "absoluteExternalPositionalAccuracy" },
+        "horizontalAccuracy": { "type": "number" },
+        "verticalAccuracy": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_relative_internal_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "relativeInternalPositionalAccuracy" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_gridded_data_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "griddedDataPositionalAccuracy" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_non_quantitative_attribute_correctness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "nonQuantitativeAttributeCorrectness" },
+        "attribute": { "type": "string" },
+        "correctnessRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_quantitative_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "quantitativeAttributeAccuracy" },
+        "attribute": { "type": "string" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_format_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "formatConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_domain_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "domainConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_temporal_validity": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalValidity" },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": "string", "format": "date-time" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
     "iso19115_dq_element": {
       "type": "object",
       "properties": {
@@ -201,6 +294,14 @@
             "cloudCoverage",
             "processingLevel",
             "usabilityAssessment",
+            "absoluteExternalPositionalAccuracy",
+            "relativeInternalPositionalAccuracy",
+            "griddedDataPositionalAccuracy",
+            "nonQuantitativeAttributeCorrectness",
+            "quantitativeAttributeAccuracy",
+            "formatConsistency",
+            "domainConsistency",
+            "temporalValidity",
             "other"
           ]
         },
@@ -220,6 +321,14 @@
             { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
             { "$ref": "#/definitions/iso19115_4_processing_level" },
             { "$ref": "#/definitions/iso19115_4_usability_assessment" },
+            { "$ref": "#/definitions/dgiwg_absolute_external_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_relative_internal_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_gridded_data_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_non_quantitative_attribute_correctness" },
+            { "$ref": "#/definitions/dgiwg_quantitative_attribute_accuracy" },
+            { "$ref": "#/definitions/dgiwg_format_consistency" },
+            { "$ref": "#/definitions/dgiwg_domain_consistency" },
+            { "$ref": "#/definitions/dgiwg_temporal_validity" },
             { "$ref": "#/definitions/iso19115_dq_measure" }
           ]
         },

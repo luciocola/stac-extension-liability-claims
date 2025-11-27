@@ -545,12 +545,105 @@
       "required": ["type"],
       "additionalProperties": true
     },
+    "dgiwg_absolute_external_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "absoluteExternalPositionalAccuracy" },
+        "horizontalAccuracy": { "type": "number", "description": "Horizontal absolute accuracy value" },
+        "verticalAccuracy": { "type": "number", "description": "Vertical absolute accuracy value" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_relative_internal_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "relativeInternalPositionalAccuracy" },
+        "accuracyValue": { "type": "number", "description": "Relative positional accuracy between features" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_gridded_data_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "griddedDataPositionalAccuracy" },
+        "accuracyValue": { "type": "number", "description": "Positional accuracy for gridded/raster data" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_non_quantitative_attribute_correctness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "nonQuantitativeAttributeCorrectness" },
+        "attribute": { "type": "string", "description": "Name of the non-quantitative attribute" },
+        "correctnessRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of correct attribute values" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_quantitative_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "quantitativeAttributeAccuracy" },
+        "attribute": { "type": "string", "description": "Name of the quantitative attribute" },
+        "accuracyValue": { "type": "number", "description": "Accuracy of quantitative attribute values" },
+        "units": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_format_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "formatConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of format conformance" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_domain_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "domainConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of domain value conformance" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_temporal_validity": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalValidity" },
+        "validFrom": { "type": "string", "format": "date-time", "description": "Start of temporal validity period" },
+        "validTo": { "type": "string", "format": "date-time", "description": "End of temporal validity period" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
     "iso19115_dq_element": {
       "type": "object",
       "properties": {
         "elementType": {
           "type": "string",
-          "description": "ISO 19115/19115-4 data quality class",
+          "description": "ISO 19115/19115-4/DGIWG data quality class",
           "enum": [
             "completeness",
             "logicalConsistency",
@@ -565,6 +658,14 @@
             "cloudCoverage",
             "processingLevel",
             "usabilityAssessment",
+            "absoluteExternalPositionalAccuracy",
+            "relativeInternalPositionalAccuracy",
+            "griddedDataPositionalAccuracy",
+            "nonQuantitativeAttributeCorrectness",
+            "quantitativeAttributeAccuracy",
+            "formatConsistency",
+            "domainConsistency",
+            "temporalValidity",
             "other"
           ]
         },
@@ -584,6 +685,14 @@
             { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
             { "$ref": "#/definitions/iso19115_4_processing_level" },
             { "$ref": "#/definitions/iso19115_4_usability_assessment" },
+            { "$ref": "#/definitions/dgiwg_absolute_external_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_relative_internal_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_gridded_data_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_non_quantitative_attribute_correctness" },
+            { "$ref": "#/definitions/dgiwg_quantitative_attribute_accuracy" },
+            { "$ref": "#/definitions/dgiwg_format_consistency" },
+            { "$ref": "#/definitions/dgiwg_domain_consistency" },
+            { "$ref": "#/definitions/dgiwg_temporal_validity" },
             { "$ref": "#/definitions/iso19115_dq_measure" }
           ]
         },
