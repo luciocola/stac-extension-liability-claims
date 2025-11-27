@@ -23,6 +23,9 @@
     },
     "iso19115_dq_measure": {
       "type": "object",
+      "not": {
+        "required": ["type"]
+      },
       "properties": {
         "description": { "type": "string" },
         "value": { "type": ["number", "string", "boolean", "object", "null"] },
@@ -118,12 +121,88 @@
       "required": ["type"],
       "additionalProperties": true
     },
+    "iso19115_4_radiometric_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "radiometricAccuracy" },
+        "description": { "type": "string" },
+        "calibrationAccuracy": { "type": "number", "description": "Radiometric calibration accuracy" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_sensor_quality": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "sensorQuality" },
+        "sensorType": { "type": "string" },
+        "calibrationStatus": { "type": "string", "enum": ["calibrated", "uncalibrated", "partial", "unknown"] },
+        "calibrationDate": { "type": "string", "format": "date-time" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_cloud_coverage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "cloudCoverage" },
+        "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "assessmentMethod": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_processing_level": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "processingLevel" },
+        "level": { "type": "string", "description": "Processing level code (e.g., L1A, L1B, L2A)" },
+        "description": { "type": "string" },
+        "processingDate": { "type": "string", "format": "date-time" },
+        "processor": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type", "level"],
+      "additionalProperties": true
+    },
+    "iso19115_4_usability_assessment": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "usabilityAssessment" },
+        "usabilityScore": { "type": "number", "minimum": 0, "maximum": 1 },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "intendedUse": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
     "iso19115_dq_element": {
       "type": "object",
       "properties": {
         "elementType": {
           "type": "string",
-          "enum": ["completeness","logicalConsistency","positionalAccuracy","thematicAccuracy","temporalAccuracy","attributeAccuracy","topologicalConsistency","lineage","other"]
+          "enum": [
+            "completeness",
+            "logicalConsistency",
+            "positionalAccuracy",
+            "thematicAccuracy",
+            "temporalAccuracy",
+            "attributeAccuracy",
+            "topologicalConsistency",
+            "lineage",
+            "radiometricAccuracy",
+            "sensorQuality",
+            "cloudCoverage",
+            "processingLevel",
+            "usabilityAssessment",
+            "other"
+          ]
         },
         "summary": { "type": "string" },
         "detail": {
@@ -136,6 +215,11 @@
             { "$ref": "#/definitions/iso19115_dq_attribute_accuracy" },
             { "$ref": "#/definitions/iso19115_dq_topological_consistency" },
             { "$ref": "#/definitions/iso19115_dq_lineage" },
+            { "$ref": "#/definitions/iso19115_4_radiometric_accuracy" },
+            { "$ref": "#/definitions/iso19115_4_sensor_quality" },
+            { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
+            { "$ref": "#/definitions/iso19115_4_processing_level" },
+            { "$ref": "#/definitions/iso19115_4_usability_assessment" },
             { "$ref": "#/definitions/iso19115_dq_measure" }
           ]
         },
