@@ -5,7 +5,7 @@
 - **Field Name Prefix:** liability
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @uciocola Https://secure-dimensions.de
+- **Owner**: @luciocola Https://secure-dimensions.de
 
 This extension provides fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, and insurance information related to spatial data assets.
 
