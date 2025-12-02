@@ -29,6 +29,29 @@ This extension includes comprehensive support for data quality reporting based o
 
 Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts ISO 19115-compliant quality reports. A standalone JSON Schema for quality reports is provided at `json-schema/iso19115-quality.json`.
 
+### Enhanced Lineage Support (ISO 19115-4 Aligned)
+
+The `liability:quality` field now includes full support for **ISO 19115-4 lineage management**, following the official JSON schema structure from [ISO-TC211/XML](https://github.com/ISO-TC211/XML/tree/master/schemas.isotc211.org/json/19115/-4).
+
+**Lineage capabilities include:**
+
+- **Statement**: General explanation of data producer's knowledge about dataset lineage
+- **Process Steps**: Detailed event/transformation documentation including:
+  - Description, rationale, and timestamp of each step
+  - Processor identification (person/organization) with contact info
+  - Processing information: software, algorithms, parameters, documentation
+  - References to methodology papers and technical documentation
+- **Source Information**: Complete source data provenance including:
+  - Source citations with identifiers and URLs
+  - Source reference systems (CRS/EPSG codes)
+  - Source metadata references
+  - Spatial and temporal extents of source data
+- **Additional Documentation**: Links to processing specifications, QA reports, and technical documents
+
+**Example use case**: Document satellite imagery processing from raw L1C → atmospherically corrected → geometrically corrected → classified land cover, with full traceability of software, algorithms, parameters, and source datasets at each step.
+
+See `examples/item-with-iso19115-lineage.json` for a complete example showing multi-stage processing lineage.
+
 ### Interoperability with Metadata Standards
 
 The extension's ISO 19115 foundation provides high compatibility with major geospatial metadata frameworks:

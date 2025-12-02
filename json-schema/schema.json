@@ -521,8 +521,194 @@
       "type": "object",
       "properties": {
         "type": { "const": "lineage" },
-        "statement": { "type": "string", "description": "Lineage statement describing data provenance" },
-        "sources": { "type": "array", "items": { "type": "string" }, "description": "Sources used in creating the dataset" }
+        "statement": { "type": "string", "description": "General explanation of the data producer's knowledge about the lineage of a dataset" },
+        "scope": { 
+          "type": "object",
+          "description": "Type of resource and/or extent to which the lineage information applies",
+          "properties": {
+            "level": { "type": "string", "enum": ["dataset", "series", "feature", "attribute", "featureType", "propertyType", "fieldSession", "software", "service", "model", "tile", "metadata", "initiative", "sample", "document", "repository", "aggregate", "product", "collection", "coverage", "application"] },
+            "extent": { "type": "object", "description": "GeoJSON geometry defining the extent" },
+            "levelDescription": { "type": "string" }
+          }
+        },
+        "processStep": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Information about an event or transformation in the life of the dataset",
+            "properties": {
+              "description": { "type": "string", "description": "Description of the event, including related parameters or tolerances" },
+              "rationale": { "type": "string", "description": "Requirement or purpose for the process step" },
+              "stepDateTime": { "type": "string", "format": "date-time", "description": "Date, time, and/or range of the process step" },
+              "processor": {
+                "type": "array",
+                "description": "Identification of, and means of communication with, person(s) and organization(s) associated with the process step",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "organizationName": { "type": "string" },
+                    "role": { "type": "string" },
+                    "contactInfo": {
+                      "type": "object",
+                      "properties": {
+                        "email": { "type": "string", "format": "email" },
+                        "phone": { "type": "string" },
+                        "address": { "type": "string" },
+                        "onlineResource": { "type": "string", "format": "uri" }
+                      }
+                    }
+                  }
+                }
+              },
+              "reference": {
+                "type": "array",
+                "description": "Process step documentation",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "date": { "type": "string", "format": "date-time" },
+                    "identifier": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" }
+                  },
+                  "required": ["title"]
+                }
+              },
+              "scope": {
+                "type": "object",
+                "description": "Type of resource and/or extent to which the process step applies",
+                "properties": {
+                  "level": { "type": "string" },
+                  "extent": { "type": "object" }
+                }
+              },
+              "processingInformation": {
+                "type": "object",
+                "description": "Additional details about the process step (ISO 19115-4 extension)",
+                "properties": {
+                  "identifier": { "type": "string" },
+                  "softwareReference": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "version": { "type": "string" },
+                        "identifier": { "type": "string" }
+                      }
+                    }
+                  },
+                  "procedureDescription": { "type": "string" },
+                  "documentation": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "url": { "type": "string", "format": "uri" }
+                      }
+                    }
+                  },
+                  "runTimeParameters": { "type": "string" },
+                  "algorithm": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "citation": { "type": "object" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": ["description"]
+          }
+        },
+        "source": {
+          "type": "array",
+          "description": "Information about the source data used in creating the data specified by the scope",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": { "type": "string", "description": "Detailed description of the level of the source data" },
+              "sourceCitation": {
+                "type": "object",
+                "description": "Recommended reference to be used for the source data",
+                "properties": {
+                  "title": { "type": "string" },
+                  "date": { "type": "string", "format": "date-time" },
+                  "identifier": { "type": "string" },
+                  "url": { "type": "string", "format": "uri" }
+                },
+                "required": ["title"]
+              },
+              "sourceReferenceSystem": {
+                "type": "object",
+                "description": "Spatial reference system used by the source data",
+                "properties": {
+                  "code": { "type": "string", "description": "EPSG or other CRS code" },
+                  "codeSpace": { "type": "string", "default": "EPSG" },
+                  "version": { "type": "string" }
+                }
+              },
+              "sourceMetadata": {
+                "type": "array",
+                "description": "References to metadata for the source",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" }
+                  }
+                }
+              },
+              "scope": {
+                "type": "object",
+                "description": "Type of resource and/or extent of the source",
+                "properties": {
+                  "level": { "type": "string" },
+                  "extent": { "type": "object" }
+                }
+              },
+              "sourceExtent": {
+                "type": "object",
+                "description": "Spatial and temporal extent of the source data",
+                "properties": {
+                  "geographicElement": { "type": "object", "description": "GeoJSON geometry" },
+                  "temporalElement": {
+                    "type": "object",
+                    "properties": {
+                      "extent": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additionalDocumentation": {
+          "type": "array",
+          "description": "Additional documentation (ISO 19115-1:2014)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "date": { "type": "string", "format": "date-time" },
+              "url": { "type": "string", "format": "uri" },
+              "description": { "type": "string" }
+            },
+            "required": ["title"]
+          }
+        }
       },
       "required": ["type"],
       "additionalProperties": true
