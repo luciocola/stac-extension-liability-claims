@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2024-12-04
+
+### Added
+- `liability:required_roles` field for specifying roles required to access assets (enforced at API level)
+- Comprehensive OpenAPI 3.0 example (`examples/stac-api-openapi.yaml`) demonstrating API-level security
+- New example file `examples/item-with-security-v1.1.json` showing recommended v1.1.0 security approach
+- STAC API compatibility assessment document (`STAC-API-COMPATIBILITY.md`)
+- Migration guide in README for transitioning from v1.0.0 to v1.1.0
+
+### Changed
+- **BREAKING (deprecation)**: Separated security classification metadata from API authentication
+- Updated extension identifier to `v1.1.0`
+- Improved documentation emphasizing API-level security over item-level authentication
+- Updated all examples to use `v1.1.0` extension URI
+- Enhanced README with clearer distinction between data metadata and API authentication
+
+### Deprecated
+- `liability:access_control` field - Use OpenAPI `securitySchemes` at API level instead (will be removed in v2.0.0)
+- `liability:alternate` field - Use standard STAC `assets` with different hrefs or `links` with `rel="alternate"` instead (will be removed in v2.0.0)
+
+### Removed
+- Detailed authentication scheme definitions from JSON schema asset fields
+- Complex nested authentication objects that duplicated OpenAPI functionality
+
+### Fixed
+- Alignment with STAC and OGC API best practices for authentication and authorization
+- Separation of concerns between data metadata (STAC) and API implementation (OpenAPI)
+
+### Security
+- Improved security model by moving authentication to API layer where it belongs
+- Better alignment with OpenAPI 3.0 security schemes
+- Clearer role-based access control (RBAC) implementation guidance
+
 ## [1.0.0] - 2024-11-25
 
 ### Added

@@ -1,8 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json#",
+  "$id": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#",
   "title": "Liability and Claims Extension",
   "description": "STAC Liability and Claims Extension for Items and Collections",
+  "version": "1.1.0",
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Items.",
@@ -77,7 +78,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+            "const": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
           }
         }
       }
@@ -239,108 +240,9 @@
       "additionalProperties": false
     },
     "asset_fields": {
-      "$comment": "Asset-level fields for authentication and access control",
+      "$comment": "Asset-level fields for security classification and access restrictions",
       "type": "object",
       "properties": {
-        "liability:access_control": {
-          "type": "object",
-          "description": "Access control configuration for liability-related assets",
-          "properties": {
-            "required_auth": {
-              "type": "boolean",
-              "description": "Whether authentication is required to access this asset"
-            },
-            "auth_methods": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": ["apiKey", "oauth2", "cookie", "certificate"]
-              },
-              "description": "Available authentication methods"
-            },
-            "auth_schemes": {
-              "type": "object",
-              "description": "Detailed authentication scheme configurations",
-              "patternProperties": {
-                ".*": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": ["apiKey", "oauth2", "http", "openIdConnect"]
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "in": {
-                      "type": "string",
-                      "enum": ["header", "query", "cookie"]
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "flows": {
-                      "type": "object",
-                      "description": "OAuth2 flow configurations"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "liability:alternate": {
-          "type": "object",
-          "description": "Alternative access methods for the asset with different authentication requirements",
-          "patternProperties": {
-            ".*": {
-              "type": "object",
-              "properties": {
-                "href": {
-                  "type": "string",
-                  "format": "uri",
-                  "description": "Alternative URL for accessing the asset"
-                },
-                "title": {
-                  "type": "string",
-                  "description": "Title for the alternative access method"
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Description of the alternative access method"
-                },
-                "type": {
-                  "type": "string",
-                  "description": "Media type of the alternative asset"
-                },
-                "auth": {
-                  "type": "object",
-                  "description": "Authentication configuration for this alternative",
-                  "properties": {
-                    "refs": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "References to authentication schemes"
-                    },
-                    "roles": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Roles required for this access method"
-                    },
-                    "schemes": {
-                      "type": "object",
-                      "description": "Inline authentication scheme definition"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "liability:security_classification": {
           "type": "string",
           "enum": ["public", "internal", "confidential", "restricted", "classified"],
@@ -352,6 +254,13 @@
             "type": "string"
           },
           "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
+        },
+        "liability:required_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
         }
       },
       "patternProperties": {
@@ -379,11 +288,13 @@
         },
         "liability:access_control": {
           "type": "object",
-          "description": "Access control configuration for liability-related assets"
+          "description": "DEPRECATED in v1.1.0: Use API-level security schemes (OpenAPI securitySchemes) instead. This field will be removed in v2.0.0.",
+          "deprecated": true
         },
         "liability:alternate": {
           "type": "object",
-          "description": "Alternative access methods for the asset"
+          "description": "DEPRECATED in v1.1.0: Use standard STAC assets with different hrefs or links with rel='alternate' instead. This field will be removed in v2.0.0.",
+          "deprecated": true
         },
         "liability:security_classification": {
           "type": "string",
@@ -395,7 +306,14 @@
           "items": {
             "type": "string"
           },
-          "description": "List of access restrictions"
+          "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
+        },
+        "liability:required_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
         }
       },
       "patternProperties": {

@@ -1,11 +1,12 @@
 # Liability and Claims Extension Specification
 
 - **Title:** Liability and Claims
-- **Identifier:** <https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json>
+- **Identifier:** <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json>
 - **Field Name Prefix:** liability
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @luciocola Https://secure-dimensions.de
+- **Version**: 1.1.0
 
 This extension provides fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, and insurance information related to spatial data assets.
 
@@ -93,14 +94,24 @@ The fields in the table below can be used in these parts of STAC documents:
 
 ### Asset-Level Fields
 
-The following fields can be used in STAC Asset objects to control access and specify security requirements:
+The following fields can be used in STAC Asset objects to specify security classification and access requirements:
 
 | Field Name                             | Type                      | Description |
 | -------------------------------------- | ------------------------- | ----------- |
-| liability:access_control               | Access Control Object     | Access control configuration for liability-related assets |
-| liability:alternate                    | Map<string, Alternate>    | Alternative access methods with different authentication requirements |
 | liability:security_classification      | string                    | Security classification level. One of: `public`, `internal`, `confidential`, `restricted`, `classified` |
 | liability:access_restrictions          | \[string\]                | List of access restrictions (e.g., `legal_hold`, `court_order`, `privacy_constraints`) |
+| liability:required_roles               | \[string\]                | **NEW in v1.1.0.** Roles required to access this asset (enforced at API level via OpenAPI security schemes) |
+| ~~liability:access_control~~           | ~~Access Control Object~~ | **DEPRECATED in v1.1.0.** Use API-level security (OpenAPI `securitySchemes`) instead. Will be removed in v2.0.0. |
+| ~~liability:alternate~~                | ~~Map<string, Alternate>~~| **DEPRECATED in v1.1.0.** Use standard STAC assets with different hrefs or `links` with `rel='alternate'` instead. Will be removed in v2.0.0. |
+
+**Important Note on Authentication (v1.1.0+):**
+
+Authentication and authorization are **API-level concerns** and should be configured in the STAC API's OpenAPI specification using standard `securitySchemes`, not in STAC Item/Collection metadata. STAC Items should only contain:
+- **Security classification metadata** (what data this is)
+- **Access restrictions** (legal/policy constraints)
+- **Required roles** (who should have access)
+
+The actual authentication mechanisms (API keys, OAuth2, etc.) should be defined in your STAC API's `openapi.yaml`. See [examples/stac-api-openapi.yaml](examples/stac-api-openapi.yaml) for a complete example.
 
 ### Additional Field Information
 
@@ -134,38 +145,6 @@ Categories of claims that can be tracked:
 - `operational`: Operational incidents or failures
 - `other`: Other types of claims not covered above
 
-#### Access Control Object
-
-Used in `liability:access_control` field at the asset level:
-
-| Field Name    | Type       | Description |
-| ------------- | ---------- | ----------- |
-| required_auth | boolean    | Whether authentication is required to access this asset |
-| auth_methods  | \[string\] | Available authentication methods (e.g., `apiKey`, `oauth2`, `cookie`, `certificate`) |
-| auth_schemes  | object     | Detailed authentication scheme configurations keyed by scheme name |
-
-#### Alternate Access Object
-
-Used in `liability:alternate` field at the asset level, keyed by access method name:
-
-| Field Name  | Type             | Description |
-| ----------- | ---------------- | ----------- |
-| href        | string (URI)     | Alternative URL for accessing the asset |
-| title       | string           | Title for the alternative access method |
-| description | string           | Description of how to use this access method |
-| type        | string           | Media type of the alternative asset |
-| auth        | Auth Config      | Authentication configuration for this alternative |
-
-#### Auth Config Object
-
-Used in alternate access methods:
-
-| Field Name | Type       | Description |
-| ---------- | ---------- | ----------- |
-| refs       | \[string\] | References to authentication schemes |
-| roles      | \[string\] | Roles required for this access method |
-| schemes    | object     | Inline authentication scheme definition |
-
 #### liability:security_classification
 
 Security classification levels for assets:
@@ -176,6 +155,59 @@ Security classification levels for assets:
 - `restricted`: Highly restricted access (e.g., attorney-client privilege)
 - `classified`: Classified information requiring security clearance
 
+#### liability:required_roles
+
+**NEW in v1.1.0:** Specifies which user roles are required to access an asset. The actual enforcement happens at the API level through OpenAPI security schemes. This field provides metadata about access requirements.
+
+Example:
+```json
+"liability:required_roles": ["investigator", "legal_counsel"]
+```
+
+#### Deprecated Fields (v1.1.0)
+
+The following fields are **deprecated** as of v1.1.0 and will be removed in v2.0.0:
+
+- **`liability:access_control`** - Replaced by API-level OpenAPI `securitySchemes`
+- **`liability:alternate`** - Replaced by standard STAC `assets` (with different hrefs) or `links` with `rel="alternate"`
+
+**Migration Guide:**
+
+*Old approach (v1.0.0):*
+```json
+"assets": {
+  "evidence": {
+    "href": "https://secure.example.com/image.tif",
+    "liability:access_control": {
+      "required_auth": true,
+      "auth_methods": ["apiKey"]
+    }
+  }
+}
+```
+
+*New approach (v1.1.0):*
+```json
+// In STAC Item:
+"assets": {
+  "evidence": {
+    "href": "https://secure.example.com/image.tif",
+    "liability:security_classification": "confidential",
+    "liability:required_roles": ["investigator"]
+  }
+}
+
+// In STAC API openapi.yaml:
+components:
+  securitySchemes:
+    ClaimsApiKey:
+      type: apiKey
+      in: header
+      name: X-Claims-API-Key
+security:
+  - ClaimsApiKey: []
+```
+
 ## Examples
 
 ### Example 1: Environmental Liability Claim
@@ -184,7 +216,7 @@ Security classification levels for assets:
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
   ],
   "type": "Feature",
   "id": "environmental-incident-2024-001",
@@ -259,7 +291,7 @@ Security classification levels for assets:
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
   ],
   "type": "Feature",
   "id": "property-damage-2023-042",
@@ -308,25 +340,35 @@ Security classification levels for assets:
 }
 ```
 
-### Example 3: Secure Asset with Authentication
+### Example 3: Secure Asset with Security Classification (v1.1.0)
 
-This example demonstrates the use of asset-level security and authentication fields:
+This example demonstrates the **recommended v1.1.0 approach** for secure assets. Authentication is handled at the API level (see `examples/stac-api-openapi.yaml`):
 
 ```json
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json",
     "https://stac-extensions.github.io/file/v2.1.0/schema.json"
   ],
   "type": "Feature",
   "id": "environmental-incident-2024-secure",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
   "properties": {
     "datetime": "2024-11-15T10:30:00Z",
     "liability:claim_id": "ENV-2024-SECURE-001",
     "liability:claim_type": "environmental",
     "liability:claim_status": "under_investigation",
-    "liability:security_classification": "confidential",
     "liability:origin": "Environmental Protection Agency"
   },
   "assets": {
@@ -339,43 +381,43 @@ This example demonstrates the use of asset-level security and authentication fie
       "liability:security_classification": "confidential",
       "liability:access_restrictions": [
         "legal_hold",
-        "authorized_investigators_only"
+        "authorized_investigators_only",
+        "privacy_act_protected"
       ],
-      "liability:access_control": {
-        "required_auth": true,
-        "auth_methods": ["apiKey"],
-        "auth_schemes": {
-          "apiKey": {
-            "type": "apiKey",
-            "description": "API Key authentication for authorized investigators",
-            "in": "header",
-            "name": "X-Claims-API-Key"
-          }
-        }
-      },
-      "liability:alternate": {
-        "API_Key_Access": {
-          "href": "https://assets.claims.example.com/api/v1/evidence/sat-2024-11-15.tif",
-          "title": "Download Asset via API Key",
-          "description": "Download evidence using X-Claims-API-Key header. Obtain key from https://claims.example.com/auth/api-key",
-          "type": "image/tiff; application=geotiff",
-          "auth": {
-            "refs": ["apiKey"],
-            "roles": ["investigator", "legal_counsel"],
-            "schemes": {
-              "description": "X-Claims-API-Key authenticates authorized personnel",
-              "type": "apiKey",
-              "in": "header",
-              "name": "X-Claims-API-Key",
-              "required": true
-            }
-          }
-        }
-      }
+      "liability:required_roles": ["investigator", "legal_counsel"]
+    },
+    "investigation-report": {
+      "href": "https://assets.claims.example.com/api/v1/reports/inv-2024-001.pdf",
+      "title": "Investigation Report - Restricted",
+      "type": "application/pdf",
+      "roles": ["metadata", "evidence"],
+      "liability:security_classification": "restricted",
+      "liability:access_restrictions": [
+        "attorney_client_privilege",
+        "work_product_doctrine"
+      ],
+      "liability:required_roles": ["legal_counsel"]
+    },
+    "public-overview": {
+      "href": "https://public.claims.example.com/overview-2024-001.jpg",
+      "title": "Public Overview Image",
+      "type": "image/jpeg",
+      "roles": ["overview"],
+      "liability:security_classification": "public"
     }
-  }
+  },
+  "links": [
+    {
+      "rel": "alternate",
+      "href": "https://portal.claims.example.com/items/ENV-2024-SECURE-001",
+      "title": "View in authenticated web portal",
+      "type": "text/html"
+    }
+  ]
 }
 ```
+
+**Note:** For the corresponding API-level authentication configuration, see `examples/stac-api-openapi.yaml`.
 
 ### Example 4: Data Quality Reporting (ISO 19115-4 and DGIWG)
 
@@ -385,7 +427,7 @@ This example demonstrates quality reporting for satellite imagery and defence ge
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
   ],
   "type": "Feature",
   "id": "quality-report-example",
