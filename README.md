@@ -25,7 +25,7 @@ This extension supports several important use cases:
 This extension includes comprehensive support for data quality reporting based on international standards:
 
 - **ISO 19115** - Core data quality elements (completeness, logical consistency, positional accuracy, temporal accuracy, thematic accuracy, attribute accuracy, topological consistency, lineage)
-- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, processing level, usability assessment)
+- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, snow coverage, processing level, usability assessment)
 - **DGIWG** - Defence Geospatial Information Working Group quality elements (absolute/relative positional accuracy, gridded data accuracy, quantitative/non-quantitative attribute correctness, format/domain consistency, temporal validity)
 
 Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts ISO 19115-compliant quality reports. A standalone JSON Schema for quality reports is provided at `json-schema/iso19115-quality.json`.

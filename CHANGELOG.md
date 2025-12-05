@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Snow coverage quality element (`snowCoverage`) for DGIWG metadata compliance
+  - Follows same pattern as cloud coverage with percentage and assessment method
+  - Aligns with DGIWG Metadata Foundation requirements for imagery quality assessment
+  - Added schema definition in `json-schema/iso19115-quality.json`
+  - Added example in `examples/item-with-imagery-quality.json`
+
 ## [1.1.0] - 2024-12-04
 
 ### Added

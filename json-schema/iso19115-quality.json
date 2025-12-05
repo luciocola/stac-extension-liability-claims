@@ -157,6 +157,17 @@
       "required": ["type"],
       "additionalProperties": true
     },
+    "iso19115_4_snow_coverage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "snowCoverage" },
+        "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "assessmentMethod": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
     "iso19115_4_processing_level": {
       "type": "object",
       "properties": {
@@ -292,6 +303,7 @@
             "radiometricAccuracy",
             "sensorQuality",
             "cloudCoverage",
+            "snowCoverage",
             "processingLevel",
             "usabilityAssessment",
             "absoluteExternalPositionalAccuracy",
@@ -319,6 +331,7 @@
             { "$ref": "#/definitions/iso19115_4_radiometric_accuracy" },
             { "$ref": "#/definitions/iso19115_4_sensor_quality" },
             { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
+            { "$ref": "#/definitions/iso19115_4_snow_coverage" },
             { "$ref": "#/definitions/iso19115_4_processing_level" },
             { "$ref": "#/definitions/iso19115_4_usability_assessment" },
             { "$ref": "#/definitions/dgiwg_absolute_external_positional_accuracy" },

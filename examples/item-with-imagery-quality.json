@@ -49,6 +49,21 @@
           }
         },
         {
+          "elementType": "snowCoverage",
+          "summary": "Snow and ice coverage assessment",
+          "detail": {
+            "type": "snowCoverage",
+            "coveragePercentage": 8.3,
+            "assessmentMethod": "NDSI-based snow detection algorithm",
+            "measure": {
+              "description": "Percentage of scene covered by snow and ice",
+              "value": 8.3,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
           "elementType": "radiometricAccuracy",
           "summary": "Radiometric calibration quality",
           "detail": {
