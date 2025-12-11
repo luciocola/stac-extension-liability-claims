@@ -53,6 +53,17 @@ The `liability:quality` field now includes full support for **ISO 19115-4 lineag
 
 See `examples/item-with-iso19115-lineage.json` for a complete example showing multi-stage processing lineage.
 
+### W3C PROV Provenance Support
+
+**NEW in v1.1.0:** The extension now supports W3C PROV (Provenance) model alongside ISO 19115 lineage through the `liability:prov` field. This enables:
+
+- **Semantic Web Integration**: Full compatibility with W3C PROV tools, SPARQL queries, and Linked Data platforms
+- **Explicit Attribution**: Clear tracking of responsibility chains using PROV agents and delegation
+- **Complex Provenance Graphs**: Support for multiple derivation paths and influence relationships
+- **Interoperability**: Bridge between geospatial (ISO 19115) and semantic web (PROV) communities
+
+Both `liability:quality` (ISO 19115) and `liability:prov` (W3C PROV) can be used together for maximum interoperability. See [PROV-ISO19115-MAPPING.md](PROV-ISO19115-MAPPING.md) for detailed mapping guidelines and conversion strategies.
+
 ### Interoperability with Metadata Standards
 
 The extension's ISO 19115 foundation provides high compatibility with major geospatial metadata frameworks:
@@ -91,6 +102,7 @@ The fields in the table below can be used in these parts of STAC documents:
 | liability:notes                   | string                    | Additional notes or comments about the claim |
 | liability:origin                  | string                    | Origin or source organization of the claim data |
 | liability:quality                 | Quality Report Object or \[Quality Report Object\] | ISO 19115/19115-4/DGIWG-compliant data quality report(s). See [Quality Schema](json-schema/iso19115-quality.json) |
+| liability:prov                    | PROV Document Object      | **NEW in v1.1.0.** W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. See [W3C PROV](https://www.w3.org/TR/prov-overview/) |
 
 ### Asset-Level Fields
 
@@ -207,6 +219,94 @@ components:
 security:
   - ClaimsApiKey: []
 ```
+
+### W3C PROV Provenance Support
+
+**NEW in v1.1.0:** The `liability:prov` field provides W3C PROV-JSON compliant provenance tracking alongside ISO 19115 lineage. This enables interoperability with W3C PROV tools and semantic web applications.
+
+#### PROV vs ISO 19115 Lineage
+
+Both fields serve provenance needs but use different models:
+
+- **`liability:quality` (ISO 19115 lineage)**: Geospatial standard focused on data quality and processing history. Preferred for GIS workflows.
+- **`liability:prov` (W3C PROV)**: Semantic web standard for general provenance using entities, activities, and agents. Enables integration with PROV tools.
+
+You can use **both fields together** for maximum interoperability.
+
+#### PROV Core Concepts
+
+The PROV data model uses three main types:
+
+- **Entity**: Things (datasets, files, documents) - identified with qualified names
+- **Activity**: Processes that act upon entities (data processing, analysis)
+- **Agent**: Responsible parties (people, organizations, software)
+
+Relations connect these types:
+- `wasGeneratedBy`: Entity was created by Activity
+- `used`: Activity consumed Entity
+- `wasAttributedTo`: Entity was created by Agent
+- `wasAssociatedWith`: Activity was performed by Agent
+- `wasDerivedFrom`: Entity was derived from another Entity
+- `actedOnBehalfOf`: Agent acted on behalf of another Agent
+
+#### PROV Field Structure
+
+```json
+"liability:prov": {
+  "prefix": {
+    "ex": "http://example.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "entity": {
+    "ex:entity1": {
+      "prov:type": "prov:Dataset",
+      "prov:label": "Output dataset"
+    }
+  },
+  "activity": {
+    "ex:activity1": {
+      "prov:type": "prov:ProcessExecution",
+      "prov:startTime": "2025-01-15T10:00:00Z",
+      "prov:endTime": "2025-01-15T12:00:00Z",
+      "prov:label": "Data processing"
+    }
+  },
+  "agent": {
+    "ex:agent1": {
+      "prov:type": "prov:Person",
+      "prov:label": "Dr. Jane Smith"
+    }
+  },
+  "wasGeneratedBy": {
+    "_:wgb1": {
+      "prov:entity": "ex:entity1",
+      "prov:activity": "ex:activity1"
+    }
+  },
+  "wasAssociatedWith": {
+    "_:waw1": {
+      "prov:activity": "ex:activity1",
+      "prov:agent": "ex:agent1"
+    }
+  }
+}
+```
+
+#### When to Use PROV
+
+Use `liability:prov` when:
+- Integrating with semantic web tools (SPARQL, RDF stores)
+- Complex provenance graphs with multiple derivation chains
+- Need to track responsibility and attribution explicitly
+- Compliance with W3C standards is required
+- Cross-domain provenance (beyond geospatial)
+
+#### PROV References
+
+- [W3C PROV Overview](https://www.w3.org/TR/prov-overview/)
+- [PROV-DM (Data Model)](https://www.w3.org/TR/prov-dm/)
+- [PROV-JSON Specification](https://www.w3.org/Submission/prov-json/)
+- [PROV Primer](https://www.w3.org/TR/prov-primer/)
 
 ## Examples
 
@@ -421,7 +521,22 @@ This example demonstrates the **recommended v1.1.0 approach** for secure assets.
 
 ### Example 4: Data Quality Reporting (ISO 19115-4 and DGIWG)
 
-This example demonstrates quality reporting for satellite imagery and defence geospatial data:
+This example demonstrates quality reporting for satellite imagery and defence geospatial data. See `examples/item-with-imagery-quality.json` for the full example.
+
+### Example 5: W3C PROV Provenance Tracking
+
+This example demonstrates complete W3C PROV-JSON provenance tracking with entities, activities, agents, and their relationships. It shows a multi-stage satellite image processing workflow with full attribution chains. See `examples/item-with-prov.json` for the complete example with detailed PROV graph.
+
+**Key features demonstrated:**
+- Multiple processing stages (atmospheric correction, geometric correction, classification)
+- Source data tracking (Sentinel-2 imagery, DEM, training data)
+- Person, Organization, and SoftwareAgent tracking
+- Derivation chains showing data flow
+- Delegation relationships (persons acting on behalf of organizations)
+
+For guidance on mapping between ISO 19115 lineage and W3C PROV, see [PROV-ISO19115-MAPPING.md](PROV-ISO19115-MAPPING.md).
+
+## Contributing
 
 ```json
 {

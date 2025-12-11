@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **W3C PROV Support**: New `liability:prov` field for W3C PROV-JSON provenance information
+  - Full PROV-JSON schema definitions for entities, activities, agents, and all PROV relations
+  - Support for complete PROV-DM model including wasGeneratedBy, used, wasDerivedFrom, wasAttributedTo, etc.
+  - Enables semantic web integration and interoperability with W3C PROV tools
+  - Complements existing ISO 19115 lineage support
+- New example `examples/item-with-prov.json` demonstrating complete PROV provenance tracking
+- Comprehensive mapping document `PROV-ISO19115-MAPPING.md` explaining relationship between PROV and ISO 19115 lineage
+- Detailed PROV documentation in README with usage guidelines and references
 - Snow coverage quality element (`snowCoverage`) for DGIWG metadata compliance
   - Follows same pattern as cloud coverage with percentage and assessment method
   - Aligns with DGIWG Metadata Foundation requirements for imagery quality assessment
