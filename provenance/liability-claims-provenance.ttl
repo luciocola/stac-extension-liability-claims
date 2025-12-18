@@ -1,0 +1,468 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix dqv: <http://www.w3.org/ns/dqv#> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix ex: <http://example.org/liability-claims/> .
+@prefix liability: <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#> .
+
+# ============================================
+# STAC Liability and Claims Extension
+# Provenance & Lineage RDF Graph
+# ============================================
+# Purpose: W3C PROV-O compliant provenance graph for liability claims data
+# Spec: https://stac-extensions.github.io/liability-claims/
+# W3C PROV-O: https://www.w3.org/TR/prov-o/
+# Created: 2025-12-18
+
+
+# ============================================
+# Entities (Datasets, Documents, Collections)
+# ============================================
+
+ex:LandCoverMap2025
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Land Cover Classification Map 2025" ;
+    dcterms:title "Processed Land Cover Map with Complete Provenance" ;
+    dcterms:description "Land cover classification derived from satellite imagery with W3C PROV-compliant provenance tracking" ;
+    dcterms:created "2025-11-20T16:30:00Z"^^xsd:dateTime ;
+    dcterms:format "GeoTIFF" ;
+    
+    # STAC Liability Claims Properties
+    liability:claim_id "CLM-PROV-001" ;
+    liability:claim_type "environmental" ;
+    liability:claim_status "open" ;
+    liability:liability_framework "ISO 19157 Data Quality" ;
+    liability:jurisdiction "US" ;
+    liability:origin "Environmental Monitoring Agency" ;
+    
+    # Spatial and temporal coverage
+    dcterms:spatial [
+        a dcterms:Location ;
+        schema:geo [
+            a schema:GeoShape ;
+            schema:box "-122.5,37.7 -122.3,37.9"
+        ]
+    ] ;
+    dcterms:temporal [
+        a dcterms:PeriodOfTime ;
+        dcat:startDate "2025-11-10T00:00:00Z"^^xsd:dateTime ;
+        dcat:endDate "2025-11-20T23:59:59Z"^^xsd:dateTime
+    ] ;
+    
+    # Data Quality
+    dqv:hasQualityMeasurement ex:OverallAccuracy ;
+    
+    # Provenance relationships
+    prov:wasGeneratedBy ex:ClassificationActivity ;
+    prov:wasDerivedFrom ex:AtmosphericallyCorrectedImagery ;
+    prov:wasAttributedTo ex:AnalystJohnDoe ;
+    prov:generatedAtTime "2025-11-20T16:30:00Z"^^xsd:dateTime .
+
+
+ex:AtmosphericallyCorrectedImagery
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Atmospherically Corrected Sentinel-2 Imagery" ;
+    dcterms:format "GeoTIFF" ;
+    dcterms:created "2025-11-15T10:45:00Z"^^xsd:dateTime ;
+    
+    prov:wasGeneratedBy ex:AtmosphericCorrectionActivity ;
+    prov:wasDerivedFrom ex:GeometricallyCorrectedImagery ;
+    prov:wasAttributedTo ex:ProcessorSoftwareENVI ;
+    prov:generatedAtTime "2025-11-15T10:45:00Z"^^xsd:dateTime .
+
+
+ex:GeometricallyCorrectedImagery
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Geometrically Corrected Sentinel-2 Imagery" ;
+    dcterms:format "GeoTIFF" ;
+    dcterms:created "2025-11-16T11:30:00Z"^^xsd:dateTime ;
+    
+    prov:wasGeneratedBy ex:GeometricCorrectionActivity ;
+    prov:wasDerivedFrom ex:Sentinel2L1C ;
+    prov:wasAttributedTo ex:ProcessorSoftwareERDAS ;
+    prov:generatedAtTime "2025-11-16T11:30:00Z"^^xsd:dateTime .
+
+
+ex:Sentinel2L1C
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Sentinel-2 Level-1C MSI" ;
+    dcterms:description "Top-of-atmosphere reflectance from Sentinel-2 MultiSpectral Instrument" ;
+    dcterms:source <https://scihub.copernicus.eu/dhus/odata/v1/Products('abc123')> ;
+    dcterms:created "2025-11-10T10:35:22Z"^^xsd:dateTime ;
+    
+    # Satellite acquisition metadata
+    schema:provider "European Space Agency (ESA)" ;
+    ex:satellite "Sentinel-2A" ;
+    ex:sensor "MultiSpectral Instrument (MSI)" ;
+    ex:acquisitionDate "2025-11-10T10:35:22Z"^^xsd:dateTime ;
+    ex:cloudCoverage "5.2"^^xsd:decimal ;
+    
+    prov:wasAttributedTo ex:ESACopernicusProgramme .
+
+
+ex:TrainingDataset
+    a prov:Entity, prov:Collection ;
+    rdfs:label "Land Cover Training Dataset" ;
+    dcterms:description "Ground truth samples for supervised classification" ;
+    dcterms:created "2025-09-15T00:00:00Z"^^xsd:dateTime ;
+    
+    ex:sampleCount 5000 ;
+    ex:classCount 12 ;
+    ex:classNames "water, forest, grassland, crops, urban, bare-soil, wetland, snow, clouds, shadow, roads, buildings" ;
+    
+    prov:wasGeneratedBy ex:FieldSurveyActivity ;
+    prov:wasAttributedTo ex:FieldSurveyTeam .
+
+
+ex:ClassificationModel
+    a prov:Entity, prov:Plan ;
+    rdfs:label "Random Forest Classification Model" ;
+    dcterms:description "Trained machine learning model for land cover classification" ;
+    
+    # Model hyperparameters
+    ex:algorithm "Random Forest" ;
+    ex:nEstimators 500 ;
+    ex:maxDepth 25 ;
+    ex:minSamplesSplit 10 ;
+    ex:criterion "gini" ;
+    ex:trainingAccuracy "97.8"^^xsd:decimal ;
+    ex:validationAccuracy "94.2"^^xsd:decimal ;
+    
+    prov:wasGeneratedBy ex:ModelTrainingActivity ;
+    prov:wasDerivedFrom ex:TrainingDataset ;
+    prov:wasAttributedTo ex:DataScientistAliceSmith .
+
+
+ex:QualityReport
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Classification Quality Assessment Report" ;
+    dcterms:format "JSON" ;
+    dcterms:created "2025-11-21T10:00:00Z"^^xsd:dateTime ;
+    
+    prov:wasGeneratedBy ex:QualityAssessmentActivity ;
+    prov:wasDerivedFrom ex:LandCoverMap2025 ;
+    prov:wasAttributedTo ex:QASpecialistBobJones .
+
+
+# ============================================
+# Activities (Processes, Workflows)
+# ============================================
+
+ex:AtmosphericCorrectionActivity
+    a prov:Activity, ex:AtmosphericCorrection ;
+    rdfs:label "FLAASH Atmospheric Correction" ;
+    dcterms:description "Conversion of at-sensor radiance to surface reflectance using FLAASH algorithm" ;
+    
+    prov:startedAtTime "2025-11-15T08:30:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-11-15T10:45:00Z"^^xsd:dateTime ;
+    prov:used ex:Sentinel2L1C ;
+    prov:wasAssociatedWith ex:ProcessorSoftwareENVI ;
+    prov:wasAssociatedWith ex:AnalystJohnDoe ;
+    prov:qualifiedUsage [
+        a prov:Usage ;
+        prov:entity ex:Sentinel2L1C ;
+        prov:hadRole ex:InputImagery
+    ] ;
+    
+    # Processing parameters
+    ex:software "ENVI 5.6.3" ;
+    ex:algorithm "FLAASH" ;
+    ex:atmosphericModel "mid-latitude summer" ;
+    ex:aerosolModel "maritime" ;
+    ex:visibility "40km" ;
+    ex:solarZenithAngle "35.2"^^xsd:decimal ;
+    ex:sensorAltitude "786km" .
+
+
+ex:GeometricCorrectionActivity
+    a prov:Activity, ex:GeometricCorrection ;
+    rdfs:label "RPC Orthorectification" ;
+    dcterms:description "Geometric correction using RPC model and SRTM DEM" ;
+    
+    prov:startedAtTime "2025-11-16T10:15:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-11-16T11:30:00Z"^^xsd:dateTime ;
+    prov:used ex:AtmosphericallyCorrectedImagery ;
+    prov:used ex:SRTM_DEM ;
+    prov:wasAssociatedWith ex:ProcessorSoftwareERDAS ;
+    prov:wasAssociatedWith ex:AnalystJohnDoe ;
+    
+    # Processing parameters
+    ex:software "ERDAS IMAGINE 2022" ;
+    ex:method "RPC orthorectification" ;
+    ex:demSource "SRTM 30m" ;
+    ex:gcpCount 25 ;
+    ex:rmsError "0.4 pixels" ;
+    ex:resamplingMethod "cubic convolution" ;
+    ex:outputResolution "10m" .
+
+
+ex:ClassificationActivity
+    a prov:Activity, ex:SupervisedClassification ;
+    rdfs:label "Random Forest Land Cover Classification" ;
+    dcterms:description "Supervised classification using Random Forest algorithm" ;
+    
+    prov:startedAtTime "2025-11-20T14:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-11-20T16:30:00Z"^^xsd:dateTime ;
+    prov:used ex:GeometricallyCorrectedImagery ;
+    prov:used ex:TrainingDataset ;
+    prov:used ex:ClassificationModel ;
+    prov:wasAssociatedWith ex:AnalystJohnDoe ;
+    prov:wasAssociatedWith ex:DataScientistAliceSmith ;
+    prov:qualifiedUsage [
+        a prov:Usage ;
+        prov:entity ex:GeometricallyCorrectedImagery ;
+        prov:hadRole ex:InputImagery
+    ] ;
+    prov:qualifiedUsage [
+        a prov:Usage ;
+        prov:entity ex:ClassificationModel ;
+        prov:hadRole ex:ClassificationPlan
+    ] ;
+    
+    # Processing parameters
+    ex:software "Python scikit-learn 1.3.2" ;
+    ex:pythonVersion "3.11.5" ;
+    ex:computeEnvironment "AWS EC2 m5.4xlarge" ;
+    ex:processingTime "2.5 hours" .
+
+
+ex:ModelTrainingActivity
+    a prov:Activity, ex:ModelTraining ;
+    rdfs:label "Model Training and Validation" ;
+    dcterms:description "Training of Random Forest classifier with cross-validation" ;
+    
+    prov:startedAtTime "2025-10-01T09:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-10-01T15:30:00Z"^^xsd:dateTime ;
+    prov:used ex:TrainingDataset ;
+    prov:wasAssociatedWith ex:DataScientistAliceSmith ;
+    
+    # Training parameters
+    ex:crossValidationFolds 10 ;
+    ex:testSplitRatio "0.2"^^xsd:decimal ;
+    ex:randomState 42 .
+
+
+ex:FieldSurveyActivity
+    a prov:Activity, ex:FieldDataCollection ;
+    rdfs:label "Ground Truth Field Survey" ;
+    dcterms:description "Collection of in-situ land cover observations" ;
+    
+    prov:startedAtTime "2025-08-01T06:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-08-31T18:00:00Z"^^xsd:dateTime ;
+    prov:wasAssociatedWith ex:FieldSurveyTeam ;
+    
+    ex:surveyMethod "GPS-enabled field observations" ;
+    ex:gpsAccuracy "2m" .
+
+
+ex:QualityAssessmentActivity
+    a prov:Activity, ex:QualityAssessment ;
+    rdfs:label "Post-Classification Quality Assessment" ;
+    dcterms:description "Independent validation using test dataset" ;
+    
+    prov:startedAtTime "2025-11-21T08:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-11-21T10:00:00Z"^^xsd:dateTime ;
+    prov:used ex:LandCoverMap2025 ;
+    prov:used ex:ValidationDataset ;
+    prov:wasAssociatedWith ex:QASpecialistBobJones ;
+    
+    ex:validationMethod "Confusion matrix analysis" ;
+    ex:validationSamples 1000 .
+
+
+# ============================================
+# Agents (People, Organizations, Software)
+# ============================================
+
+ex:AnalystJohnDoe
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "John Doe" ;
+    foaf:mbox <mailto:john.doe@example.org> ;
+    schema:jobTitle "Remote Sensing Analyst" ;
+    schema:affiliation ex:EnvironmentalMonitoringAgency ;
+    
+    prov:actedOnBehalfOf ex:EnvironmentalMonitoringAgency .
+
+
+ex:DataScientistAliceSmith
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Alice Smith" ;
+    foaf:mbox <mailto:alice.smith@example.org> ;
+    schema:jobTitle "Data Scientist" ;
+    schema:affiliation ex:EnvironmentalMonitoringAgency ;
+    
+    prov:actedOnBehalfOf ex:EnvironmentalMonitoringAgency .
+
+
+ex:QASpecialistBobJones
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Bob Jones" ;
+    foaf:mbox <mailto:bob.jones@example.org> ;
+    schema:jobTitle "Quality Assurance Specialist" ;
+    schema:affiliation ex:EnvironmentalMonitoringAgency ;
+    
+    prov:actedOnBehalfOf ex:EnvironmentalMonitoringAgency .
+
+
+ex:FieldSurveyTeam
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "Field Survey Team" ;
+    rdfs:label "Ground Truth Collection Team" ;
+    schema:memberOf ex:EnvironmentalMonitoringAgency ;
+    
+    prov:actedOnBehalfOf ex:EnvironmentalMonitoringAgency .
+
+
+ex:EnvironmentalMonitoringAgency
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "Environmental Monitoring Agency" ;
+    schema:url <https://example.org/ema> ;
+    dcterms:description "Government agency responsible for environmental data collection and monitoring" ;
+    
+    liability:responsible_party ex:EnvironmentalMonitoringAgency ;
+    liability:liability_framework "ISO 19157 Data Quality" ;
+    liability:jurisdiction "US" .
+
+
+ex:ProcessorSoftwareENVI
+    a prov:Agent, prov:SoftwareAgent ;
+    rdfs:label "ENVI 5.6.3" ;
+    schema:softwareVersion "5.6.3" ;
+    schema:publisher "L3Harris Geospatial" ;
+    dcterms:description "Image processing software for atmospheric correction" .
+
+
+ex:ProcessorSoftwareERDAS
+    a prov:Agent, prov:SoftwareAgent ;
+    rdfs:label "ERDAS IMAGINE 2022" ;
+    schema:softwareVersion "2022" ;
+    schema:publisher "Hexagon Geospatial" ;
+    dcterms:description "Remote sensing and photogrammetry software suite" .
+
+
+ex:ESACopernicusProgramme
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "European Space Agency - Copernicus Programme" ;
+    schema:url <https://www.copernicus.eu/> ;
+    dcterms:description "European Union's Earth observation programme" .
+
+
+# ============================================
+# Supporting Entities
+# ============================================
+
+ex:SRTM_DEM
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "SRTM Digital Elevation Model" ;
+    dcterms:description "30m resolution DEM from Shuttle Radar Topography Mission" ;
+    dcterms:source <https://earthexplorer.usgs.gov/> ;
+    schema:provider "NASA / USGS" ;
+    ex:spatialResolution "30m" .
+
+
+ex:ValidationDataset
+    a prov:Entity, prov:Collection ;
+    rdfs:label "Independent Validation Dataset" ;
+    dcterms:description "Hold-out test samples for accuracy assessment" ;
+    ex:sampleCount 1000 ;
+    prov:wasDerivedFrom ex:TrainingDataset .
+
+
+# ============================================
+# Data Quality Measurements
+# ============================================
+
+ex:OverallAccuracy
+    a dqv:QualityMeasurement ;
+    dqv:isMeasurementOf ex:AccuracyMetric ;
+    dqv:value "92.5"^^xsd:decimal ;
+    schema:unitCode "P1" ; # Percentage
+    dqv:computedOn ex:LandCoverMap2025 ;
+    prov:wasGeneratedBy ex:QualityAssessmentActivity .
+
+
+ex:AccuracyMetric
+    a dqv:Metric ;
+    rdfs:label "Overall Classification Accuracy" ;
+    dcterms:description "Percentage of correctly classified pixels" ;
+    dqv:expectedDataType xsd:decimal ;
+    dqv:inDimension ex:AccuracyDimension .
+
+
+ex:AccuracyDimension
+    a dqv:Dimension ;
+    rdfs:label "Classification Accuracy" ;
+    dcterms:description "Correctness of thematic classification" .
+
+
+ex:KappaCoefficient
+    a dqv:QualityMeasurement ;
+    dqv:isMeasurementOf ex:KappaMetric ;
+    dqv:value "0.89"^^xsd:decimal ;
+    dqv:computedOn ex:LandCoverMap2025 ;
+    prov:wasGeneratedBy ex:QualityAssessmentActivity .
+
+
+ex:KappaMetric
+    a dqv:Metric ;
+    rdfs:label "Kappa Coefficient" ;
+    dcterms:description "Statistical measure of inter-rater agreement for categorical data" ;
+    dqv:expectedDataType xsd:decimal .
+
+
+# ============================================
+# Roles
+# ============================================
+
+ex:InputImagery
+    a prov:Role ;
+    rdfs:label "Input Imagery" ;
+    rdfs:comment "Role for input raster data in processing workflow" .
+
+
+ex:ClassificationPlan
+    a prov:Role ;
+    rdfs:label "Classification Plan" ;
+    rdfs:comment "Role for classification model/algorithm used in processing" .
+
+
+# ============================================
+# Revision and Derivation Relationships
+# ============================================
+
+# Complete derivation chain
+ex:LandCoverMap2025 prov:hadPrimarySource ex:Sentinel2L1C .
+
+# Alternative derivation with revision tracking
+ex:LandCoverMap2025_v2
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Land Cover Map 2025 - Version 2" ;
+    prov:wasRevisionOf ex:LandCoverMap2025 ;
+    prov:wasDerivedFrom ex:LandCoverMap2025 ;
+    prov:wasAttributedTo ex:AnalystJohnDoe ;
+    dcterms:created "2025-12-01T14:00:00Z"^^xsd:dateTime ;
+    liability:claim_id "CLM-PROV-001-v2" .
+
+
+# ============================================
+# Bundle: Complete Provenance Graph
+# ============================================
+
+ex:LandCoverProvenanceBundle
+    a prov:Bundle ;
+    rdfs:label "Complete Provenance Bundle for Land Cover Map 2025" ;
+    dcterms:description "Full W3C PROV-O compliant provenance graph documenting all processing steps" ;
+    dcterms:created "2025-12-18T00:00:00Z"^^xsd:dateTime ;
+    prov:wasAttributedTo ex:EnvironmentalMonitoringAgency ;
+    
+    # Bundle contains all provenance statements
+    prov:generated ex:LandCoverMap2025 ;
+    prov:hadMember ex:Sentinel2L1C, ex:AtmosphericallyCorrectedImagery, 
+                   ex:GeometricallyCorrectedImagery, ex:TrainingDataset,
+                   ex:ClassificationModel, ex:QualityReport .

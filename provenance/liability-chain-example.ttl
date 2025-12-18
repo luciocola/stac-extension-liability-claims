@@ -1,0 +1,416 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix legal: <http://www.w3.org/ns/legal#> .
+@prefix ex: <http://example.org/claims/> .
+@prefix liability: <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#> .
+
+# ============================================
+# Liability Claims Lineage Example
+# ============================================
+# Scenario: Property damage claim from aerial survey
+# Purpose: Track liability chain from data acquisition to claim
+# Created: 2025-12-18
+
+# ============================================
+# The Claim Entity
+# ============================================
+
+ex:PropertyDamageClaim2025
+    a prov:Entity, legal:LegalCase ;
+    rdfs:label "Property Damage Claim 2025-09-1234" ;
+    dcterms:created "2025-09-15T14:30:00Z"^^xsd:dateTime ;
+    
+    # STAC Liability Claims Properties
+    liability:claim_id "CLM-2025-09-1234" ;
+    liability:claim_type "property_damage" ;
+    liability:claim_status "under_investigation" ;
+    liability:claim_date "2025-09-15T14:30:00Z"^^xsd:dateTime ;
+    liability:incident_date "2025-08-10T12:00:00Z"^^xsd:dateTime ;
+    liability:damages_estimated "250000.00"^^xsd:decimal ;
+    liability:damages_currency "USD" ;
+    liability:legal_jurisdiction "CA" ;
+    liability:insurance_provider ex:InsuranceCompanyABC ;
+    liability:policy_number "POL-2025-7890" ;
+    liability:responsible_party ex:MunicipalPlanningDept ;
+    liability:affected_parties (ex:PropertyOwnerJohnSmith ex:TenantMaryJohnson) ;
+    liability:notes "Claim alleges flood damage due to incorrect drainage assessment based on aerial survey data" ;
+    
+    # Provenance: Claim derived from analysis of survey data
+    prov:wasDerivedFrom ex:FloodRiskAssessmentReport ;
+    prov:wasAttributedTo ex:LegalTeam ;
+    prov:generatedAtTime "2025-09-15T14:30:00Z"^^xsd:dateTime .
+
+
+# ============================================
+# Evidence Documents
+# ============================================
+
+ex:FloodRiskAssessmentReport
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Flood Risk Assessment Report - Parcel 45-678-9012" ;
+    dcterms:created "2025-03-20T10:00:00Z"^^xsd:dateTime ;
+    dcterms:format "PDF" ;
+    
+    liability:claim_id "CLM-2025-09-1234" ;
+    liability:evidence_refs (
+        ex:AerialSurvey2024
+        ex:HydrologicalModel
+        ex:GroundObservations
+    ) ;
+    
+    # This report was used to approve construction
+    prov:wasGeneratedBy ex:FloodRiskAssessmentActivity ;
+    prov:wasDerivedFrom ex:DEMAerialSurvey, ex:AerialImagery2024 ;
+    prov:wasAttributedTo ex:HydraulicEngineerBobWilson ;
+    prov:generatedAtTime "2025-03-20T10:00:00Z"^^xsd:dateTime .
+
+
+ex:AerialSurvey2024
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Aerial LiDAR Survey - Downtown District" ;
+    dcterms:created "2024-11-15T09:00:00Z"^^xsd:dateTime ;
+    dcterms:format "LAS" ;
+    
+    # Survey specifications
+    ex:surveyDate "2024-11-15"^^xsd:date ;
+    ex:pointDensity "8 points/m²" ;
+    ex:verticalAccuracy "0.15m RMSE" ;
+    ex:horizontalAccuracy "0.25m RMSE" ;
+    ex:coverageArea "50 km²" ;
+    
+    # Provenance chain
+    prov:wasGeneratedBy ex:AerialSurveyActivity ;
+    prov:wasAttributedTo ex:SurveyCompanyXYZ ;
+    prov:wasAttributedTo ex:PilotJaneAnderson ;
+    prov:generatedAtTime "2024-11-15T09:00:00Z"^^xsd:dateTime .
+
+
+ex:DEMAerialSurvey
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Digital Elevation Model - Downtown District" ;
+    dcterms:created "2024-12-01T14:00:00Z"^^xsd:dateTime ;
+    dcterms:format "GeoTIFF" ;
+    
+    ex:spatialResolution "0.5m" ;
+    ex:verticalDatum "NAVD88" ;
+    ex:horizontalDatum "NAD83" ;
+    
+    # Derived from point cloud
+    prov:wasGeneratedBy ex:DEMGenerationActivity ;
+    prov:wasDerivedFrom ex:AerialSurvey2024 ;
+    prov:wasAttributedTo ex:DataProcessorCompanyDEF .
+
+
+ex:AerialImagery2024
+    a prov:Entity, dcat:Dataset ;
+    rdfs:label "Aerial Orthophotos - Downtown District" ;
+    dcterms:created "2024-11-15T09:00:00Z"^^xsd:dateTime ;
+    dcterms:format "GeoTIFF" ;
+    
+    ex:spatialResolution "0.1m" ;
+    ex:bands "RGB + NIR" ;
+    
+    prov:wasGeneratedBy ex:AerialSurveyActivity ;
+    prov:wasAttributedTo ex:SurveyCompanyXYZ .
+
+
+ex:HydrologicalModel
+    a prov:Entity, prov:Plan ;
+    rdfs:label "100-Year Flood Model" ;
+    dcterms:created "2025-02-10T16:00:00Z"^^xsd:dateTime ;
+    
+    ex:modelSoftware "HEC-RAS 6.3" ;
+    ex:returnPeriod "100 years" ;
+    ex:inputData "DEM, stream flow, rainfall data" ;
+    
+    prov:wasGeneratedBy ex:HydrologicalModelingActivity ;
+    prov:wasDerivedFrom ex:DEMAerialSurvey ;
+    prov:wasAttributedTo ex:HydraulicEngineerBobWilson .
+
+
+ex:GroundObservations
+    a prov:Entity, prov:Collection ;
+    rdfs:label "Post-Flood Ground Survey Observations" ;
+    dcterms:created "2025-08-12T10:00:00Z"^^xsd:dateTime ;
+    
+    ex:observationCount 150 ;
+    ex:floodDepthRange "0.3m to 2.1m" ;
+    
+    prov:wasGeneratedBy ex:PostFloodSurveyActivity ;
+    prov:wasAttributedTo ex:FieldInspectorAliceGreen .
+
+
+# ============================================
+# Activities (Events in Liability Chain)
+# ============================================
+
+ex:AerialSurveyActivity
+    a prov:Activity, ex:DataAcquisition ;
+    rdfs:label "Aerial LiDAR and Photo Survey Flight" ;
+    
+    prov:startedAtTime "2024-11-15T06:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2024-11-15T18:00:00Z"^^xsd:dateTime ;
+    prov:wasAssociatedWith ex:SurveyCompanyXYZ ;
+    prov:wasAssociatedWith ex:PilotJaneAnderson ;
+    
+    ex:aircraft "Cessna 206 Stationair" ;
+    ex:lidarSensor "Riegl VQ-1560i" ;
+    ex:camera "PhaseOne iXM-100" ;
+    ex:flightAltitude "1500m AGL" ;
+    ex:weatherConditions "Clear, 10% cloud cover" .
+
+
+ex:DEMGenerationActivity
+    a prov:Activity, ex:DataProcessing ;
+    rdfs:label "DEM Generation from Point Cloud" ;
+    
+    prov:startedAtTime "2024-11-20T08:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2024-12-01T14:00:00Z"^^xsd:dateTime ;
+    prov:used ex:AerialSurvey2024 ;
+    prov:wasAssociatedWith ex:DataProcessorCompanyDEF ;
+    prov:wasAssociatedWith ex:TechnicianCarolDavis ;
+    
+    ex:processingMethod "Triangulation with ground point classification" ;
+    ex:software "TerraSolid TerraScan 24.0" ;
+    ex:groundClassificationAlgorithm "Progressive TIN densification" .
+
+
+ex:HydrologicalModelingActivity
+    a prov:Activity, ex:Modeling ;
+    rdfs:label "Hydraulic Flood Modeling" ;
+    
+    prov:startedAtTime "2025-02-01T09:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-02-10T16:00:00Z"^^xsd:dateTime ;
+    prov:used ex:DEMAerialSurvey ;
+    prov:wasAssociatedWith ex:HydraulicEngineerBobWilson ;
+    
+    ex:software "HEC-RAS 6.3" ;
+    ex:simulationDuration "72 hours" ;
+    ex:timeStep "1 minute" .
+
+
+ex:FloodRiskAssessmentActivity
+    a prov:Activity, ex:Analysis ;
+    rdfs:label "Flood Risk Assessment for Building Permit" ;
+    
+    prov:startedAtTime "2025-03-01T08:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-03-20T10:00:00Z"^^xsd:dateTime ;
+    prov:used ex:HydrologicalModel ;
+    prov:used ex:DEMAerialSurvey ;
+    prov:used ex:AerialImagery2024 ;
+    prov:wasAssociatedWith ex:HydraulicEngineerBobWilson ;
+    prov:wasAssociatedWith ex:MunicipalPlanningDept ;
+    
+    ex:assessmentConclusion "Property outside 100-year floodplain - approved for development" ;
+    ex:buildingPermitNumber "BP-2025-3456" .
+
+
+ex:PostFloodSurveyActivity
+    a prov:Activity, ex:Investigation ;
+    rdfs:label "Post-Flood Damage Assessment" ;
+    
+    prov:startedAtTime "2025-08-11T07:00:00Z"^^xsd:dateTime ;
+    prov:endedAtTime "2025-08-12T17:00:00Z"^^xsd:dateTime ;
+    prov:wasAssociatedWith ex:FieldInspectorAliceGreen ;
+    prov:wasAssociatedWith ex:InsuranceAdjuster ;
+    
+    ex:findingSummary "Flood depth exceeded model predictions by 0.8m - DEM accuracy questioned" .
+
+
+ex:LiabilityInvestigationActivity
+    a prov:Activity, legal:Investigation ;
+    rdfs:label "Liability Investigation - Damage Claim" ;
+    
+    prov:startedAtTime "2025-09-15T15:00:00Z"^^xsd:dateTime ;
+    prov:used ex:FloodRiskAssessmentReport ;
+    prov:used ex:GroundObservations ;
+    prov:used ex:DEMAerialSurvey ;
+    prov:wasAssociatedWith ex:LegalTeam ;
+    prov:wasAssociatedWith ex:ForensicEngineer ;
+    
+    ex:investigationFocus "DEM vertical accuracy and ground classification errors" .
+
+
+# ============================================
+# Agents (Parties in Liability Chain)
+# ============================================
+
+ex:PropertyOwnerJohnSmith
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "John Smith" ;
+    schema:address "123 Main Street, Downtown District, CA" ;
+    
+    # Role: Claimant
+    legal:hasRole ex:ClaimantRole .
+
+
+ex:TenantMaryJohnson
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Mary Johnson" ;
+    
+    # Role: Affected party
+    legal:hasRole ex:AffectedPartyRole .
+
+
+ex:MunicipalPlanningDept
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "Municipal Planning Department" ;
+    schema:address "City Hall, Downtown District, CA" ;
+    
+    # Role: Decision maker who approved permit based on assessment
+    liability:responsible_party ex:MunicipalPlanningDept ;
+    prov:actedOnBehalfOf ex:CityGovernment .
+
+
+ex:SurveyCompanyXYZ
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "XYZ Aerial Surveys Inc." ;
+    schema:url <https://example.org/xyz-surveys> ;
+    
+    # Potentially liable: Provided survey data
+    liability:liability_framework "Professional liability insurance" ;
+    liability:insurance_provider ex:ProfessionalLiabilityInsurer .
+
+
+ex:DataProcessorCompanyDEF
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "DEF Data Processing Ltd." ;
+    
+    # Potentially liable: Created DEM from point cloud
+    prov:actedOnBehalfOf ex:SurveyCompanyXYZ .
+
+
+ex:HydraulicEngineerBobWilson
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Bob Wilson, P.E." ;
+    schema:jobTitle "Licensed Hydraulic Engineer" ;
+    foaf:mbox <mailto:bob.wilson@example.org> ;
+    
+    # Professional who prepared assessment
+    prov:actedOnBehalfOf ex:MunicipalPlanningDept .
+
+
+ex:PilotJaneAnderson
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Jane Anderson" ;
+    schema:jobTitle "Survey Pilot" ;
+    
+    prov:actedOnBehalfOf ex:SurveyCompanyXYZ .
+
+
+ex:TechnicianCarolDavis
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Carol Davis" ;
+    schema:jobTitle "GIS Technician" ;
+    
+    prov:actedOnBehalfOf ex:DataProcessorCompanyDEF .
+
+
+ex:FieldInspectorAliceGreen
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Alice Green" ;
+    schema:jobTitle "Field Inspector" ;
+    foaf:mbox <mailto:alice.green@example.org> .
+
+
+ex:LegalTeam
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "Property Damage Legal Team" ;
+    
+    prov:actedOnBehalfOf ex:PropertyOwnerJohnSmith .
+
+
+ex:ForensicEngineer
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Dr. David Taylor, P.E." ;
+    schema:jobTitle "Forensic Engineer" ;
+    
+    prov:actedOnBehalfOf ex:LegalTeam .
+
+
+ex:InsuranceAdjuster
+    a prov:Agent, prov:Person, foaf:Person ;
+    foaf:name "Emma Wilson" ;
+    schema:jobTitle "Insurance Claims Adjuster" ;
+    
+    prov:actedOnBehalfOf ex:InsuranceCompanyABC .
+
+
+ex:InsuranceCompanyABC
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "ABC Insurance Company" ;
+    schema:url <https://example.org/abc-insurance> .
+
+
+ex:ProfessionalLiabilityInsurer
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "Professional Liability Insurance Corp" .
+
+
+ex:CityGovernment
+    a prov:Agent, prov:Organization, foaf:Organization ;
+    foaf:name "City of Downtown District" .
+
+
+# ============================================
+# Roles
+# ============================================
+
+ex:ClaimantRole
+    a legal:Role ;
+    rdfs:label "Claimant" ;
+    rdfs:comment "Party filing liability claim" .
+
+
+ex:AffectedPartyRole
+    a legal:Role ;
+    rdfs:label "Affected Party" ;
+    rdfs:comment "Party impacted by incident" .
+
+
+# ============================================
+# Liability Chain Summary
+# ============================================
+
+ex:LiabilityChain2025
+    a prov:Bundle ;
+    rdfs:label "Complete Liability Chain: Property Damage Claim CLM-2025-09-1234" ;
+    dcterms:description "Full provenance from data acquisition to legal claim" ;
+    dcterms:created "2025-12-18T00:00:00Z"^^xsd:dateTime ;
+    
+    # Chain of responsibility
+    prov:hadMember ex:AerialSurvey2024,
+                   ex:DEMAerialSurvey,
+                   ex:HydrologicalModel,
+                   ex:FloodRiskAssessmentReport,
+                   ex:PropertyDamageClaim2025 ;
+    
+    # All involved parties
+    prov:wasAttributedTo ex:SurveyCompanyXYZ,
+                        ex:DataProcessorCompanyDEF,
+                        ex:HydraulicEngineerBobWilson,
+                        ex:MunicipalPlanningDept .
+
+
+# ============================================
+# Key Finding: Potential DEM Error
+# ============================================
+
+ex:DEMAccuracyIssue
+    a prov:Entity, ex:TechnicalFinding ;
+    rdfs:label "DEM Vertical Accuracy Discrepancy" ;
+    dcterms:description "Analysis suggests DEM underestimated ground elevation by 0.5-1.0m in flood-prone areas" ;
+    dcterms:created "2025-09-18T14:00:00Z"^^xsd:dateTime ;
+    
+    # This finding challenges the original assessment
+    prov:invalidated ex:FloodRiskAssessmentReport ;
+    prov:wasGeneratedBy ex:LiabilityInvestigationActivity ;
+    prov:wasAttributedTo ex:ForensicEngineer ;
+    
+    ex:evidenceType "Comparative analysis of post-flood survey vs. original DEM" ;
+    ex:potentialCause "Ground classification error in dense vegetation areas" .
