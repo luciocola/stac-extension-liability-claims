@@ -7,7 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Added - SHACL Validation and CI/CD Pipeline (2025-12-13)
+
+- **SHACL Validation Rules** (`shacl/liability-claims-shapes.ttl`)
+  - Comprehensive SHACL shapes for semantic validation of provenance graphs
+  - Validates PROV entities, activities, agents with complete constraints
+  - Temporal consistency checks (activity start/end times, derivation ordering)
+  - Graph completeness validation (referenced entities/agents existence)
+  - Quality metadata validation (ISO 19115/DQV measurements)
+  - Support for complex provenance chains and delegation relationships
+- **SHACL Documentation** (`shacl/README.md`)
+  - Complete usage guide with pyshacl, Node.js, and Apache Jena examples
+  - Validation workflow documentation
+  - SPARQL query examples for complex constraints
+- **GitHub Actions CI/CD Pipeline** (`.github/workflows/validate.yml`)
+  - Multi-version JSON Schema validation (Python 3.9-3.12)
+  - SHACL semantic validation with pyshacl and Apache Jena
+  - OGC Building Blocks compliance verification
+  - Security scanning with Trivy vulnerability scanner
+  - Documentation completeness checks
+  - Automated test suite with coverage reporting
+  - Artifact generation (SHACL reports, OGC submission package)
+- **Markdownlint Configuration** (`.markdownlint.json`)
+
+### Changed
+
+- Enhanced README.md with comprehensive validation section
+  - Added SHACL validation examples and workflows
+  - Documented CI/CD pipeline capabilities
+  - Highlighted semantic validation features
+
+### Added - OGC Building Blocks Alignment (2025-12-13)
+
+- **JSON-LD Context** (`context.jsonld`) for semantic web interoperability and RDF uplift
+  - Mappings to Schema.org, W3C Legal, FIBO, DQV, and PROV ontologies
+  - Enables SPARQL queries and Linked Data integration
+- **External PROV Schema Reference** (`json-schema/prov-ref.json`)
+  - References `ogc.ogc-utils.prov` building block for consistency
+  - Maintains backward compatibility with embedded PROV definitions
+- **Validation Test Suite** (`tests/` directory)
+  - 4 valid test examples (basic, PROV, quality, collection)
+  - 4 invalid test examples demonstrating validation errors
+  - Comprehensive testing documentation and CI/CD examples
+- **OGC Compliance Documentation** (`OGC-COMPLIANCE-ACTIONS.md`)
+  - Detailed alignment with OGC Building Blocks standards
+  - Implementation summary and next steps
+
+### Changed
+
+- Updated `liability:prov` field to support both embedded and external schemas via `oneOf`
+- Enhanced README with OGC Building Blocks section and validation instructions
+- Improved interoperability score from 4/5 to 4.5/5
+
+### Added - W3C PROV Support (2025-12-06)
+
 - **W3C PROV Support**: New `liability:prov` field for W3C PROV-JSON provenance information
   - Full PROV-JSON schema definitions for entities, activities, agents, and all PROV relations
   - Support for complete PROV-DM model including wasGeneratedBy, used, wasDerivedFrom, wasAttributedTo, etc.

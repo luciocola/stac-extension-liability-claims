@@ -1,0 +1,396 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema: <http://schema.org/> .
+@prefix liability: <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#> .
+@prefix dqv: <http://www.w3.org/ns/dqv#> .
+
+# ============================================
+# STAC Liability and Claims Extension
+# SHACL Validation Rules
+# ============================================
+# Purpose: Semantic validation of provenance graphs and extension properties
+# Spec: https://stac-extensions.github.io/liability-claims/
+# W3C PROV: https://www.w3.org/TR/prov-o/
+
+# ============================================
+# Core Extension Shapes
+# ============================================
+
+liability:ExtensionShape
+    a sh:NodeShape ;
+    sh:targetClass liability:LiabilityClaimsExtension ;
+    rdfs:label "STAC Liability and Claims Extension Shape" ;
+    rdfs:comment "Validates core extension properties for legal frameworks and quality reporting" ;
+    sh:property [
+        sh:path liability:liability_framework ;
+        sh:name "liability_framework" ;
+        sh:description "Legal framework governing data liability" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "liability:liability_framework is required and must be a string"
+    ] ;
+    sh:property [
+        sh:path liability:jurisdiction ;
+        sh:name "jurisdiction" ;
+        sh:description "Legal jurisdiction (ISO 3166-1 alpha-2 code)" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:pattern "^[A-Z]{2}$" ;
+        sh:message "liability:jurisdiction must be a valid ISO 3166-1 alpha-2 code (e.g., 'US', 'GB', 'DE')"
+    ] ;
+    sh:property [
+        sh:path liability:liability_terms ;
+        sh:name "liability_terms" ;
+        sh:description "URI to legal terms and conditions" ;
+        sh:nodeKind sh:IRI ;
+        sh:minCount 1 ;
+        sh:message "liability:liability_terms must be a valid URI"
+    ] .
+
+# ============================================
+# PROV Document Shape
+# ============================================
+
+liability:ProvDocumentShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Bundle ;
+    rdfs:label "PROV Document Shape" ;
+    rdfs:comment "Validates W3C PROV-O provenance graphs" ;
+    sh:property [
+        sh:path prov:entity ;
+        sh:name "entity" ;
+        sh:description "At least one entity must be defined in provenance graph" ;
+        sh:minCount 1 ;
+        sh:message "PROV document must define at least one prov:Entity"
+    ] ;
+    sh:or (
+        [ sh:path prov:activity ; sh:minCount 1 ]
+        [ sh:path prov:agent ; sh:minCount 1 ]
+    ) ;
+    sh:message "PROV document must define at least one prov:Activity or prov:Agent" .
+
+# ============================================
+# PROV Entity Shape
+# ============================================
+
+liability:ProvEntityShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Entity ;
+    rdfs:label "PROV Entity Shape" ;
+    rdfs:comment "Validates PROV entities (datasets, files, records)" ;
+    sh:property [
+        sh:path prov:type ;
+        sh:name "entity_type" ;
+        sh:description "Entity type classification" ;
+        sh:minCount 1 ;
+        sh:message "Every prov:Entity should have at least one prov:type"
+    ] ;
+    sh:property [
+        sh:path prov:wasGeneratedBy ;
+        sh:name "generation" ;
+        sh:description "Link to activity that generated this entity" ;
+        sh:class prov:Activity ;
+        sh:message "prov:wasGeneratedBy must reference a valid prov:Activity"
+    ] ;
+    sh:property [
+        sh:path prov:wasAttributedTo ;
+        sh:name "attribution" ;
+        sh:description "Link to agent responsible for this entity" ;
+        sh:class prov:Agent ;
+        sh:message "prov:wasAttributedTo must reference a valid prov:Agent"
+    ] ;
+    sh:property [
+        sh:path prov:wasDerivedFrom ;
+        sh:name "derivation" ;
+        sh:description "Link to source entity" ;
+        sh:class prov:Entity ;
+        sh:message "prov:wasDerivedFrom must reference a valid prov:Entity"
+    ] .
+
+# ============================================
+# PROV Activity Shape
+# ============================================
+
+liability:ProvActivityShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Activity ;
+    rdfs:label "PROV Activity Shape" ;
+    rdfs:comment "Validates PROV activities (processing, transformation)" ;
+    sh:property [
+        sh:path prov:startedAtTime ;
+        sh:name "start_time" ;
+        sh:description "Activity start timestamp" ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "prov:startedAtTime must be a valid xsd:dateTime"
+    ] ;
+    sh:property [
+        sh:path prov:endedAtTime ;
+        sh:name "end_time" ;
+        sh:description "Activity end timestamp" ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "prov:endedAtTime must be a valid xsd:dateTime"
+    ] ;
+    sh:property [
+        sh:path prov:wasAssociatedWith ;
+        sh:name "association" ;
+        sh:description "Link to agent executing this activity" ;
+        sh:class prov:Agent ;
+        sh:minCount 1 ;
+        sh:message "Every prov:Activity must be associated with at least one prov:Agent"
+    ] ;
+    sh:property [
+        sh:path prov:used ;
+        sh:name "usage" ;
+        sh:description "Link to entities used by this activity" ;
+        sh:class prov:Entity ;
+        sh:message "prov:used must reference valid prov:Entity instances"
+    ] ;
+    # Temporal constraint: endedAtTime >= startedAtTime
+    sh:sparql [
+        sh:message "Activity end time must be after or equal to start time" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:startedAtTime ?start ;
+                      prov:endedAtTime ?end .
+                FILTER (?end < ?start)
+            }
+        """
+    ] .
+
+# ============================================
+# PROV Agent Shape
+# ============================================
+
+liability:ProvAgentShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Agent ;
+    rdfs:label "PROV Agent Shape" ;
+    rdfs:comment "Validates PROV agents (people, organizations, software)" ;
+    sh:property [
+        sh:path prov:type ;
+        sh:name "agent_type" ;
+        sh:description "Agent type classification" ;
+        sh:minCount 1 ;
+        sh:in (
+            prov:Person
+            prov:Organization
+            prov:SoftwareAgent
+        ) ;
+        sh:message "prov:Agent must have type Person, Organization, or SoftwareAgent"
+    ] ;
+    sh:or (
+        [ sh:path rdfs:label ; sh:minCount 1 ]
+        [ sh:path schema:name ; sh:minCount 1 ]
+    ) ;
+    sh:message "Every prov:Agent must have either rdfs:label or schema:name" .
+
+# ============================================
+# Quality Metadata Shape
+# ============================================
+
+liability:QualityMetadataShape
+    a sh:NodeShape ;
+    sh:targetClass dqv:QualityMetadata ;
+    rdfs:label "Quality Metadata Shape" ;
+    rdfs:comment "Validates ISO 19115 data quality metadata" ;
+    sh:property [
+        sh:path dqv:hasQualityMeasurement ;
+        sh:name "quality_measurement" ;
+        sh:description "Quality measurements and assessments" ;
+        sh:class dqv:QualityMeasurement ;
+        sh:minCount 1 ;
+        sh:message "Quality metadata must include at least one dqv:QualityMeasurement"
+    ] .
+
+liability:QualityMeasurementShape
+    a sh:NodeShape ;
+    sh:targetClass dqv:QualityMeasurement ;
+    rdfs:label "Quality Measurement Shape" ;
+    sh:property [
+        sh:path dqv:isMeasurementOf ;
+        sh:name "metric" ;
+        sh:description "Quality metric being measured" ;
+        sh:class dqv:Metric ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each measurement must reference exactly one dqv:Metric"
+    ] ;
+    sh:property [
+        sh:path dqv:value ;
+        sh:name "value" ;
+        sh:description "Measured quality value" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each measurement must have exactly one dqv:value"
+    ] .
+
+# ============================================
+# Provenance Chain Validation
+# ============================================
+
+liability:ProvenanceChainShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Entity ;
+    rdfs:label "Provenance Chain Validation" ;
+    rdfs:comment "Ensures entities have complete provenance chains" ;
+    # Rule: If entity has wasDerivedFrom, source entity must exist
+    sh:sparql [
+        sh:message "Derived entity references non-existent source entity" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:wasDerivedFrom ?source .
+                FILTER NOT EXISTS { ?source a prov:Entity }
+            }
+        """
+    ] ;
+    # Rule: Generated entities must link to generating activity
+    sh:sparql [
+        sh:message "Entity wasGeneratedBy references non-existent activity" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:wasGeneratedBy ?activity .
+                FILTER NOT EXISTS { ?activity a prov:Activity }
+            }
+        """
+    ] .
+
+# ============================================
+# Activity Dependencies Validation
+# ============================================
+
+liability:ActivityDependenciesShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Activity ;
+    rdfs:label "Activity Dependencies Validation" ;
+    rdfs:comment "Validates activity input/output relationships" ;
+    # Rule: Activity that uses entity must have that entity exist
+    sh:sparql [
+        sh:message "Activity uses non-existent entity" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:used ?entity .
+                FILTER NOT EXISTS { ?entity a prov:Entity }
+            }
+        """
+    ] ;
+    # Rule: Activity must be associated with existing agent
+    sh:sparql [
+        sh:message "Activity associated with non-existent agent" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:wasAssociatedWith ?agent .
+                FILTER NOT EXISTS { ?agent a prov:Agent }
+            }
+        """
+    ] .
+
+# ============================================
+# Agent Attribution Validation
+# ============================================
+
+liability:AgentAttributionShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Agent ;
+    rdfs:label "Agent Attribution Validation" ;
+    rdfs:comment "Validates agent delegation and responsibility chains" ;
+    # Rule: Delegation must reference existing agents
+    sh:sparql [
+        sh:message "Agent delegation references non-existent delegate" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:actedOnBehalfOf ?delegate .
+                FILTER NOT EXISTS { ?delegate a prov:Agent }
+            }
+        """
+    ] .
+
+# ============================================
+# Temporal Consistency Validation
+# ============================================
+
+liability:TemporalConsistencyShape
+    a sh:NodeShape ;
+    sh:targetClass prov:Entity ;
+    rdfs:label "Temporal Consistency Validation" ;
+    rdfs:comment "Validates temporal ordering in provenance chains" ;
+    # Rule: Entity generation time must be after source entity generation
+    sh:sparql [
+        sh:message "Derived entity generated before its source entity" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                $this prov:wasDerivedFrom ?source ;
+                      prov:wasGeneratedBy/prov:endedAtTime ?thisTime .
+                ?source prov:wasGeneratedBy/prov:endedAtTime ?sourceTime .
+                FILTER (?thisTime < ?sourceTime)
+            }
+        """
+    ] ;
+    # Rule: Entity usage must occur during activity execution
+    sh:sparql [
+        sh:message "Entity used outside activity execution timeframe" ;
+        sh:select """
+            PREFIX prov: <http://www.w3.org/ns/prov#>
+            SELECT $this
+            WHERE {
+                ?activity prov:used $this ;
+                          prov:startedAtTime ?actStart ;
+                          prov:endedAtTime ?actEnd .
+                $this prov:wasGeneratedBy/prov:endedAtTime ?entityGen .
+                FILTER (?entityGen > ?actEnd || ?entityGen < ?actStart)
+            }
+        """
+    ] .
+
+# ============================================
+# Liability Claims Shape
+# ============================================
+
+liability:ClaimShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Claim ;
+    rdfs:label "Liability Claim Shape" ;
+    rdfs:comment "Validates claim structure and provenance linkage" ;
+    sh:property [
+        sh:path schema:claimInterpreter ;
+        sh:name "claim_interpreter" ;
+        sh:description "Agent responsible for claim interpretation" ;
+        sh:class prov:Agent ;
+        sh:minCount 1 ;
+        sh:message "Every claim must have at least one claimInterpreter"
+    ] ;
+    sh:property [
+        sh:path schema:datePublished ;
+        sh:name "publication_date" ;
+        sh:description "Claim publication date" ;
+        sh:datatype xsd:dateTime ;
+        sh:maxCount 1 ;
+        sh:message "Claim publication date must be xsd:dateTime"
+    ] ;
+    sh:property [
+        sh:path prov:wasAttributedTo ;
+        sh:name "attribution" ;
+        sh:description "Link claim to PROV agent" ;
+        sh:class prov:Agent ;
+        sh:minCount 1 ;
+        sh:message "Claim must be attributed to at least one prov:Agent"
+    ] .

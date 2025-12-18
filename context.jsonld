@@ -1,0 +1,142 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dqv": "http://www.w3.org/ns/dqv#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "schema": "http://schema.org/",
+    "fibo-fnd": "https://spec.edmcouncil.org/fibo/ontology/FND/",
+    "legal": "http://www.w3.org/ns/legal#",
+    
+    "liability": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#liability:",
+    
+    "liability:responsible_party": {
+      "@id": "schema:accountablePerson",
+      "@type": "@id"
+    },
+    "liability:claim_status": {
+      "@id": "legal:status",
+      "@type": "xsd:string"
+    },
+    "liability:claim_id": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "liability:claim_date": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "liability:claim_type": {
+      "@id": "schema:additionalType",
+      "@type": "xsd:string"
+    },
+    "liability:coverage_area": {
+      "@id": "schema:spatialCoverage",
+      "@type": "@json"
+    },
+    "liability:affected_parties": {
+      "@id": "schema:participant",
+      "@type": "@id",
+      "@container": "@list"
+    },
+    "liability:damages_estimated": {
+      "@id": "fibo-fnd:monetaryAmount",
+      "@type": "xsd:decimal"
+    },
+    "liability:damages_currency": {
+      "@id": "fibo-fnd:currency",
+      "@type": "xsd:string"
+    },
+    "liability:legal_jurisdiction": {
+      "@id": "legal:jurisdiction",
+      "@type": "xsd:string"
+    },
+    "liability:incident_date": {
+      "@id": "schema:startDate",
+      "@type": "xsd:dateTime"
+    },
+    "liability:resolution_date": {
+      "@id": "schema:endDate",
+      "@type": "xsd:dateTime"
+    },
+    "liability:resolution_status": {
+      "@id": "legal:outcome",
+      "@type": "xsd:string"
+    },
+    "liability:insurance_provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "liability:policy_number": {
+      "@id": "schema:serialNumber",
+      "@type": "xsd:string"
+    },
+    "liability:evidence_refs": {
+      "@id": "legal:evidence",
+      "@type": "@id",
+      "@container": "@list"
+    },
+    "liability:notes": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "liability:origin": {
+      "@id": "dcat:contactPoint",
+      "@type": "xsd:string"
+    },
+    "liability:quality": {
+      "@id": "dqv:hasQualityMeasurement",
+      "@type": "@json",
+      "@context": {
+        "type": "@type",
+        "scope": "dqv:scope",
+        "conformanceResult": "dqv:conformsTo",
+        "pass": "dqv:isSuccessful",
+        "specification": "dqv:specification",
+        "explanation": "dqv:explanation",
+        "completeness": "dqv:CompletenessMetric",
+        "logicalConsistency": "dqv:ConsistencyMetric",
+        "positionalAccuracy": "dqv:AccuracyMetric",
+        "temporalAccuracy": "dqv:TemporalAccuracyMetric",
+        "thematicAccuracy": "dqv:AccuracyMetric",
+        "lineage": {
+          "@id": "prov:has_provenance",
+          "@type": "@json"
+        },
+        "statement": "prov:value",
+        "processStep": {
+          "@id": "prov:Activity",
+          "@type": "@id",
+          "@container": "@list"
+        },
+        "source": {
+          "@id": "prov:Entity",
+          "@type": "@id",
+          "@container": "@list"
+        }
+      }
+    },
+    "liability:prov": {
+      "@id": "prov:has_provenance",
+      "@type": "@json",
+      "@context": "https://www.w3.org/ns/prov-jsonld"
+    },
+    "liability:security_classification": {
+      "@id": "schema:securityLevel",
+      "@type": "xsd:string"
+    },
+    "liability:access_restrictions": {
+      "@id": "schema:accessMode",
+      "@type": "xsd:string",
+      "@container": "@list"
+    },
+    "liability:required_roles": {
+      "@id": "schema:requiredRole",
+      "@type": "xsd:string",
+      "@container": "@list"
+    }
+  }
+}

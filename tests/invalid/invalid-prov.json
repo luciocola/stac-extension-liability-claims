@@ -1,0 +1,30 @@
+{
+  "$comment": "INVALID: PROV document missing required structure",
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "invalid-prov",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-12-10T14:30:00Z",
+    "liability:claim_id": "INVALID-004",
+    "liability:prov": {
+      "invalid_key": "This is not a valid PROV structure",
+      "entity": "Should be an object, not a string"
+    }
+  },
+  "assets": {},
+  "links": []
+}

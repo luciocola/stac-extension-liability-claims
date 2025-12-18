@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/liability-claims/v1.1.0/prov-ref.json#",
+  "$comment": "External reference to W3C PROV-JSON schema. This file serves as a bridge to OGC Building Blocks ogc.ogc-utils.prov",
+  "title": "W3C PROV-JSON Schema Reference",
+  "description": "This schema references the canonical W3C PROV-JSON specification. For OGC Building Blocks compatibility, implementations should prefer ogc.ogc-utils.prov from https://ogcincubator.github.io/bblock-prov-schema/",
+  "type": "object",
+  "properties": {
+    "prefix": {
+      "type": "object",
+      "description": "Namespace prefixes for qualified names",
+      "additionalProperties": { "type": "string" }
+    },
+    "entity": {
+      "type": "object",
+      "description": "Map of entity identifiers to entity objects",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "prov:type": { "type": "string" },
+          "prov:label": { "type": "string" },
+          "prov:location": { "type": "string" },
+          "prov:value": {}
+        },
+        "additionalProperties": true
+      }
+    },
+    "activity": {
+      "type": "object",
+      "description": "Map of activity identifiers to activity objects",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "prov:startTime": { "type": "string", "format": "date-time" },
+          "prov:endTime": { "type": "string", "format": "date-time" },
+          "prov:type": { "type": "string" },
+          "prov:label": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "agent": {
+      "type": "object",
+      "description": "Map of agent identifiers to agent objects",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "prov:type": { "type": "string" },
+          "prov:label": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "wasGeneratedBy": { "type": "object", "additionalProperties": true },
+    "used": { "type": "object", "additionalProperties": true },
+    "wasInformedBy": { "type": "object", "additionalProperties": true },
+    "wasStartedBy": { "type": "object", "additionalProperties": true },
+    "wasEndedBy": { "type": "object", "additionalProperties": true },
+    "wasInvalidatedBy": { "type": "object", "additionalProperties": true },
+    "wasDerivedFrom": { "type": "object", "additionalProperties": true },
+    "wasAttributedTo": { "type": "object", "additionalProperties": true },
+    "wasAssociatedWith": { "type": "object", "additionalProperties": true },
+    "actedOnBehalfOf": { "type": "object", "additionalProperties": true },
+    "wasInfluencedBy": { "type": "object", "additionalProperties": true },
+    "specializationOf": { "type": "object", "additionalProperties": true },
+    "alternateOf": { "type": "object", "additionalProperties": true },
+    "hadMember": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": true,
+  "externalDocs": {
+    "description": "W3C PROV-JSON Specification",
+    "url": "https://www.w3.org/Submission/prov-json/"
+  },
+  "x-ogc-building-block": {
+    "reference": "ogc.ogc-utils.prov",
+    "source": "https://ogcincubator.github.io/bblock-prov-schema/build/register.json"
+  }
+}

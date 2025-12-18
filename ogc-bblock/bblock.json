@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/master/ogc/bblocks/metadata-schema.yaml",
+  "itemIdentifier": "ogc.contrib.stac.extensions.liability-claims",
+  "name": "STAC Liability and Claims Extension",
+  "highlighted": true,
+  "abstract": "STAC extension for documenting liability claims, legal proceedings, and insurance information with comprehensive ISO 19115 quality reporting and W3C PROV provenance support",
+  "status": "under-development",
+  "dateTimeAddition": "2025-12-13T00:00:00Z",
+  "itemClass": "schema",
+  "register": "ogc-incubator-building-block-register",
+  "version": "1.1.0",
+  "dateOfLastChange": "2025-12-13",
+  "link": "https://github.com/luciocola/stac-extension-liability-claims",
+  "sources": [
+    {
+      "title": "GitHub Repository",
+      "link": "https://github.com/luciocola/stac-extension-liability-claims"
+    },
+    {
+      "title": "STAC Specification",
+      "link": "https://stacspec.org/en/about/stac-spec/"
+    },
+    {
+      "title": "ISO 19115-1:2014 Geographic Information - Metadata",
+      "link": "https://www.iso.org/standard/53798.html"
+    },
+    {
+      "title": "ISO 19115-4:2021 Geographic Information - Metadata - Imagery and gridded data",
+      "link": "https://www.iso.org/standard/77867.html"
+    },
+    {
+      "title": "W3C PROV-DM: The PROV Data Model",
+      "link": "https://www.w3.org/TR/prov-dm/"
+    },
+    {
+      "title": "W3C PROV-JSON",
+      "link": "https://www.w3.org/Submission/prov-json/"
+    }
+  ],
+  "scope": "contrib",
+  "tags": [
+    "stac",
+    "stac-extension",
+    "liability",
+    "claims",
+    "insurance",
+    "legal",
+    "environmental",
+    "quality",
+    "provenance",
+    "shacl",
+    "validation",
+    "iso19115",
+    "iso19115-4",
+    "dgiwg",
+    "prov",
+    "prov-json",
+    "metadata",
+    "compliance"
+  ],
+  "shaclShapes": {},
+  "dependsOn": [
+    "ogc.contrib.stac.item",
+    "ogc.contrib.stac.collection",
+    "ogc.ogc-utils.prov"
+  ],
+  "ldContext": "https://stac-extensions.github.io/liability-claims/v1.1.0/context.jsonld",
+  "schema": {
+    "application/yaml": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.yaml",
+    "application/json": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  },
+  "sourceLdContext": "context.jsonld",
+  "sourceSchema": "schema.json",
+  "description": "This STAC extension provides comprehensive fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, insurance information, and data quality/provenance related to spatial data assets.\n\nKey features:\n- **Liability Claims Management**: Track claim status, types, jurisdictions, damages, and affected parties\n- **ISO 19115/19115-4 Quality**: Full support for completeness, accuracy, lineage, and imagery quality\n- **DGIWG Compliance**: Defence geospatial quality elements\n- **W3C PROV Provenance**: Complete PROV-JSON support for semantic web integration\n- **Legal/Insurance**: Policy numbers, providers, evidence references, resolution tracking\n- **Semantic Web**: JSON-LD context with Schema.org, FIBO, DQV, and PROV mappings",
+  "examples": [
+    {
+      "title": "Basic Environmental Liability Claim",
+      "snippets": [
+        {
+          "language": "json",
+          "ref": "examples/item-basic.json",
+          "code": "See examples/item-basic.json"
+        }
+      ]
+    },
+    {
+      "title": "Item with W3C PROV Provenance",
+      "snippets": [
+        {
+          "language": "json",
+          "ref": "examples/item-with-prov.json",
+          "code": "See examples/item-with-prov.json"
+        }
+      ]
+    },
+    {
+      "title": "Item with ISO 19115 Quality Assessment",
+      "snippets": [
+        {
+          "language": "json",
+          "ref": "examples/item-with-quality.json",
+          "code": "See examples/item-with-quality.json"
+        }
+      ]
+    }
+  ],
+  "shaclRules": {
+    "ogc.contrib.stac.extensions.liability-claims": [
+      "shacl/liability-claims-shapes.ttl"
+    ]
+  },
+  "validationPassed": true,
+  "testOutputs": "https://github.com/luciocola/stac-extension-liability-claims/tree/main/tests"
+}

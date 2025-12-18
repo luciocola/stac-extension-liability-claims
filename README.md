@@ -7,6 +7,8 @@
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @luciocola Https://secure-dimensions.de
 - **Version**: 1.1.0
+- **JSON-LD Context:** [context.jsonld](./context.jsonld)
+- **OGC Compliance:** Aligned with OGC Building Blocks standards (see [OGC-COMPLIANCE-ACTIONS.md](./OGC-COMPLIANCE-ACTIONS.md))
 
 This extension provides fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, and insurance information related to spatial data assets.
 
@@ -639,6 +641,88 @@ If the tests reveal formatting problems with the examples, you can fix them with
 ```bash
 npm run format-examples
 ```
+
+## OGC Building Blocks Compliance
+
+This extension is aligned with [OGC Building Blocks](https://opengeospatial.github.io/bblocks/) standards for enhanced interoperability:
+
+### Semantic Web Support
+
+- **JSON-LD Context**: [`context.jsonld`](./context.jsonld) enables RDF uplift and SPARQL queries
+- **Ontology Mappings**: Fields map to Schema.org, W3C Legal, FIBO, DQV, and PROV ontologies
+- **Linked Data**: Compatible with semantic web tools and knowledge graphs
+
+### Dependencies
+
+This extension builds on:
+- `ogc.contrib.stac.item` - Base STAC Item schema
+- `ogc.contrib.stac.collection` - Base STAC Collection schema  
+- `ogc.ogc-utils.prov` - W3C PROV provenance schema (via [`json-schema/prov-ref.json`](./json-schema/prov-ref.json))
+
+### Validation
+
+This extension includes comprehensive validation capabilities:
+
+#### JSON Schema Validation
+
+Automated JSON Schema validation tests are available in the [`tests/`](./tests/) directory:
+
+```bash
+# Install JSON Schema validator
+npm install -g ajv-cli
+
+# Validate examples
+ajv validate -s json-schema/schema.json -d "tests/valid/*.json"
+
+# Test invalid examples
+! ajv validate -s json-schema/schema.json -d "tests/invalid/*.json"
+```
+
+#### SHACL Semantic Validation
+
+**NEW in v1.1.0:** The extension includes SHACL (Shapes Constraint Language) validation rules for semantic validation of provenance graphs:
+
+```bash
+# Install pyshacl
+pip install pyshacl rdflib
+
+# Convert JSON-LD example to Turtle
+riot --syntax=jsonld --output=turtle examples/item-with-prov.json > item.ttl
+
+# Run SHACL validation
+pyshacl -s shacl/liability-claims-shapes.ttl -df turtle -sf turtle item.ttl
+```
+
+**SHACL validation rules include:**
+- **Core extension properties** validation (liability_framework, jurisdiction, etc.)
+- **PROV provenance graphs** validation (entities, activities, agents)
+- **Temporal consistency** checks (activity start/end times, derivation ordering)
+- **Graph completeness** checks (referenced entities/agents exist)
+- **Quality metadata** validation (ISO 19115 quality measurements)
+
+See [`shacl/README.md`](./shacl/README.md) for detailed documentation on SHACL validation rules and usage.
+
+#### CI/CD Validation
+
+Automated validation runs on every push and pull request via GitHub Actions:
+- JSON Schema validation across Python 3.9-3.12
+- SHACL semantic validation
+- OGC Building Blocks compliance checks
+- Security scanning
+- Documentation validation
+
+See [`.github/workflows/validate.yml`](.github/workflows/validate.yml) for the complete CI/CD pipeline.
+
+See [OGC-COMPLIANCE-ACTIONS.md](./OGC-COMPLIANCE-ACTIONS.md) for detailed compliance documentation.
+
+## References
+
+- [STAC Specification](https://stacspec.org/)
+- [ISO 19115 Geographic Information - Metadata](https://www.iso.org/standard/53798.html)
+- [W3C PROV-DM](https://www.w3.org/TR/prov-dm/)
+- [W3C PROV-JSON](https://www.w3.org/Submission/prov-json/)
+- [OGC Building Blocks](https://opengeospatial.github.io/bblocks/)
+- [NASA UMM](https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/common-metadata-repository/unified-metadata-model)
 
 ## License
 

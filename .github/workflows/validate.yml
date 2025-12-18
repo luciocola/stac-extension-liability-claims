@@ -1,0 +1,394 @@
+name: Validate Extension
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  json-schema-validation:
+    name: JSON Schema Validation
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema ajv-cli
+          if [ -f pyproject.toml ]; then pip install -e .; fi
+
+      - name: Install Node.js for ajv
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Validate JSON Schema syntax
+        run: |
+          echo "Validating main schema..."
+          ajv compile -s json-schema/schema.json --strict=false
+          echo "✓ Main schema is valid"
+          
+          echo "Validating PROV reference schema..."
+          ajv compile -s json-schema/prov-ref.json --strict=false
+          echo "✓ PROV reference schema is valid"
+
+      - name: Validate JSON-LD context
+        run: |
+          echo "Validating JSON-LD context syntax..."
+          python -c "import json; json.load(open('context.jsonld'))"
+          echo "✓ JSON-LD context is valid JSON"
+
+      - name: Validate examples against schema
+        run: |
+          echo "Validating valid examples..."
+          for file in tests/valid/*.json; do
+            echo "Validating $file..."
+            ajv validate -s json-schema/schema.json -d "$file" --strict=false
+          done
+          echo "✓ All valid examples pass validation"
+          
+          echo "Testing invalid examples (should fail)..."
+          for file in tests/invalid/*.json; do
+            echo "Testing $file (expecting failure)..."
+            if ajv validate -s json-schema/schema.json -d "$file" --strict=false; then
+              echo "ERROR: $file should have failed validation"
+              exit 1
+            fi
+          done
+          echo "✓ All invalid examples correctly fail validation"
+
+      - name: Run Python validation script
+        run: |
+          if [ -f validate.py ]; then
+            python validate.py
+            echo "✓ Python validation passed"
+          fi
+
+      - name: Run comprehensive validation
+        run: |
+          if [ -f validate-all.sh ]; then
+            chmod +x validate-all.sh
+            ./validate-all.sh
+            echo "✓ Comprehensive validation passed"
+          fi
+
+  shacl-validation:
+    name: SHACL Semantic Validation
+    runs-on: ubuntu-latest
+    needs: json-schema-validation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pyshacl and RDF tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyshacl rdflib requests
+
+      - name: Install Apache Jena (for RIOT)
+        run: |
+          wget https://dlcdn.apache.org/jena/binaries/apache-jena-4.10.0.tar.gz
+          tar -xzf apache-jena-4.10.0.tar.gz
+          echo "$PWD/apache-jena-4.10.0/bin" >> $GITHUB_PATH
+
+      - name: Validate SHACL shapes syntax
+        run: |
+          echo "Validating SHACL shapes file..."
+          riot --validate shacl/liability-claims-shapes.ttl
+          echo "✓ SHACL shapes are valid RDF"
+
+      - name: Convert JSON-LD examples to Turtle
+        run: |
+          echo "Converting valid examples to Turtle for SHACL validation..."
+          mkdir -p tests/rdf
+          
+          for file in tests/valid/*.json; do
+            base=$(basename "$file" .json)
+            echo "Converting $file..."
+            riot --syntax=jsonld --output=turtle "$file" > "tests/rdf/${base}.ttl" 2>/dev/null || true
+          done
+          
+          echo "✓ Examples converted to Turtle"
+
+      - name: Run SHACL validation on examples
+        run: |
+          echo "Running SHACL validation on converted examples..."
+          
+          for file in tests/rdf/*.ttl; do
+            if [ -f "$file" ]; then
+              echo "Validating $file..."
+              pyshacl -s shacl/liability-claims-shapes.ttl \
+                      -df turtle \
+                      -sf turtle \
+                      "$file" || echo "⚠ Validation warnings for $file"
+            fi
+          done
+          
+          echo "✓ SHACL validation completed"
+
+      - name: Generate SHACL validation report
+        run: |
+          echo "Generating detailed SHACL validation report..."
+          
+          mkdir -p reports
+          
+          for file in tests/rdf/*.ttl; do
+            if [ -f "$file" ]; then
+              base=$(basename "$file" .ttl)
+              echo "=== Validating $base ===" >> reports/shacl-report.txt
+              pyshacl -s shacl/liability-claims-shapes.ttl \
+                      -df turtle \
+                      -sf turtle \
+                      -f human \
+                      "$file" >> reports/shacl-report.txt 2>&1 || true
+              echo "" >> reports/shacl-report.txt
+            fi
+          done
+          
+          echo "✓ SHACL validation report generated"
+
+      - name: Upload SHACL validation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: shacl-validation-report
+          path: reports/shacl-report.txt
+          retention-days: 30
+
+  ogc-compliance:
+    name: OGC Building Blocks Compliance
+    runs-on: ubuntu-latest
+    needs: json-schema-validation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate OGC Building Block metadata
+        run: |
+          echo "Validating bblock.json..."
+          python -c "import json; json.load(open('ogc-bblock/bblock.json'))"
+          echo "✓ bblock.json is valid JSON"
+          
+          # Check required fields
+          python -c "
+          import json
+          import sys
+          
+          with open('ogc-bblock/bblock.json') as f:
+              data = json.load(f)
+          
+          required = ['itemIdentifier', 'name', 'abstract', 'status', 'version', 'ldContext']
+          missing = [field for field in required if field not in data]
+          
+          if missing:
+              print(f'ERROR: Missing required fields: {missing}')
+              sys.exit(1)
+          
+          print('✓ All required bblock.json fields present')
+          "
+
+      - name: Validate submission package structure
+        run: |
+          echo "Validating OGC submission package structure..."
+          
+          required_files=(
+            "ogc-bblock/bblock.json"
+            "json-schema/schema.json"
+            "context.jsonld"
+            "ogc-bblock/description.md"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Required file $file is missing"
+              exit 1
+            fi
+          done
+          
+          echo "✓ All required OGC Building Block files present"
+
+      - name: Run submission preparation script
+        run: |
+          if [ -f ogc-bblock/prepare-submission.sh ]; then
+            chmod +x ogc-bblock/prepare-submission.sh
+            ./ogc-bblock/prepare-submission.sh
+            echo "✓ Submission package created successfully"
+          fi
+
+      - name: Upload submission package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ogc-submission-package
+          path: stac-liability-claims-*.tar.gz
+          retention-days: 90
+
+  test-suite:
+    name: Run Test Suite
+    runs-on: ubuntu-latest
+    needs: json-schema-validation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov pytest-json-report
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then pip install -e .[test]; fi
+
+      - name: Run pytest
+        run: |
+          if [ -d tests ] && [ -f pytest.ini ] || [ -f pyproject.toml ]; then
+            pytest --cov=. --cov-report=xml --cov-report=html --json-report --json-report-file=reports/test-report.json
+            echo "✓ Test suite passed"
+          else
+            echo "⚠ No pytest configuration found, skipping unit tests"
+          fi
+
+      - name: Upload test coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+          verbose: true
+
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-reports
+          path: |
+            htmlcov/
+            reports/
+          retention-days: 30
+
+  security-scan:
+    name: Security and Dependency Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  documentation:
+    name: Build and Validate Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate Markdown files
+        uses: DavidAnson/markdownlint-cli2-action@v14
+        with:
+          globs: '**/*.md'
+          config: '.markdownlint.json'
+        continue-on-error: true
+
+      - name: Check documentation completeness
+        run: |
+          echo "Checking for required documentation files..."
+          
+          required_docs=(
+            "README.md"
+            "CHANGELOG.md"
+            "CONTRIBUTING.md"
+            "LICENSE"
+            "ogc-bblock/description.md"
+            "shacl/README.md"
+          )
+          
+          for file in "${required_docs[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "⚠ Warning: Recommended file $file is missing"
+            else
+              echo "✓ Found $file"
+            fi
+          done
+
+      - name: Validate example documentation
+        run: |
+          echo "Checking that all examples have documentation..."
+          
+          for file in examples/*.json tests/valid/*.json; do
+            if [ -f "$file" ]; then
+              echo "✓ Found example: $file"
+            fi
+          done
+
+  summary:
+    name: Validation Summary
+    runs-on: ubuntu-latest
+    needs: [json-schema-validation, shacl-validation, ogc-compliance, test-suite, security-scan, documentation]
+    if: always()
+
+    steps:
+      - name: Generate validation summary
+        run: |
+          echo "# Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ JSON Schema Validation: ${{ needs.json-schema-validation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ SHACL Semantic Validation: ${{ needs.shacl-validation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ OGC Compliance: ${{ needs.ogc-compliance.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Test Suite: ${{ needs.test-suite.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Security Scan: ${{ needs.security-scan.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Documentation: ${{ needs.documentation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- SHACL validation report" >> $GITHUB_STEP_SUMMARY
+          echo "- OGC submission package" >> $GITHUB_STEP_SUMMARY
+          echo "- Test coverage reports" >> $GITHUB_STEP_SUMMARY

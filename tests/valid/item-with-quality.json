@@ -1,0 +1,171 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "item-with-iso19115-quality",
+  "bbox": [-180, -90, 180, 90],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-180, -90],
+      [180, -90],
+      [180, 90],
+      [-180, 90],
+      [-180, -90]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-12-11T00:00:00Z",
+    "title": "Global Land Cover with Quality Assessment",
+    "description": "Land cover classification with comprehensive ISO 19115 quality reporting",
+    "liability:claim_id": "QA-2025-LANDCOVER",
+    "liability:claim_type": "operational",
+    "liability:origin": "Global Earth Observation Agency",
+    "liability:quality": {
+      "reportId": "QA-2025-LC-001",
+      "scope": "dataset",
+      "date": "2025-12-11T00:00:00Z",
+      "version": "1.0",
+      "elements": [
+        {
+          "elementType": "completeness",
+          "summary": "Dataset covers 98.5% of land surface, excluding Antarctica",
+          "detail": {
+            "type": "completeness",
+            "commission": 0.5,
+            "omission": 1.5,
+            "assessmentMethod": "Visual inspection and automated gap analysis"
+          }
+        },
+        {
+          "elementType": "positionalAccuracy",
+          "summary": "Positional accuracy within 10 meters (CE90)",
+          "detail": {
+            "type": "positionalAccuracy",
+            "absoluteExternalPositionalAccuracy": 10.0,
+            "units": "meters",
+            "datum": "WGS84",
+            "assessmentMethod": "Ground control points comparison"
+          }
+        },
+        {
+          "elementType": "thematicAccuracy",
+          "summary": "Overall classification accuracy: 87.3%",
+          "detail": {
+            "type": "thematicAccuracy",
+            "overallAccuracy": 87.3,
+            "numberOfClasses": 12,
+            "confusionMatrix": "See external documentation",
+            "assessmentMethod": "Stratified random sampling with validation dataset (n=10000)"
+          }
+        },
+        {
+          "elementType": "lineage",
+          "summary": "Multi-stage satellite imagery processing pipeline",
+          "detail": {
+            "type": "lineage",
+            "statement": "Land cover classification derived from Sentinel-2 Level-1C imagery through atmospheric correction, geometric correction, and supervised classification",
+            "processStep": [
+              {
+                "description": "Atmospheric correction using Sen2Cor",
+                "rationale": "Remove atmospheric effects for surface reflectance",
+                "dateTime": "2025-11-15T00:00:00Z",
+                "processor": {
+                  "organisationName": "ESA Processing Center",
+                  "contactInfo": "processing@esa.int"
+                },
+                "processingInformation": {
+                  "softwareReference": [
+                    {
+                      "title": "Sen2Cor",
+                      "version": "2.11",
+                      "identifier": "https://step.esa.int/main/snap-supported-plugins/sen2cor/"
+                    }
+                  ],
+                  "procedureDescription": "Atmospheric correction to Level-2A Bottom-Of-Atmosphere reflectance"
+                }
+              },
+              {
+                "description": "Supervised classification using Random Forest",
+                "rationale": "Generate land cover classes from corrected imagery",
+                "dateTime": "2025-11-20T00:00:00Z",
+                "processor": {
+                  "organisationName": "Classification Team",
+                  "contactInfo": "classify@example.org"
+                },
+                "processingInformation": {
+                  "softwareReference": [
+                    {
+                      "title": "scikit-learn RandomForestClassifier",
+                      "version": "1.3.2"
+                    }
+                  ],
+                  "algorithm": [
+                    {
+                      "title": "Random Forest Classification",
+                      "description": "Ensemble learning method with 500 decision trees",
+                      "citation": {
+                        "title": "Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5-32."
+                      }
+                    }
+                  ],
+                  "runTimeParameters": "n_estimators=500, max_depth=20, min_samples_split=10"
+                }
+              }
+            ],
+            "source": [
+              {
+                "description": "Sentinel-2 Level-1C Multi-Spectral Instrument (MSI) imagery",
+                "sourceCitation": {
+                  "title": "Sentinel-2 MSI Level-1C",
+                  "date": "2025-06-01T00:00:00Z",
+                  "identifier": "S2B_MSIL1C_20250601",
+                  "url": "https://scihub.copernicus.eu/"
+                },
+                "sourceReferenceSystem": {
+                  "code": "32633",
+                  "codeSpace": "EPSG"
+                },
+                "sourceExtent": {
+                  "temporalElement": {
+                    "extent": ["2025-01-01T00:00:00Z", "2025-12-31T23:59:59Z"]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "assets": {
+    "landcover_map": {
+      "href": "./assets/global_landcover_2025.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Global Land Cover Classification 2025",
+      "roles": ["data"],
+      "liability:quality": {
+        "reportId": "ASSET-QA-001",
+        "scope": "asset",
+        "elements": [
+          {
+            "elementType": "processingLevel",
+            "detail": {
+              "type": "processingLevel",
+              "level": "L3",
+              "description": "Analysis-ready thematic product"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-iso19115-quality.json"
+    }
+  ]
+}

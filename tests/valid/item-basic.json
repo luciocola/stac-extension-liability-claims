@@ -1,0 +1,78 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "liability-claim-basic-001",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-12-10T14:30:00Z",
+    "title": "Environmental Claim - Oil Spill Incident",
+    "description": "Documentation of oil spill incident and environmental liability claim",
+    "liability:claim_id": "ENV-2025-001",
+    "liability:claim_type": "environmental",
+    "liability:claim_status": "under_investigation",
+    "liability:claim_date": "2025-12-10T14:30:00Z",
+    "liability:incident_date": "2025-12-08T09:15:00Z",
+    "liability:responsible_party": "Maritime Transport Company XYZ",
+    "liability:affected_parties": [
+      {
+        "name": "Local Fishing Cooperative",
+        "role": "claimant",
+        "contact": "fishcoop@example.org"
+      },
+      {
+        "name": "State Environmental Agency",
+        "role": "regulator",
+        "contact": "env.agency@state.gov"
+      }
+    ],
+    "liability:damages_estimated": 2500000.00,
+    "liability:damages_currency": "USD",
+    "liability:legal_jurisdiction": "California State Court",
+    "liability:insurance_provider": "Maritime Insurance Group",
+    "liability:policy_number": "MIG-2025-78945",
+    "liability:notes": "Preliminary assessment indicates moderate environmental impact. Full investigation pending.",
+    "liability:origin": "State Environmental Protection Agency"
+  },
+  "assets": {
+    "incident_report": {
+      "href": "./assets/incident_report_ENV-2025-001.pdf",
+      "type": "application/pdf",
+      "title": "Official Incident Report",
+      "roles": ["data"],
+      "liability:security_classification": "internal",
+      "liability:access_restrictions": ["regulatory_review_only"]
+    },
+    "satellite_imagery": {
+      "href": "./assets/oil_spill_20251208.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Satellite Imagery of Spill Area",
+      "roles": ["data"],
+      "liability:security_classification": "public"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./liability-claim-basic-001.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "type": "Collection",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "environmental-claims-2025",
+  "title": "Environmental Liability Claims 2025",
+  "description": "Collection of environmental liability claims and incidents for the year 2025",
+  "keywords": ["liability", "environmental", "claims", "insurance"],
+  "license": "proprietary",
+  "providers": [
+    {
+      "name": "Environmental Protection Agency",
+      "roles": ["licensor", "producer"],
+      "url": "https://www.epa.example.gov"
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2025-01-01T00:00:00Z", "2025-12-31T23:59:59Z"]]
+    }
+  },
+  "summaries": {
+    "liability:claim_type": ["environmental", "property_damage", "operational"],
+    "liability:claim_status": ["pending", "under_investigation", "settled"],
+    "liability:legal_jurisdiction": ["Federal Court", "State Courts"],
+    "datetime": {
+      "minimum": "2025-01-01T00:00:00Z",
+      "maximum": "2025-12-31T23:59:59Z"
+    }
+  },
+  "liability:origin": "Environmental Protection Agency - Claims Division",
+  "liability:notes": "This collection contains all environmental liability claims filed in 2025, including oil spills, hazardous waste incidents, and air quality violations.",
+  "links": [
+    {
+      "rel": "self",
+      "href": "./collection-basic.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "./collection-basic.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./item-basic.json",
+      "type": "application/json",
+      "title": "Example Claim Item"
+    },
+    {
+      "rel": "license",
+      "href": "https://www.epa.example.gov/data-license",
+      "type": "text/html",
+      "title": "Data License"
+    }
+  ]
+}

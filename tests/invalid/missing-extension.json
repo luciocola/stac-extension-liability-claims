@@ -1,0 +1,24 @@
+{
+  "$comment": "INVALID: Missing stac_extensions declaration",
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "invalid-missing-extension",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-12-10T14:30:00Z",
+    "liability:claim_id": "INVALID-001",
+    "liability:claim_type": "environmental"
+  },
+  "assets": {},
+  "links": []
+}
