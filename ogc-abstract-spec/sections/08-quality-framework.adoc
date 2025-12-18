@@ -1,0 +1,142 @@
+== Quality Assessment Framework
+
+=== Overview
+
+This clause defines requirements for integrating data quality assessment with liability frameworks. Quality assessment provides the technical evidence basis for evaluating liability claims and determining fitness-for-purpose.
+
+=== Requirements Class: Quality Assessment
+
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class*
+2+|http://www.opengis.net/spec/liability-claims/1.1/req/quality
+|Target type |Implementation specification
+|Dependency |<<iso19157>>
+|Dependency |<<dqv>>
+|Dependency |http://www.opengis.net/spec/liability-claims/1.1/req/core
+|===
+
+==== Requirement 9: Quality Measurement Documentation
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/quality/measurements"]
+====
+[%metadata]
+label:: /req/quality/measurements
+subject:: Quality assessment
+part:: Quality assessments SHALL document individual measurements using the QualityMeasurement class.
+part:: Each measurement SHALL identify the quality element, measure, and evaluation method.
+part:: Measurements SHOULD reference standardized quality measures from ISO 19157 where applicable.
+====
+
+==== Requirement 10: Conformance Testing
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/quality/conformance"]
+====
+[%metadata]
+label:: /req/quality/conformance
+subject:: Quality assessment
+part:: Implementations MAY document conformance to specifications using the ConformanceResult class.
+part:: Conformance results SHALL indicate pass/fail status and reference the tested specification.
+====
+
+==== Requirement 11: Assessor Attribution
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/quality/assessor"]
+====
+[%metadata]
+label:: /req/quality/assessor
+subject:: Quality assessment
+part:: Quality assessments SHALL identify the assessor (person or organization conducting the assessment).
+part:: Assessor information SHALL include contact details as specified in ISO 19115-1.
+====
+
+=== Integration with ISO 19157
+
+This specification builds upon ISO 19157:2013 Geographic Information - Data Quality. Implementations SHALL:
+
+* Use ISO 19157 quality elements where applicable (completeness, logical consistency, positional accuracy, temporal quality, thematic accuracy, usability)
+* Reference ISO 19157 quality measures using standardized identifiers
+* Document evaluation methods consistent with ISO 19157 guidance
+
+=== Integration with W3C DQV
+
+Implementations MAY express quality measurements using W3C Data Quality Vocabulary (DQV). When using DQV:
+
+* Quality measurements map to `dqv:QualityMeasurement` class
+* Quality metrics map to `dqv:Metric` class
+* Quality dimensions from ISO 19157 map to `dqv:Dimension` class
+
+=== Quality Dimensions
+
+The following quality dimensions from ISO 19157 are particularly relevant for liability assessment:
+
+[cols="1,3",width="90%",options="header"]
+|===
+|Dimension |Relevance to Liability
+
+|Positional Accuracy
+|Critical for land parcel boundaries, infrastructure planning, emergency response
+
+|Thematic Accuracy
+|Essential for classification-based decisions (land use, environmental conditions)
+
+|Temporal Quality
+|Important for time-sensitive applications (disaster response, surveillance)
+
+|Completeness
+|Affects fitness-for-purpose; missing data can lead to incorrect decisions
+
+|Logical Consistency
+|Data integrity issues can propagate errors through analysis workflows
+
+|Usability
+|Metadata quality and documentation affect appropriate use
+|===
+
+=== Quality Reporting Requirements
+
+Conforming implementations SHALL report quality in a manner that enables liability assessment:
+
+1. *Comprehensiveness*: Cover all relevant quality dimensions for the intended use
+2. *Objectivity*: Use reproducible evaluation methods
+3. *Transparency*: Document evaluation methods and limitations
+4. *Comparability*: Use standardized measures enabling comparison
+5. *Timeliness*: Conduct assessments at appropriate intervals
+
+=== Example Quality Documentation
+
+The following example shows quality documentation for positional accuracy:
+
+[source,json]
+----
+{
+  "quality": {
+    "scope": "dataset",
+    "assessment_date": "2025-12-01T10:00:00Z",
+    "assessor": {
+      "name": "Quality Control Department",
+      "organization": "Survey Company XYZ"
+    },
+    "measurements": [
+      {
+        "measure_id": "ISO19157:CE90",
+        "measure_name": "Circular Error 90%",
+        "measure_description": "90% of points within this radius",
+        "result_value": 2.5,
+        "result_unit": "meters",
+        "evaluation_method": "Comparison with control points",
+        "evaluation_date": "2025-11-28T14:00:00Z",
+        "conformance_level": true
+      }
+    ],
+    "conformance_results": [
+      {
+        "specification": "Project Requirements v2.3",
+        "explanation": "Positional accuracy meets required threshold of 5m CE90",
+        "pass": true,
+        "test_date": "2025-12-01T09:00:00Z"
+      }
+    ]
+  }
+}
+----

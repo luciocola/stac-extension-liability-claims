@@ -1,0 +1,199 @@
+[appendix,obligation="normative"]
+== Annex C: Abstract Test Suite
+
+=== Conformance Class: Core
+
+==== Test /conf/core/framework
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/core/framework
+|Requirement |/req/core/framework
+|Test purpose |Verify that liability metadata declares the applicable legal framework
+|Test method |Inspect the liability metadata. Verify that `liability_framework` property exists and contains a non-empty string identifying the legal or regulatory framework.
+|===
+
+==== Test /conf/core/jurisdiction
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/core/jurisdiction
+|Requirement |/req/core/jurisdiction
+|Test purpose |Verify that jurisdiction is properly specified
+|Test method |Inspect the liability metadata. Verify that `jurisdiction` property exists and contains a valid ISO 3166-1 alpha-2 code or recognized jurisdiction identifier.
+|===
+
+==== Test /conf/core/responsible-party
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/core/responsible-party
+|Requirement |/req/core/responsible-party
+|Test purpose |Verify that at least one responsible party is identified
+|Test method |Inspect the liability metadata. Verify that `responsible_party` property exists and includes name and contact information conforming to ISO 19115-1.
+|===
+
+==== Test /conf/core/terms
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/core/terms
+|Requirement |/req/core/terms
+|Test purpose |Verify that terms and conditions URI is provided
+|Test method |Inspect the liability metadata. Verify that `liability_terms` property exists and contains a valid URI that resolves to a document.
+|===
+
+=== Conformance Class: Claims Management
+
+==== Test /conf/claims/unique-id
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/claims/unique-id
+|Requirement |/req/claims/unique-id
+|Test purpose |Verify that claims have unique identifiers
+|Test method |Inspect all claims in the system. Verify that each claim has a `claim_id` property and that all identifiers are unique.
+|===
+
+==== Test /conf/claims/status
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/claims/status
+|Requirement |/req/claims/status
+|Test purpose |Verify that claim status uses valid enumeration values
+|Test method |Inspect all claims. Verify that `claim_status` values match the ClaimStatus enumeration or documented extensions.
+|===
+
+==== Test /conf/claims/temporal
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/claims/temporal
+|Requirement |/req/claims/temporal
+|Test purpose |Verify that temporal information is properly formatted
+|Test method |Inspect all claims. Verify that `claim_date` exists and is in ISO 8601 format with UTC timezone.
+|===
+
+==== Test /conf/claims/affected-parties
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/claims/affected-parties
+|Requirement |/req/claims/affected-parties
+|Test purpose |Verify that affected parties are documented
+|Test method |Inspect all claims. Verify that at least one affected party is documented using the AffectedParty class.
+|===
+
+=== Conformance Class: Quality Assessment
+
+==== Test /conf/quality/measurements
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/quality/measurements
+|Requirement |/req/quality/measurements
+|Test purpose |Verify quality measurements are properly documented
+|Test method |Inspect quality assessments. Verify that measurements use QualityMeasurement class and include measure identification, evaluation method, and results.
+|===
+
+==== Test /conf/quality/conformance
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/quality/conformance
+|Requirement |/req/quality/conformance
+|Test purpose |Verify conformance results are properly formatted
+|Test method |Inspect conformance results. Verify that ConformanceResult class includes specification reference, pass/fail status, and explanation.
+|===
+
+==== Test /conf/quality/assessor
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/quality/assessor
+|Requirement |/req/quality/assessor
+|Test purpose |Verify that assessor is identified
+|Test method |Inspect quality assessments. Verify that assessor information is provided with contact details.
+|===
+
+=== Conformance Class: Provenance
+
+==== Test /conf/provenance/prov-o
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/provenance/prov-o
+|Requirement |/req/provenance/prov-o
+|Test purpose |Verify W3C PROV-O compliance
+|Test method |Parse provenance graph. Verify that it conforms to W3C PROV-O specification including proper use of prov:Entity, prov:Activity, and prov:Agent classes.
+|===
+
+==== Test /conf/provenance/attribution
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/provenance/attribution
+|Requirement |/req/provenance/attribution
+|Test purpose |Verify that attribution relationships exist
+|Test method |Inspect provenance graph. Verify that data products are linked to agents using `prov:wasAttributedTo`.
+|===
+
+==== Test /conf/provenance/derivation
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/provenance/derivation
+|Requirement |/req/provenance/derivation
+|Test purpose |Verify that derivation chains are documented
+|Test method |Inspect derived products. Verify that source materials are documented using `prov:wasDerivedFrom` and chains trace to original sources.
+|===
+
+==== Test /conf/provenance/activities
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/provenance/activities
+|Requirement |/req/provenance/activities
+|Test purpose |Verify that activities are properly documented
+|Test method |Inspect activities in provenance graph. Verify that they include temporal information, associated agents, and used entities.
+|===
+
+=== Conformance Class: Legal Frameworks
+
+==== Test /conf/legal/framework-id
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/legal/framework-id
+|Requirement |/req/legal/framework-id
+|Test purpose |Verify legal framework identification
+|Test method |Inspect legal references. Verify that LegalReference class includes title, authority, and effective date where available.
+|===
+
+==== Test /conf/legal/jurisdiction
+
+[cols="1,4",width="90%"]
+|===
+2+|*Test*
+2+|http://www.opengis.net/spec/liability-claims/1.1/conf/legal/jurisdiction
+|Requirement |/req/legal/jurisdiction
+|Test purpose |Verify jurisdiction specification format
+|Test method |Inspect jurisdiction codes. Verify that they use ISO 3166-1 alpha-2 format for countries, with appropriate extensions for sub-national jurisdictions.
+|===

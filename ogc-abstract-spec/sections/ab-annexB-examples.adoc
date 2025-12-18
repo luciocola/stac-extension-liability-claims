@@ -1,0 +1,241 @@
+[appendix,obligation="informative"]
+== Annex B: Implementation Examples
+
+=== Example 1: JSON Schema Implementation (STAC)
+
+This example shows a complete STAC Item with liability and claims metadata:
+
+[source,json]
+----
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "lidar-survey-2025",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-11-15T09:00:00Z",
+    
+    "liability:liability_framework": "ISO 19157 + Professional Surveyor Standards",
+    "liability:jurisdiction": "US",
+    "liability:liability_terms": "https://example.org/terms/survey-services",
+    "liability:responsible_party": {
+      "name": "Survey Company XYZ",
+      "organization": "XYZ Aerial Surveys Inc.",
+      "email": "info@xyz-surveys.example",
+      "role": "data_provider"
+    },
+    "liability:origin": "XYZ Aerial Surveys Inc.",
+    "liability:limitation_of_liability": "Liability limited to survey contract value. Not liable for third-party uses beyond stated purpose.",
+    
+    "liability:insurance_provider": "Professional Liability Insurance Corp",
+    "liability:policy_number": "PLIC-2025-789456",
+    
+    "liability:quality": {
+      "scope": "dataset",
+      "assessment_date": "2025-11-18T14:00:00Z",
+      "assessor": {
+        "name": "Jane Smith, PLS",
+        "organization": "XYZ Quality Control"
+      },
+      "measurements": [
+        {
+          "measure_id": "ISO19157:CE90",
+          "measure_name": "Circular Error 90%",
+          "result_value": 0.15,
+          "result_unit": "meters",
+          "evaluation_method": "Comparison with ground control points",
+          "conformance_level": true
+        }
+      ]
+    }
+  },
+  "assets": {
+    "point_cloud": {
+      "href": "./data/pointcloud.las",
+      "type": "application/vnd.las",
+      "title": "LiDAR Point Cloud"
+    }
+  }
+}
+----
+
+=== Example 2: RDF/Turtle Implementation
+
+This example shows the same information in RDF/Turtle format:
+
+[source,turtle]
+----
+@prefix liability: <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<http://example.org/dataset/lidar-survey-2025>
+    a dcat:Dataset, prov:Entity ;
+    dcterms:title "LiDAR Survey 2025" ;
+    dcterms:created "2025-11-15T09:00:00Z"^^xsd:dateTime ;
+    
+    liability:liability_framework "ISO 19157 + Professional Surveyor Standards" ;
+    liability:jurisdiction "US" ;
+    liability:liability_terms <https://example.org/terms/survey-services> ;
+    
+    prov:wasAttributedTo <http://example.org/org/xyz-surveys> ;
+    prov:wasGeneratedBy <http://example.org/activity/aerial-survey-2025-11> .
+
+<http://example.org/org/xyz-surveys>
+    a prov:Organization ;
+    foaf:name "XYZ Aerial Surveys Inc." ;
+    liability:insurance_provider "Professional Liability Insurance Corp" ;
+    liability:policy_number "PLIC-2025-789456" .
+----
+
+=== Example 3: XML Schema Implementation (ISO 19115-2)
+
+This example shows integration with ISO 19115 metadata:
+
+[source,xml]
+----
+<gmd:MD_Metadata>
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope>
+        <gmd:DQ_Scope>
+          <gmd:level>
+            <gmd:MD_ScopeCode codeList="..." codeListValue="dataset"/>
+          </gmd:level>
+        </gmd:DQ_Scope>
+      </gmd:scope>
+      
+      <gmd:report>
+        <gmd:DQ_AbsoluteExternalPositionalAccuracy>
+          <gmd:result>
+            <gmd:DQ_QuantitativeResult>
+              <gmd:valueUnit>
+                <gml:BaseUnit gml:id="meters">
+                  <gml:identifier codeSpace="SI">meters</gml:identifier>
+                </gml:BaseUnit>
+              </gmd:valueUnit>
+              <gmd:value>
+                <gco:Record>0.15</gco:Record>
+              </gmd:value>
+            </gmd:DQ_QuantitativeResult>
+          </gmd:result>
+        </gmd:DQ_AbsoluteExternalPositionalAccuracy>
+      </gmd:report>
+      
+      <gmd:lineage>
+        <gmd:LI_Lineage>
+          <gmd:statement>
+            <gco:CharacterString>LiDAR collected by XYZ Aerial Surveys under professional surveyor standards</gco:CharacterString>
+          </gmd:statement>
+          <gmd:source>
+            <!-- Extended with liability information -->
+            <ext:LI_Source_Liability>
+              <ext:liabilityFramework>
+                <gco:CharacterString>ISO 19157 + Professional Surveyor Standards</gco:CharacterString>
+              </ext:liabilityFramework>
+              <ext:jurisdiction>
+                <gco:CharacterString>US</gco:CharacterString>
+              </ext:jurisdiction>
+            </ext:LI_Source_Liability>
+          </gmd:source>
+        </gmd:LI_Lineage>
+      </gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>
+----
+
+=== Example 4: Complete Claims Documentation
+
+This example shows a complete claim with all required elements:
+
+[source,json]
+----
+{
+  "claim_id": "CLM-2025-09-1234",
+  "claim_type": "property_damage",
+  "claim_status": "under_investigation",
+  "claim_date": "2025-09-15T14:30:00Z",
+  "incident_date": "2025-08-10T12:00:00Z",
+  "description": "Property flood damage allegedly due to incorrect drainage assessment based on DEM data",
+  
+  "affected_parties": [
+    {
+      "party_id": "AP-001",
+      "party_name": "John Smith",
+      "party_type": "individual",
+      "contact_info": {
+        "address": "123 Main Street",
+        "email": "john.smith@example.com"
+      },
+      "impact_description": "Flood damage to new construction",
+      "role": "claimant"
+    }
+  ],
+  
+  "damages_estimated": 250000.00,
+  "damages_currency": "USD",
+  
+  "evidence_refs": [
+    "https://example.org/evidence/flood-photos",
+    "https://example.org/evidence/engineering-report",
+    "https://example.org/evidence/dem-analysis"
+  ],
+  
+  "provenance": {
+    "entity": {
+      "dem_2024": {
+        "type": "prov:Entity",
+        "label": "Digital Elevation Model 2024",
+        "prov:wasAttributedTo": "survey_company_xyz"
+      }
+    },
+    "activity": {
+      "drainage_assessment": {
+        "type": "prov:Activity",
+        "label": "Drainage Engineering Assessment",
+        "prov:startedAtTime": "2025-03-01T08:00:00Z",
+        "prov:endedAtTime": "2025-03-20T10:00:00Z",
+        "prov:used": ["dem_2024"],
+        "prov:wasAssociatedWith": ["engineer_bob_wilson"]
+      }
+    },
+    "agent": {
+      "engineer_bob_wilson": {
+        "type": "prov:Person",
+        "foaf:name": "Bob Wilson, P.E.",
+        "credentials": "Professional Engineer License CA-PE-54321"
+      }
+    }
+  },
+  
+  "quality": {
+    "scope": "dem_2024",
+    "measurements": [
+      {
+        "measure_name": "Vertical Accuracy",
+        "result_value": 0.25,
+        "result_unit": "meters",
+        "evaluation_method": "Survey control points",
+        "conformance_level": true
+      }
+    ]
+  },
+  
+  "notes": "Investigation focuses on whether DEM vertical accuracy was adequate for drainage engineering applications and whether limitations were properly communicated."
+}
+----

@@ -1,0 +1,115 @@
+.Preface
+
+This Abstract Specification Topic defines a conceptual model and requirements for managing liability, legal accountability, and quality claims associated with geospatial data. It provides a framework for documenting legal frameworks, data quality assessments, provenance tracking, and liability attribution in the context of geospatial information systems.
+
+The specification addresses the growing need for transparent accountability in geospatial data usage, particularly in critical applications such as emergency response, defense operations, infrastructure planning, and legal proceedings where data quality and provenance may have significant legal or financial implications.
+
+This document builds upon and extends the SpatioTemporal Asset Catalog (STAC) specification with specific provisions for liability tracking and integrates with W3C Provenance Ontology (PROV-O), W3C Data Quality Vocabulary (DQV), and established legal frameworks including ISO 19157 for data quality.
+
+[NOTE]
+====
+This is the initial draft specification developed to support the STAC Liability and Claims Extension v1.1.0. Future work will expand the model to cover additional use cases and integrate with other OGC standards.
+====
+
+[abstract]
+== Abstract
+
+This OGC Abstract Specification Topic defines a comprehensive framework for representing and managing liability, legal claims, and quality assessments associated with geospatial data products. The specification provides:
+
+* A conceptual model for liability attribution and claims management
+* Requirements for documenting legal frameworks and jurisdictions
+* Integration with W3C PROV-O for complete provenance tracking
+* Quality assessment frameworks based on ISO 19157 and W3C DQV
+* Mechanisms for tracking affected parties and evidence chains
+* Support for multiple legal jurisdictions and frameworks
+
+The specification is designed to be implementation-neutral while providing concrete guidance for systems that must maintain accountability for geospatial data quality and usage. It is particularly relevant for applications in emergency management, defense, critical infrastructure, insurance, and legal proceedings.
+
+[.preface]
+== Submitters
+
+All questions regarding this submission should be directed to the editor or the submitters:
+
+[%unnumbered]
+|===
+h| Name h| Affiliation
+| Lucio Colaiacomo | Defence Science and Technology
+|===
+
+
+[.preface]
+== Introduction
+
+The increasing use of geospatial data in critical decision-making contexts—from emergency response coordination to legal evidence to infrastructure planning—has created a pressing need for robust frameworks to track data quality, provenance, and legal liability. When geospatial data products are used to make decisions that affect public safety, property rights, or legal proceedings, questions of accountability, data quality, and liability naturally arise.
+
+This specification addresses several key challenges:
+
+1. *Attribution and Accountability*: Who is responsible for the quality and fitness-for-purpose of geospatial data?
+2. *Legal Frameworks*: What legal standards and jurisdictions govern data usage and liability?
+3. *Quality Assessment*: How is data quality measured, documented, and communicated?
+4. *Provenance Tracking*: What is the complete lineage of data from acquisition to final product?
+5. *Claims Management*: How are claims of data errors, quality issues, or liability documented and tracked?
+6. *Evidence Chains*: What supporting evidence exists for data quality claims or liability assertions?
+
+Traditional geospatial metadata standards provide mechanisms for documenting data quality and lineage, but lack specific provisions for legal liability, claims management, and the integration of quality assessments with legal frameworks. This specification fills that gap by defining a comprehensive model that bridges geospatial data quality concepts with legal liability frameworks.
+
+The specification is designed to complement existing OGC and ISO standards rather than replace them. It references and builds upon:
+
+* ISO 19115: Geographic information — Metadata
+* ISO 19157: Geographic information — Data quality
+* W3C PROV-O: Provenance Ontology
+* W3C DQV: Data Quality Vocabulary
+* STAC: SpatioTemporal Asset Catalog specification
+
+=== Use Case Background
+
+This specification emerged from requirements in several critical application domains:
+
+*Emergency Response*: During disaster response operations, geospatial data quality can directly impact life-safety decisions. Response agencies need clear documentation of data accuracy, timeliness, and fitness-for-purpose, along with clear attribution of responsibility.
+
+*Defense Operations*: Military planning and operations rely on geospatial intelligence where data quality and provenance must be rigorously tracked. Understanding the complete chain of custody and processing for intelligence products is essential for operational confidence and legal accountability.
+
+*Infrastructure Planning*: Engineering decisions for critical infrastructure (dams, bridges, utilities) based on geospatial data carry significant legal and financial liability. Clear documentation of data sources, quality, and responsible parties is essential for risk management.
+
+*Insurance and Legal Proceedings*: Geospatial data increasingly serves as evidence in insurance claims and legal cases. Courts and insurers require clear documentation of data quality, provenance, and the qualifications of those responsible for data products.
+
+=== Design Principles
+
+The specification adheres to the following design principles:
+
+1. *Implementation Neutrality*: The abstract model can be implemented in various formats (JSON, XML, RDF/OWL, databases)
+2. *Standards Alignment*: Builds upon established OGC and ISO standards rather than creating parallel structures
+3. *Semantic Web Ready*: Designed for expression in RDF/OWL with clear mappings to semantic web ontologies
+4. *Provenance First*: Treats complete provenance tracking as a first-class requirement
+5. *Quality Integration*: Integrates data quality assessment directly with liability frameworks
+6. *Legal Awareness*: Recognizes that liability operates within specific legal jurisdictions and frameworks
+7. *Extensibility*: Allows for domain-specific extensions while maintaining core interoperability
+
+[.preface]
+== Relationship to Other Standards
+
+This specification relates to and extends the following standards and specifications:
+
+* *STAC (SpatioTemporal Asset Catalog)*: Provides the base specification for cataloging spatiotemporal assets. This abstract specification defines concepts that are implemented in the STAC Liability and Claims Extension.
+
+* *ISO 19115*: Provides comprehensive metadata structures. This specification extends those concepts with specific liability and claims management requirements.
+
+* *ISO 19157*: Defines data quality concepts and measures. This specification adopts and extends those quality concepts for liability contexts.
+
+* *W3C PROV-O*: Defines provenance relationships. This specification requires PROV-O compliance for provenance tracking.
+
+* *W3C DQV*: Defines data quality vocabulary. This specification uses DQV for quality metric definitions.
+
+* *OGC API - Records*: This specification's concepts can be exposed through OGC API - Records implementations.
+
+[.preface]
+== Future Work
+
+Future versions of this specification may address:
+
+* Integration with blockchain technologies for immutable audit trails
+* Real-time quality monitoring and automated claims detection
+* Cross-jurisdiction liability frameworks for international data sharing
+* AI/ML model liability and explainability frameworks
+* Integration with Digital Object Identifier (DOI) systems for persistent data citation
+* Standardized liability insurance frameworks for geospatial data providers

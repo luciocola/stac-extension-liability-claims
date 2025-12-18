@@ -1,0 +1,124 @@
+== Core Requirements
+
+=== Requirements Class: Core
+
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class*
+2+|http://www.opengis.net/spec/liability-claims/1.1/req/core
+|Target type |Implementation specification
+|Dependency |ISO 19115-1:2014
+|Dependency |<<rfc2119>>
+|===
+
+==== Requirement 1: Liability Framework Declaration
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/core/framework"]
+====
+[%metadata]
+label:: /req/core/framework
+subject:: Liability metadata
+part:: Every geospatial data product with liability metadata SHALL declare the applicable legal or regulatory framework using the `liability_framework` property.
+part:: The framework declaration SHALL be a human-readable string identifying the governing standard, law, or professional code.
+====
+
+==== Requirement 2: Jurisdiction Declaration
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/core/jurisdiction"]
+====
+[%metadata]
+label:: /req/core/jurisdiction
+subject:: Liability metadata
+part:: Every geospatial data product with liability metadata SHALL declare the legal jurisdiction using the `jurisdiction` property.
+part:: Jurisdiction SHALL be specified using ISO 3166-1 alpha-2 country codes or recognized jurisdiction identifiers.
+====
+
+==== Requirement 3: Responsible Party Attribution
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/core/responsible-party"]
+====
+[%metadata]
+label:: /req/core/responsible-party
+subject:: Liability metadata
+part:: Every geospatial data product with liability metadata SHALL identify at least one responsible party.
+part:: Responsible party information SHALL include name and contact information as specified in ISO 19115-1.
+====
+
+==== Requirement 4: Terms and Conditions Reference
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/core/terms"]
+====
+[%metadata]
+label:: /req/core/terms
+subject:: Liability metadata
+part:: Every geospatial data product with liability metadata SHALL provide a URI to legal terms and conditions using the `liability_terms` property.
+part:: The URI SHALL resolve to a human-readable document defining liability terms.
+====
+
+=== Requirements Class: Claims Management
+
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class*
+2+|http://www.opengis.net/spec/liability-claims/1.1/req/claims
+|Target type |Implementation specification
+|Dependency |http://www.opengis.net/spec/liability-claims/1.1/req/core
+|===
+
+==== Requirement 5: Claim Identifier Uniqueness
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/claims/unique-id"]
+====
+[%metadata]
+label:: /req/claims/unique-id
+subject:: Claim representation
+part:: Every claim SHALL have a unique identifier in the `claim_id` property.
+part:: The identifier SHALL be unique within the implementing organization's namespace.
+====
+
+==== Requirement 6: Claim Status Values
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/claims/status"]
+====
+[%metadata]
+label:: /req/claims/status
+subject:: Claim representation
+part:: The `claim_status` property SHALL use values from the ClaimStatus enumeration.
+part:: Implementations MAY extend the enumeration with additional domain-specific values.
+====
+
+==== Requirement 7: Temporal Information
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/claims/temporal"]
+====
+[%metadata]
+label:: /req/claims/temporal
+subject:: Claim representation
+part:: Every claim SHALL include a `claim_date` indicating when the claim was filed.
+part:: Dates SHALL be expressed in ISO 8601 format with UTC timezone.
+====
+
+==== Requirement 8: Affected Parties Documentation
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/claims/affected-parties"]
+====
+[%metadata]
+label:: /req/claims/affected-parties
+subject:: Claim representation
+part:: Claims SHALL document all affected parties using the AffectedParty class.
+part:: At least one affected party SHALL be identified for each claim.
+====
+
+=== Recommendations
+
+==== Recommendation 1: Proactive Quality Disclosure
+
+It is RECOMMENDED that data providers proactively document quality limitations and known issues rather than waiting for claims to arise. This promotes transparency and manages expectations.
+
+==== Recommendation 2: Insurance Coverage
+
+Organizations publishing geospatial data for critical applications SHOULD maintain appropriate liability insurance and document coverage using the InsuranceInfo class.
+
+==== Recommendation 3: Regular Review
+
+Liability metadata SHOULD be reviewed and updated regularly, particularly when data is updated or when legal frameworks change.

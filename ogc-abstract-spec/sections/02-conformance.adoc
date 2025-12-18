@@ -1,0 +1,15 @@
+== Conformance
+
+This specification defines the following conformance classes:
+
+* */conf/core* - Core requirements for liability and claims representation
+* */conf/provenance* - Integration with W3C PROV-O for provenance tracking  
+* */conf/quality* - Quality assessment frameworks based on ISO 19157 and W3C DQV
+* */conf/legal-frameworks* - Support for multiple legal jurisdictions and frameworks
+* */conf/claims-management* - Requirements for documenting and tracking claims
+
+Conformance with this specification shall be checked using all the relevant tests specified in Annex C (normative). The framework, concepts, and methodology for testing, and the criteria to be achieved to claim conformance are specified in ISO 19105.
+
+Implementations may choose to conform to one or more conformance classes. Core conformance requires implementation of the */conf/core* class. Other conformance classes provide additional capabilities that may be required for specific use cases.
+
+All requirements-classes and conformance-classes described in this document are owned by the standard(s) identified in this document.

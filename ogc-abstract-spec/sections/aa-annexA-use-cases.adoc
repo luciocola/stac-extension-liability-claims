@@ -1,0 +1,109 @@
+[appendix,obligation="informative"]
+== Annex A: Use Cases
+
+=== Use Case 1: Emergency Flood Response
+
+*Scenario*: A municipal emergency management agency uses aerial LiDAR data to model flood risk and evacuate residents during a major storm event.
+
+*Liability Concerns*:
+
+* Accuracy of elevation data affects flood predictions
+* Timeliness of data collection vs. storm event
+* Professional qualifications of hydrological modelers
+* Communication of uncertainty to decision-makers
+
+*Requirements Addressed*:
+
+* Core liability framework declaration (professional standards for surveyors and engineers)
+* Quality assessment showing DEM accuracy meets flood modeling requirements
+* Complete provenance from LiDAR acquisition through flood model
+* Clear attribution to licensed professionals
+* Documentation of model assumptions and limitations
+
+*Outcome*: When questioned about evacuation decisions, agency can demonstrate due diligence through documented data quality, professional credentials, and clear communication of uncertainty.
+
+=== Use Case 2: Infrastructure Planning Litigation
+
+*Scenario*: A property owner sues a municipality claiming that incorrect drainage assessment led to flood damage of their new building. The assessment was based on geospatial data.
+
+*Liability Concerns*:
+
+* Was the elevation data fit for drainage engineering purposes?
+* Were professional standards followed in the assessment?
+* Was the data current at time of assessment?
+* Were known limitations communicated?
+
+*Requirements Addressed*:
+
+* Claims management - formal claim documented with parties, damages, evidence
+* Quality documentation showing limitations of source data
+* Provenance chain from survey to engineering assessment
+* Professional credentials of engineers conducting assessment
+* Legal framework (professional engineering standards, building codes)
+
+*Outcome*: Complete liability documentation enables forensic analysis. If professional standards were followed and limitations communicated, provider may avoid liability. If standards were not met, documentation supports settlement negotiations.
+
+=== Use Case 3: Defense Intelligence Sharing
+
+*Scenario*: Military intelligence agencies share geospatial intelligence products across allied nations for joint operations planning.
+
+*Liability Concerns*:
+
+* Multi-jurisdiction data sharing across sovereignty boundaries
+* Classification levels and security clearances
+* Attribution to specific intelligence agencies
+* Quality standards for operational planning
+* Rules of engagement based on geospatial data
+
+*Requirements Addressed*:
+
+* Multi-jurisdiction legal frameworks
+* Security classification metadata
+* Clear attribution chains through coalition partners
+* Quality assessment against defense standards
+* Provenance showing intelligence sources and methods (at appropriate classification)
+
+*Outcome*: Clear liability documentation supports informed decision-making while respecting classification and sovereignty concerns.
+
+=== Use Case 4: Insurance Claim Assessment
+
+*Scenario*: Insurance company uses satellite imagery and LiDAR to assess property damage claims after a wildfire.
+
+*Liability Concerns*:
+
+* Accuracy of damage assessment affects claim payments
+* Temporal alignment (pre-fire vs post-fire imagery dates)
+* Professional qualifications of damage assessors
+* Dispute resolution if property owner challenges assessment
+
+*Requirements Addressed*:
+
+* Claims management for disputed assessments
+* Quality documentation (resolution, accuracy, temporal)
+* Provenance from satellite acquisition through damage calculation
+* Professional credentials of assessors
+* Evidence chain for legal proceedings
+
+*Outcome*: Documented assessment methodology and quality supports fair claim resolution and withstands legal scrutiny if challenged.
+
+=== Use Case 5: Environmental Impact Litigation
+
+*Scenario*: Environmental group uses satellite time-series analysis to document illegal deforestation and bring legal action against landowner.
+
+*Liability Concerns*:
+
+* Accuracy of classification (forest vs cleared)
+* Change detection methodology validity
+* Professional qualifications of analysts
+* Chain of custody for evidence
+* Peer review and scientific standards
+
+*Requirements Addressed*:
+
+* Legal framework (environmental law, scientific evidence standards)
+* Quality assessment (classification accuracy, change detection validation)
+* Provenance showing analysis methodology
+* Professional credentials of scientists
+* Evidence chain meeting legal admissibility standards
+
+*Outcome*: Rigorous documentation of data quality and methodology supports evidence admissibility. Peer review and professional credentials establish scientific credibility.

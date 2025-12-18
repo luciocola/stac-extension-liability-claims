@@ -1,0 +1,125 @@
+== Terms and Definitions
+
+This document uses the terms defined in Sub-clause 5.3 of <<OGC06-121r9>>, which is based on the ISO/IEC Directives, Part 2, Rules for the structure and drafting of International Standards. In particular, the word "shall" (not "must") is the verb form used to indicate a requirement to be strictly followed to conform to this standard.
+
+For the purposes of this document, the following additional terms and definitions apply.
+
+=== liability
+
+legal responsibility for the consequences of an act or omission, especially in relation to damage or loss caused by geospatial data quality issues
+
+[.source]
+<<iso19157>>
+
+NOTE: In the context of geospatial data, liability typically relates to fitness-for-purpose, data quality representations, and professional standards of care.
+
+=== claim
+
+formal assertion or demand for remedy based on alleged liability arising from geospatial data quality, fitness-for-purpose, or professional standards
+
+NOTE: Claims may involve financial damages, required corrections, or other remedies.
+
+=== provenance
+
+information about entities, activities, and people involved in producing a piece of data or thing, which can be used to form assessments about its quality, reliability or trustworthiness
+
+[.source]
+<<provO>>
+
+NOTE: Provenance tracking provides the evidence trail for liability attribution.
+
+=== data quality
+
+degree to which a set of characteristics of data fulfills stated requirements
+
+[.source]
+<<iso19157>>
+
+NOTE: Quality assessment forms the technical basis for many liability claims.
+
+=== responsible party
+
+individual or organization having a specific role or responsibility with respect to geospatial data
+
+[.source]
+<<iso19115-1>>
+
+NOTE: Responsible parties may include data collectors, processors, publishers, or users.
+
+=== jurisdiction
+
+territory, geographical area, or conceptual domain over which legal authority extends
+
+NOTE: Liability operates within specific legal jurisdictions with different laws and standards.
+
+=== fitness for purpose
+
+degree to which data has characteristics that enable it to satisfy stated and implied needs when used under specified conditions
+
+[.source]
+<<iso19157>>
+
+NOTE: Liability often hinges on whether data was fit for its intended purpose.
+
+=== affected party
+
+individual, organization, or legal entity that has been or may be impacted by geospatial data quality issues or associated liabilities
+
+NOTE: Affected parties may include data users, property owners, government agencies, or the general public.
+
+=== evidence chain
+
+documented trail of evidence supporting a liability claim or quality assessment, including source data, processing records, and validation results
+
+NOTE: Evidence chains rely on complete provenance tracking.
+
+=== legal framework
+
+system of laws, regulations, standards, and professional codes that govern liability for geospatial data products
+
+NOTE: Legal frameworks vary by jurisdiction and application domain.
+
+=== conformance result
+
+outcome of applying a conformance test to assess whether data or services meet specified quality requirements
+
+[.source]
+<<iso19157>>
+
+NOTE: Conformance results provide objective evidence for quality claims.
+
+=== agent
+
+person, organization, or software that bears some form of responsibility for an activity taking place, for the existence of an entity, or for another agent's activity
+
+[.source]
+<<provO>>
+
+NOTE: Agents are the actors in provenance graphs who may bear liability.
+
+=== activity
+
+something that occurs over a period of time and acts upon or with entities; it may include consuming, processing, transforming, modifying, relocating, using, or generating entities
+
+[.source]
+<<provO>>
+
+NOTE: Activities are the processing steps in provenance graphs that transform data.
+
+=== entity
+
+physical, digital, conceptual, or other kind of thing with some fixed aspects; entities may be real or imaginary
+
+[.source]
+<<provO>>
+
+NOTE: In this specification, entities are typically geospatial data products or their components.
+
+=== attribution
+
+ascribing an entity to an agent
+
+[.source]
+<<provO>>
+
+NOTE: Attribution establishes who is responsible for data products, forming the basis for liability.

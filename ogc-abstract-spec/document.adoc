@@ -1,0 +1,57 @@
+= OGC Abstract Specification Topic: Liability and Claims for Geospatial Data
+:comment: ### Document type; mandatory. Visit: https://www.metanorma.org/author/ogc/authoring/ for permitted types
+:doctype: abstract-specification-topic
+:comment: ### Language of the document; mandatory. Specified in two-letter code: "en" for English, "fr" for French
+:language: en
+:comment: ### Document status/stage; mandatory. Visit: https://www.metanorma.org/author/ogc/authoring/ for permitted types
+:status: swg-draft
+:comment: ### Relevant committee; mandatory. The permitted types are: technical, planning, and strategic-member-advisory
+:committee: technical
+:comment: ### Version number; optional. Dot-delimited, preferably with this structure <version number>.<minor version number>
+:edition: 1.1.0
+:comment: ### Internal reference number; mandatory
+:docnumber: YY-XXX
+:comment: ### Date on which the standard was updated; mandatory
+:received-date: 2025-12-18
+:comment: ### Date on which the standard was approved by the issuing authority; mandatory
+:issued-date: 2025-12-18
+:comment: ### Date on which the standard was published; mandatory
+:published-date: 2025-12-18
+:comment: ### External link referencing the document; optional. If not provided, a default value is created following this structure: "http://www.opengis.net/doc/{abbrevation of doctype}/{abbrev}/{version}"
+:external-id: http://www.opengis.net/doc/AS/liability-claims/1.1.0
+:comment: ### Identifier embedded into a document type-specific external URL
+:referenceURLID: http://docs.opengeospatial.org/as/YY-XXX/YY-XXX.html
+:comment: ### Author one
+:fullname: Lucio Colaiacomo
+:comment: ### Role of the authors; mandatory
+:role: editor
+:comment: ### Comma delimited keywords; mandatory
+:keywords: ogcdoc, OGC document, liability, claims, legal frameworks, data quality, provenance, geospatial data, STAC, SpatioTemporal Asset Catalog, quality assessment, accountability, W3C PROV
+:comment: ### Semicolon-delimited list of the submitting organizations; mandatory
+:submitting-organizations: Defence Science and Technology; Emergency Management Services
+:comment: ### Metanorma flavor; mandatory
+:mn-document-class: ogc
+:mn-output-extensions: xml,html,doc,pdf,rxl
+:comment: ### Enable local relaton cache for quick inclusion of prefetched references; optional. For further information, visit: https://www.metanorma.org/author/ref/document-attributes/#caches, https://www.metanorma.org/author/topics/building/reference-lookup/#lookup-result-caching
+:local-cache-only:
+
+// Clauses
+include::sections/00-preface.adoc[]
+include::sections/01-scope.adoc[]
+include::sections/02-conformance.adoc[]
+include::sections/03-references.adoc[]
+include::sections/04-terms_and_definitions.adoc[]
+include::sections/05-conventions.adoc[]
+include::sections/06-conceptual-model.adoc[]
+include::sections/07-core-requirements.adoc[]
+include::sections/08-quality-framework.adoc[]
+include::sections/09-provenance-model.adoc[]
+include::sections/10-legal-frameworks.adoc[]
+
+// Annexes (add annex files as needed)
+include::sections/aa-annexA-use-cases.adoc[]
+include::sections/ab-annexB-examples.adoc[]
+include::sections/ac-annexC-conformance.adoc[]
+
+// Bibliography should be the last annex
+include::sections/az-bibliography.adoc[]

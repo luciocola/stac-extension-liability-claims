@@ -1,0 +1,60 @@
+[appendix]
+== Bibliography
+
+* [[[Simonis2018,Simonis, I.]]], Standardized Big Data Processing in Hybrid Clouds. In: Proceedings of the 4th International Conference on Geographical Information Systems Theory, Applications and Management - Volume 1: GISTAM, pp. 205–210. SciTePress (2018).
+
+* [[[ogcapi-features,OGC 17-069r4]]], OGC: OGC API - Features - Part 1: Core, Version 1.0.1, 2022
+
+* [[[ogc-naming,OGC 09-048r5]]], OGC: OGC Name Type Specification - definitions - part 1 - basic name, 2020
+
+* [[[foaf,FOAF]]], Brickley, D., Miller, L.: FOAF Vocabulary Specification 0.99, 2014, http://xmlns.com/foaf/spec/
+
+* [[[schema-org,Schema.org]]], Schema.org Community Group: Schema.org - Schema for structured data on the Internet, https://schema.org/
+
+* [[[geojson,IETF RFC 7946]]], Butler, H., Daly, M., Doyle, A., Gillies, S., Hagen, S., Schaub, T.: The GeoJSON Format, IETF RFC 7946, August 2016
+
+* [[[asprs-standards,ASPRS]]], American Society for Photogrammetry and Remote Sensing: ASPRS Positional Accuracy Standards for Digital Geospatial Data, Edition 1, Version 1.0, 2014
+
+* [[[inspire,INSPIRE]]], European Commission: INSPIRE Metadata Implementing Rules: Technical Guidelines based on EN ISO 19115 and EN ISO 19119, Version 2.0.1, 2017
+
+* [[[fgdc-std,FGDC]]], Federal Geographic Data Committee: Content Standard for Digital Geospatial Metadata, FGDC-STD-001-1998, 1998
+
+* [[[gdpr,GDPR]]], European Parliament and Council: Regulation (EU) 2016/679 on the protection of natural persons with regard to the processing of personal data (General Data Protection Regulation), 2016
+
+* [[[ccpa,CCPA]]], California Legislature: California Consumer Privacy Act of 2018, California Civil Code §§ 1798.100-1798.199
+
+* [[[Groth2013,Groth, P., Moreau, L.]]], PROV-Overview: An Overview of the PROV Family of Documents, W3C Note, 2013, https://www.w3.org/TR/prov-overview/
+
+* [[[provn,W3C PROV-N]]], Moreau, L., Missier, P.: PROV-N: The Provenance Notation, W3C Recommendation, 2013, https://www.w3.org/TR/prov-n/
+
+* [[[prov-json,W3C PROV-JSON]]], Huynh, T.D., Moreau, L.: PROV-JSON: The PROV JSON Serialization, 2013, https://www.w3.org/Submission/prov-json/
+
+* [[[dqv-impl,W3C DQV]]], Albertoni, R., Isaac, A.: Data on the Web Best Practices: Data Quality Vocabulary, W3C Working Group Note, 2016
+
+* [[[linkeddata,Linked Data]]], Berners-Lee, T.: Linked Data - Design Issues, W3C, 2006, https://www.w3.org/DesignIssues/LinkedData.html
+
+* [[[rdf11,W3C RDF 1.1]]], Cyganiak, R., Wood, D., Lanthaler, M.: RDF 1.1 Concepts and Abstract Syntax, W3C Recommendation, 2014, https://www.w3.org/TR/rdf11-concepts/
+
+* [[[owl2,W3C OWL 2]]], W3C OWL Working Group: OWL 2 Web Ontology Language Document Overview (Second Edition), W3C Recommendation, 2012, https://www.w3.org/TR/owl2-overview/
+
+* [[[sparql,W3C SPARQL]]], Harris, S., Seaborne, A.: SPARQL 1.1 Query Language, W3C Recommendation, 2013, https://www.w3.org/TR/sparql11-query/
+
+* [[[json-ld,W3C JSON-LD]]], Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Lindström, N.: JSON-LD 1.1, W3C Recommendation, 2020, https://www.w3.org/TR/json-ld11/
+
+* [[[Devaraju2017,Devaraju, A., Klump, J.]]], A Protocol for Recording Provenance in Data Repositories. In: IEEE 13th International Conference on e-Science (e-Science), pp. 189-198, 2017
+
+* [[[Simmhan2005,Simmhan, Y.L., Plale, B., Gannon, D.]]], A Survey of Data Provenance in e-Science. SIGMOD Record, Vol. 34, No. 3, pp. 31-36, 2005
+
+* [[[Buneman2001,Buneman, P., Khanna, S., Tan, W.C.]]], Why and Where: A Characterization of Data Provenance. In: International Conference on Database Theory (ICDT), pp. 316-330, 2001
+
+* [[[Freire2008,Freire, J., Koop, D., Santos, E., Silva, C.T.]]], Provenance for Computational Tasks: A Survey. Computing in Science & Engineering, Vol. 10, No. 3, pp. 11-21, 2008
+
+* [[[Stonebraker2013,Stonebraker, M., Ilyas, I.F.]]], Data Integration: The Current Status and New Directions. IEEE Data Engineering Bulletin, Vol. 41, No. 2, pp. 3-9, 2018
+
+* [[[ISO19110,ISO 19110:2016]]], ISO: ISO 19110:2016, Geographic information – Methodology for feature cataloguing, 2016
+
+* [[[ISO19111,ISO 19111:2019]]], ISO: ISO 19111:2019, Geographic information – Referencing by coordinates, 2019
+
+* [[[ISO19136,ISO 19136-1:2020]]], ISO: ISO 19136-1:2020, Geographic information – Geography Markup Language (GML) – Part 1: Fundamentals, 2020
+
+* [[[OGC06-121r9,OGC 06-121r9]]], OGC: OGC Web Services Common Standard, Version 2.0, 2010

@@ -1,0 +1,459 @@
+== Conceptual Model
+
+=== Overview
+
+This clause defines the conceptual model for liability and claims management in geospatial data systems. The model is based on object-oriented principles following ISO 19103 and uses UML class diagrams to represent concepts and their relationships.
+
+The conceptual model consists of five main packages:
+
+1. *Core Liability Package*: Fundamental concepts for liability attribution
+2. *Claims Management Package*: Classes for documenting and tracking claims
+3. *Provenance Package*: Integration with W3C PROV-O  
+4. *Quality Assessment Package*: Data quality frameworks
+5. *Legal Framework Package*: Legal jurisdiction and regulatory concepts
+
+=== Core Liability Package
+
+The Core Liability Package defines the fundamental concepts for representing liability attribution in geospatial data products.
+
+==== LiabilityExtension Class
+
+The `LiabilityExtension` class is the root class for all liability-related metadata associated with a geospatial data product.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|liability_framework
+|Legal or regulatory framework governing liability (e.g., "ISO 19157 Data Quality", "Professional Liability Insurance")
+|CharacterString [1..1]
+
+|jurisdiction
+|Legal jurisdiction where liability framework applies (ISO 3166-1 alpha-2 code)
+|CharacterString [1..1]
+
+|liability_terms
+|URI to legal terms and conditions document
+|URI [1..1]
+
+|responsible_party
+|Reference to party/organization responsible for data quality
+|CI_ResponsibleParty [1..1]
+
+|origin
+|Source organization or data provider
+|CharacterString [0..1]
+
+|limitation_of_liability
+|Text describing limits of liability
+|CharacterString [0..1]
+
+|indemnification_clause
+|Text describing indemnification terms
+|CharacterString [0..1]
+
+|insurance_info
+|Information about insurance coverage
+|InsuranceInfo [0..1]
+|===
+
+==== InsuranceInfo Class
+
+The `InsuranceInfo` class captures insurance coverage details related to data liability.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|insurance_provider
+|Insurance company or provider
+|CharacterString [1..1]
+
+|policy_number
+|Insurance policy identifier
+|CharacterString [1..1]
+
+|coverage_type
+|Type of coverage (e.g., "professional liability", "errors and omissions")
+|CharacterString [1..1]
+
+|coverage_limit
+|Maximum coverage amount
+|MonetaryAmount [0..1]
+
+|effective_date
+|Date coverage begins
+|DateTime [1..1]
+
+|expiration_date
+|Date coverage expires
+|DateTime [0..1]
+|===
+
+=== Claims Management Package
+
+The Claims Management Package provides classes for documenting quality issues, errors, and formal claims against geospatial data products.
+
+==== Claim Class
+
+The `Claim` class represents a formal assertion or demand related to data quality or liability.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|claim_id
+|Unique identifier for the claim
+|CharacterString [1..1]
+
+|claim_type
+|Category of claim (e.g., "accuracy", "completeness", "timeliness", "property_damage", "environmental")
+|CharacterString [1..1]
+
+|claim_status
+|Current status (e.g., "open", "under_investigation", "resolved", "closed", "disputed")
+|ClaimStatus [1..1]
+
+|claim_date
+|Date claim was filed
+|DateTime [1..1]
+
+|incident_date
+|Date of incident giving rise to claim
+|DateTime [0..1]
+
+|description
+|Detailed description of claim
+|CharacterString [1..1]
+
+|affected_parties
+|Parties impacted by the issue
+|AffectedParty [1..*]
+
+|damages_estimated
+|Estimated financial damages
+|MonetaryAmount [0..1]
+
+|damages_currency
+|Currency for damages (ISO 4217 code)
+|CharacterString [0..1]
+
+|evidence_refs
+|References to supporting evidence
+|URI [0..*]
+
+|resolution_status
+|How claim was resolved
+|CharacterString [0..1]
+
+|resolution_date
+|Date claim was resolved
+|DateTime [0..1]
+
+|notes
+|Additional notes or documentation
+|CharacterString [0..1]
+|===
+
+==== AffectedParty Class
+
+The `AffectedParty` class represents individuals or organizations impacted by data quality issues.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|party_id
+|Unique identifier for the party
+|CharacterString [1..1]
+
+|party_name
+|Name of individual or organization
+|CharacterString [1..1]
+
+|party_type
+|Type of party (e.g., "individual", "organization", "government_agency")
+|CharacterString [1..1]
+
+|contact_info
+|Contact information
+|CI_Contact [0..1]
+
+|impact_description
+|Description of impact on this party
+|CharacterString [0..1]
+
+|role
+|Role in the claim (e.g., "claimant", "defendant", "witness")
+|CharacterString [0..1]
+|===
+
+==== ClaimStatus Enumeration
+
+The `ClaimStatus` enumeration defines valid claim status values.
+
+[cols="1,2",width="80%",options="header"]
+|===
+|Value |Definition
+
+|open
+|Claim has been filed and is awaiting review
+
+|under_investigation
+|Claim is being investigated
+
+|resolved
+|Claim has been resolved to satisfaction of parties
+
+|closed
+|Claim has been closed (may or may not be resolved)
+
+|disputed
+|Claim is under dispute between parties
+
+|pending_legal
+|Claim is subject to legal proceedings
+
+|withdrawn
+|Claim has been withdrawn by claimant
+|===
+
+=== Provenance Package
+
+The Provenance Package integrates W3C PROV-O concepts for complete lineage tracking. All classes in this package inherit from or reference W3C PROV-O classes.
+
+==== ProvenanceInfo Class
+
+The `ProvenanceInfo` class serves as a container for W3C PROV-O compliant provenance graphs.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|prov_graph
+|Complete W3C PROV-O graph as JSON-LD or RDF
+|Object [1..1]
+
+|prov_uri
+|URI to external provenance document
+|URI [0..1]
+
+|simplified_lineage
+|Human-readable lineage summary
+|CharacterString [0..1]
+|===
+
+The provenance graph SHALL conform to W3C PROV-O and include:
+
+* Entities (data products and their components)
+* Activities (processing steps)
+* Agents (people, organizations, software)
+* Relationships (wasGeneratedBy, wasDerivedFrom, wasAttributedTo, etc.)
+
+See Section 9 for detailed provenance requirements.
+
+=== Quality Assessment Package
+
+The Quality Assessment Package provides structures for documenting data quality evaluations based on ISO 19157 and W3C DQV.
+
+==== QualityInfo Class
+
+The `QualityInfo` class contains quality assessment results.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|quality_scope
+|Scope of quality assessment (e.g., "dataset", "feature", "attribute")
+|CharacterString [1..1]
+
+|quality_measurements
+|Individual quality measurements
+|QualityMeasurement [1..*]
+
+|conformance_results
+|Results of conformance testing
+|ConformanceResult [0..*]
+
+|overall_assessment
+|Overall quality summary
+|CharacterString [0..1]
+
+|assessment_date
+|Date of quality assessment
+|DateTime [1..1]
+
+|assessor
+|Person or organization conducting assessment
+|CI_ResponsibleParty [1..1]
+|===
+
+==== QualityMeasurement Class
+
+The `QualityMeasurement` class represents an individual quality metric evaluation.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|measure_id
+|Identifier for quality measure (preferably from ISO 19157)
+|CharacterString [1..1]
+
+|measure_name
+|Human-readable measure name
+|CharacterString [1..1]
+
+|measure_description
+|Description of what is measured
+|CharacterString [0..1]
+
+|result_value
+|Measured value
+|Measure [1..1]
+
+|result_unit
+|Unit of measurement
+|UnitOfMeasure [0..1]
+
+|evaluation_method
+|Method used for evaluation
+|CharacterString [1..1]
+
+|evaluation_date
+|Date of evaluation
+|DateTime [1..1]
+
+|conformance_level
+|Pass/fail status
+|Boolean [0..1]
+|===
+
+==== ConformanceResult Class
+
+The `ConformanceResult` class represents results of testing against specifications.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|specification
+|Specification being tested against
+|CI_Citation [1..1]
+
+|explanation
+|Explanation of conformance result
+|CharacterString [1..1]
+
+|pass
+|Whether test passed
+|Boolean [1..1]
+
+|test_date
+|Date conformance test was performed
+|DateTime [1..1]
+|===
+
+=== Legal Framework Package
+
+The Legal Framework Package defines classes for representing legal and regulatory contexts.
+
+==== LegalJurisdiction Class
+
+The `LegalJurisdiction` class represents a legal authority domain.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|jurisdiction_code
+|ISO 3166-1 alpha-2 country code or jurisdiction identifier
+|CharacterString [1..1]
+
+|jurisdiction_name
+|Full name of jurisdiction
+|CharacterString [1..1]
+
+|jurisdiction_type
+|Type (e.g., "national", "state", "provincial", "international")
+|CharacterString [1..1]
+
+|applicable_laws
+|References to applicable laws and regulations
+|LegalReference [0..*]
+|===
+
+==== LegalReference Class
+
+The `LegalReference` class represents a specific law, regulation, or standard.
+
+[cols="1,2,1",width="90%",options="header"]
+|===
+|Attribute |Definition |Type
+
+|reference_id
+|Identifier for law/regulation
+|CharacterString [1..1]
+
+|title
+|Title of legal instrument
+|CharacterString [1..1]
+
+|authority
+|Issuing authority
+|CharacterString [1..1]
+
+|effective_date
+|Date law/regulation took effect
+|DateTime [0..1]
+
+|uri
+|URI to legal document
+|URI [0..1]
+
+|description
+|Summary of relevant provisions
+|CharacterString [0..1]
+|===
+
+=== Package Relationships
+
+The following diagram illustrates the relationships between the main packages:
+
+[source,text]
+----
+┌─────────────────────────┐
+│  Core Liability Package │
+│  - LiabilityExtension   │
+│  - InsuranceInfo        │
+└────────┬────────────────┘
+         │
+         │ references
+         ↓
+┌─────────────────────────┐      ┌──────────────────────────┐
+│ Claims Management Pkg   │←────→│ Quality Assessment Pkg   │
+│  - Claim                │      │  - QualityInfo           │
+│  - AffectedParty        │      │  - QualityMeasurement    │
+│  - ClaimStatus          │      │  - ConformanceResult     │
+└────────┬────────────────┘      └──────────────────────────┘
+         │
+         │ documented by
+         ↓
+┌─────────────────────────┐      ┌──────────────────────────┐
+│  Provenance Package     │      │ Legal Framework Package  │
+│  - ProvenanceInfo       │      │  - LegalJurisdiction     │
+│  - W3C PROV-O entities  │      │  - LegalReference        │
+└─────────────────────────┘      └──────────────────────────┘
+----
+
+=== Implementation Considerations
+
+Implementations of this conceptual model MAY use different serialization formats including:
+
+* JSON Schema (for STAC and JSON APIs)
+* XML Schema (for OGC web services)
+* RDF/OWL (for semantic web applications)
+* Relational databases (for data management systems)
+
+Regardless of implementation format, conforming implementations SHALL maintain the semantics defined in this conceptual model.

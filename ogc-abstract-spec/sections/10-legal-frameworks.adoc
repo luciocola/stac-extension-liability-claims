@@ -1,0 +1,211 @@
+== Legal Frameworks
+
+=== Overview
+
+Liability operates within specific legal and regulatory contexts that vary by jurisdiction and application domain. This clause provides guidance on documenting legal frameworks without attempting to provide legal advice.
+
+[NOTE]
+====
+This specification provides technical mechanisms for documenting legal frameworks. It does NOT provide legal advice. Organizations should consult qualified legal professionals regarding liability obligations and risk management strategies.
+====
+
+=== Requirements Class: Legal Frameworks
+
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class*
+2+|http://www.opengis.net/spec/liability-claims/1.1/req/legal
+|Target type |Implementation specification
+|Dependency |<<iso3166>>
+|Dependency |http://www.opengis.net/spec/liability-claims/1.1/req/core
+|===
+
+==== Requirement 16: Legal Framework Identification
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/legal/framework-id"]
+====
+[%metadata]
+label:: /req/legal/framework-id
+subject:: Legal framework documentation
+part:: Legal frameworks SHALL be identified using the LegalReference class.
+part:: Framework identifiers SHALL include title, authority, and effective date where available.
+====
+
+==== Requirement 17: Jurisdiction Specification
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/legal/jurisdiction"]
+====
+[%metadata]
+label:: /req/legal/jurisdiction
+subject:: Legal framework documentation
+part:: Jurisdictions SHALL be specified using ISO 3166-1 alpha-2 codes for countries.
+part:: Sub-national jurisdictions MAY use extended codes or textual descriptions.
+====
+
+=== Common Legal Frameworks
+
+The following legal frameworks commonly apply to geospatial data liability:
+
+==== Professional Liability Frameworks
+
+Professional liability (errors and omissions) applies when licensed professionals provide geospatial services:
+
+* **Surveying**: Licensed land surveyors operate under professional standards boards
+* **Engineering**: Professional engineers are licensed and governed by state/provincial boards
+* **GIS**: Some jurisdictions have GIS professional certifications with associated standards
+
+Documentation should include:
+
+* Professional license numbers
+* Applicable professional standards
+* Professional liability insurance details
+
+==== Data Quality Standards
+
+International and national standards provide objective quality criteria:
+
+* **ISO 19157**: Geographic Information - Data Quality
+* **ASPRS**: Positional Accuracy Standards for Digital Geospatial Data
+* **FGDC**: Federal Geographic Data Committee Standards (US)
+* **INSPIRE**: Infrastructure for Spatial Information in Europe
+
+==== Product Liability
+
+Product liability law may apply when geospatial data is distributed as a commercial product:
+
+* Implied warranties of merchantability
+* Fitness for particular purpose
+* Strict liability for defective products
+
+==== Contract Law
+
+Contractual agreements often define liability terms:
+
+* Service level agreements (SLAs)
+* Data licensing agreements
+* Terms of service for data platforms
+
+==== Negligence and Tort Law
+
+Negligence claims require demonstrating:
+
+* Duty of care owed
+* Breach of that duty
+* Causation
+* Damages
+
+Documenting quality standards and professional conduct helps establish duty of care.
+
+==== Privacy and Data Protection
+
+Privacy laws affect geospatial data containing personal information:
+
+* **GDPR**: EU General Data Protection Regulation
+* **CCPA**: California Consumer Privacy Act
+* **Various national**: Data protection laws worldwide
+
+=== Limitation of Liability Clauses
+
+Providers often limit liability through:
+
+* **Disclaimer clauses**: "Data provided as-is"
+* **Liability caps**: Maximum dollar amounts
+* **Use restrictions**: Prohibiting specific applications
+* **Time limits**: Statutes of limitations
+
+Such limitations must be:
+
+* Clearly communicated
+* Legally enforceable in applicable jurisdictions
+* Reasonable given the circumstances
+
+=== Indemnification
+
+Indemnification clauses allocate risk between parties. Common patterns:
+
+* **Provider indemnifies user**: For defects in data
+* **User indemnifies provider**: For misuse of data
+* **Mutual indemnification**: Each party protects the other
+
+Implementations SHOULD document indemnification terms using the `indemnification_clause` property.
+
+=== Insurance Considerations
+
+Professional liability insurance (Errors & Omissions) covers:
+
+* Defense costs for claims
+* Settlements or judgments
+* Professional advice and services
+
+Documentation SHOULD include:
+
+* Insurance provider
+* Policy numbers
+* Coverage limits
+* Policy period
+
+=== Multi-Jurisdiction Scenarios
+
+International data sharing raises complex jurisdictional issues:
+
+1. **Conflict of Laws**: Which jurisdiction's law applies?
+2. **Enforcement**: How are judgments enforced across borders?
+3. **Data Sovereignty**: National laws restricting data movement
+4. **Harmonization**: Varying standards across jurisdictions
+
+For multi-jurisdiction data:
+
+* Document all applicable jurisdictions
+* Reference international standards where possible
+* Clearly specify governing law in agreements
+* Consider jurisdiction-specific metadata
+
+=== Example Legal Framework Documentation
+
+[source,json]
+----
+{
+  "liability_framework": "ISO 19157 Data Quality + Professional Liability",
+  "jurisdiction": "US",
+  "legal_references": [
+    {
+      "reference_id": "ISO19157:2013",
+      "title": "Geographic Information - Data Quality",
+      "authority": "ISO Technical Committee 211",
+      "effective_date": "2013-12-15",
+      "uri": "https://www.iso.org/standard/32575.html"
+    },
+    {
+      "reference_id": "StateBoard-Survey-2024",
+      "title": "California Professional Land Surveyors Act",
+      "authority": "California Board for Professional Engineers",
+      "effective_date": "2024-01-01",
+      "uri": "https://example.gov/surveyor-act"
+    }
+  ],
+  "limitation_of_liability": "Liability limited to direct damages not exceeding the purchase price of the data. No liability for consequential, incidental, or indirect damages.",
+  "indemnification_clause": "Provider shall indemnify client for claims arising from gross negligence or willful misconduct. Client shall indemnify provider for claims arising from misuse of data beyond stated fitness-for-purpose.",
+  "insurance_info": {
+    "insurance_provider": "Professional Liability Insurance Corp",
+    "policy_number": "PLIC-2025-789456",
+    "coverage_type": "Errors and Omissions",
+    "coverage_limit": {
+      "amount": 2000000,
+      "currency": "USD"
+    },
+    "effective_date": "2025-01-01T00:00:00Z",
+    "expiration_date": "2026-01-01T00:00:00Z"
+  }
+}
+----
+
+=== Recommendations for Legal Compliance
+
+Organizations implementing this specification SHOULD:
+
+1. **Consult Legal Counsel**: Obtain professional legal advice for their specific situation
+2. **Document Standards**: Clearly document which quality and professional standards apply
+3. **Maintain Insurance**: Carry appropriate liability insurance for their risk profile
+4. **Clear Communication**: Ensure users understand fitness-for-purpose and limitations
+5. **Regular Review**: Review and update legal documentation as laws and standards evolve
+6. **Record Keeping**: Maintain records supporting claims of due diligence and professional care

@@ -1,0 +1,30 @@
+== Scope
+
+This Abstract Specification Topic defines a conceptual model for representing liability, legal accountability, and quality claims associated with geospatial data products. The scope includes:
+
+* Conceptual data model for liability attribution and claims management
+* Requirements for documenting legal frameworks and jurisdictions applicable to geospatial data
+* Integration patterns with provenance tracking systems (W3C PROV-O)
+* Quality assessment frameworks for liability contexts (based on ISO 19157 and W3C DQV)
+* Mechanisms for tracking affected parties, damages, and evidence chains
+* Support for multiple legal jurisdictions and regulatory frameworks
+* Conformance classes and requirements for implementation
+
+This specification is applicable to:
+
+* Geospatial data products used in critical decision-making contexts
+* Systems requiring accountability and audit trails for data quality
+* Applications where data quality has legal or financial implications
+* Emergency response and defense applications requiring clear data attribution
+* Insurance and legal proceedings involving geospatial evidence
+* Any system implementing the STAC Liability and Claims Extension
+
+The specification defines abstract requirements and conceptual models. It does not prescribe specific implementation technologies, though examples are provided for common formats including JSON Schema, RDF/OWL, and XML.
+
+This specification does *not* cover:
+
+* Specific legal advice or interpretation of liability laws (consult legal professionals)
+* Detailed procedures for conducting data quality assessments (see ISO 19157)
+* Complete provenance tracking specifications (see W3C PROV-O)
+* Catalog service implementation details (see OGC API specifications)
+* Software liability or licensing terms (separate domain)

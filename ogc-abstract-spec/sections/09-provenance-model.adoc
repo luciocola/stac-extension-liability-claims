@@ -1,0 +1,208 @@
+== Provenance Model
+
+=== Overview
+
+Complete provenance tracking is essential for liability attribution. This clause defines requirements for integrating W3C PROV-O with liability frameworks to establish clear chains of responsibility.
+
+=== Requirements Class: Provenance
+
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class*
+2+|http://www.opengis.net/spec/liability-claims/1.1/req/provenance
+|Target type |Implementation specification
+|Dependency |<<provO>>
+|Dependency |http://www.opengis.net/spec/liability-claims/1.1/req/core
+|===
+
+==== Requirement 12: PROV-O Compliance
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/provenance/prov-o"]
+====
+[%metadata]
+label:: /req/provenance/prov-o
+subject:: Provenance documentation
+part:: Provenance information SHALL conform to W3C PROV-O specification.
+part:: Provenance graphs SHALL include entities, activities, and agents.
+====
+
+==== Requirement 13: Attribution Relationships
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/provenance/attribution"]
+====
+[%metadata]
+label:: /req/provenance/attribution
+subject:: Provenance documentation
+part:: Data products SHALL be attributed to responsible agents using `prov:wasAttributedTo`.
+part:: Attribution SHALL identify persons, organizations, or software agents.
+====
+
+==== Requirement 14: Derivation Chains
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/provenance/derivation"]
+====
+[%metadata]
+label:: /req/provenance/derivation
+subject:: Provenance documentation
+part:: Derived data products SHALL document source materials using `prov:wasDerivedFrom`.
+part:: Derivation chains SHALL be traceable back to original source data.
+====
+
+==== Requirement 15: Activity Documentation
+
+[requirement,uri="http://www.opengis.net/spec/liability-claims/1.1/req/provenance/activities"]
+====
+[%metadata]
+label:: /req/provenance/activities
+subject:: Provenance documentation
+part:: Processing activities SHALL be documented using `prov:Activity` class.
+part:: Activities SHALL include temporal information (start and end times).
+part:: Activities SHALL identify associated agents and used entities.
+====
+
+=== Essential PROV-O Relationships for Liability
+
+The following W3C PROV-O relationships are essential for liability attribution:
+
+[cols="1,3,1",width="90%",options="header"]
+|===
+|Relationship |Purpose for Liability |PROV-O Property
+
+|Attribution
+|Establishes who is responsible for a data product
+|`prov:wasAttributedTo`
+
+|Generation
+|Links data products to activities that created them
+|`prov:wasGeneratedBy`
+
+|Usage
+|Documents which inputs were used in processing
+|`prov:used`
+
+|Derivation
+|Traces lineage through processing chains
+|`prov:wasDerivedFrom`
+
+|Association
+|Links activities to responsible agents
+|`prov:wasAssociatedWith`
+
+|Delegation
+|Documents agency relationships
+|`prov:actedOnBehalfOf`
+
+|Revision
+|Tracks data product versions
+|`prov:wasRevisionOf`
+
+|Invalidation
+|Documents when data becomes invalid
+|`prov:invalidated`
+|===
+
+=== Provenance for Different Agent Types
+
+Provenance SHALL distinguish between different types of agents:
+
+==== Human Agents (prov:Person)
+
+Human agents include data collectors, analysts, quality assessors, and approvers. For human agents, document:
+
+* Full name
+* Professional credentials (where relevant)
+* Organizational affiliation
+* Contact information
+* Role in the activity
+
+==== Organizational Agents (prov:Organization)
+
+Organizations include companies, government agencies, and institutions. For organizations, document:
+
+* Official name
+* Legal jurisdiction
+* Contact information
+* Professional registrations or certifications
+
+==== Software Agents (prov:SoftwareAgent)
+
+Software includes processing tools, algorithms, and automated systems. For software, document:
+
+* Software name and version
+* Vendor/developer
+* Algorithm specifications
+* Configuration parameters
+
+=== Temporal Provenance Requirements
+
+Accurate temporal information is critical for understanding processing sequences and determining liability. Implementations SHALL:
+
+* Record activity start times (`prov:startedAtTime`)
+* Record activity end times (`prov:endedAtTime`)
+* Record entity generation times (`prov:generatedAtTime`)
+* Use ISO 8601 datetime format with UTC timezone
+* Maintain sufficient precision for the application domain
+
+=== Provenance Granularity
+
+The appropriate level of provenance detail depends on application requirements. Implementations SHALL document:
+
+* At minimum: Major processing steps, primary data sources, responsible organizations
+* For critical applications: Detailed parameter settings, intermediate products, all personnel
+* For legal proceedings: Complete audit trail with timestamps, all inputs and outputs
+
+=== Integration with Claims
+
+Provenance information supports liability claims by:
+
+1. *Identifying Responsible Parties*: Attribution relationships establish accountability
+2. *Establishing Causation*: Processing chains show how errors propagated
+3. *Documenting Professional Standards*: Agent credentials and methods show due diligence
+4. *Supporting Investigations*: Complete audit trails enable forensic analysis
+5. *Enabling Remediation*: Detailed provenance facilitates error correction
+
+=== Example Provenance for Liability Chain
+
+The following example shows a simplified provenance chain for a derived data product:
+
+[source,json]
+----
+{
+  "provenance": {
+    "entity": {
+      "derived_product": {
+        "type": "prov:Entity",
+        "label": "Land Cover Map 2025",
+        "wasGeneratedBy": "classification_activity",
+        "wasAttributedTo": "analyst_john_doe",
+        "wasDerivedFrom": ["corrected_imagery", "training_data"]
+      }
+    },
+    "activity": {
+      "classification_activity": {
+        "type": "prov:Activity",
+        "label": "Random Forest Classification",
+        "startTime": "2025-11-20T14:00:00Z",
+        "endTime": "2025-11-20T16:30:00Z",
+        "used": ["corrected_imagery", "training_data"],
+        "wasAssociatedWith": ["analyst_john_doe", "software_sklearn"]
+      }
+    },
+    "agent": {
+      "analyst_john_doe": {
+        "type": "prov:Person",
+        "name": "John Doe",
+        "mbox": "john.doe@example.org",
+        "actedOnBehalfOf": "organization_xyz"
+      },
+      "organization_xyz": {
+        "type": "prov:Organization",
+        "name": "Survey Company XYZ",
+        "jurisdiction": "US"
+      }
+    }
+  }
+}
+----
+
+This provenance enables liability assessment by clearly documenting who created the product, how it was created, and the organizational chain of responsibility.

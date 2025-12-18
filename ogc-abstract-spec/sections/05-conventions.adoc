@@ -1,0 +1,77 @@
+== Conventions
+
+=== Identifiers
+
+The normative provisions in this specification are denoted by the URI `http://www.opengis.net/spec/liability-claims/1.1`
+
+All requirements and conformance tests that appear in this document are denoted by partial URIs which are relative to this base.
+
+=== Use of IETF RFC 2119
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <<rfc2119>>.
+
+=== Abbreviated terms
+
+* API: Application Programming Interface
+* DCAT: Data Catalog Vocabulary
+* DGGS: Discrete Global Grid System
+* DOI: Digital Object Identifier
+* DQV: Data Quality Vocabulary
+* GIS: Geographic Information System
+* HTTP: Hypertext Transfer Protocol
+* IETF: Internet Engineering Task Force
+* IRI: Internationalized Resource Identifier
+* ISO: International Organization for Standardization
+* JSON: JavaScript Object Notation
+* OGC: Open Geospatial Consortium
+* OWL: Web Ontology Language
+* PROV: Provenance
+* PROV-O: Provenance Ontology
+* RDF: Resource Description Framework
+* STAC: SpatioTemporal Asset Catalog
+* TBD: To Be Determined
+* URI: Uniform Resource Identifier
+* URL: Uniform Resource Locator
+* UTC: Coordinated Universal Time
+* W3C: World Wide Web Consortium
+* XML: Extensible Markup Language
+
+=== UML Notation
+
+This specification uses the Unified Modeling Language (UML) static structure diagrams as specified in Sub-clause 5.2 of <<iso19103>>. The UML diagrams in this specification follow ISO 19103 conventions:
+
+* Classes are shown as rectangles with compartments for name, attributes, and operations
+* Associations are shown as lines connecting classes
+* Multiplicity is shown using the notation [min..max]
+* Inheritance is shown with a hollow triangle pointing to the parent class
+* Package dependencies are shown with dashed arrows
+
+=== Namespace Conventions
+
+This specification uses the following namespace prefixes:
+
+[cols="1,3",width="80%"]
+|===
+|Prefix |Namespace URI
+
+|liability:
+|https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#
+
+|prov:
+|http://www.w3.org/ns/prov#
+
+|dqv:
+|http://www.w3.org/ns/dqv#
+
+|dcat:
+|http://www.w3.org/ns/dcat#
+
+|schema:
+|http://schema.org/
+
+|legal:
+|http://www.w3.org/ns/legal#
+
+|xsd:
+|http://www.w3.org/2001/XMLSchema#
+|===

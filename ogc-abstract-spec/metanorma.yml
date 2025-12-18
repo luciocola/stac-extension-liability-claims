@@ -1,0 +1,8 @@
+---
+metanorma:
+  source:
+    files:
+      - document.adoc
+  collection:
+    organization: "Open Geospatial Consortium"
+    name: "OGC Abstract Specification Topic: Liability and Claims for Geospatial Data"
