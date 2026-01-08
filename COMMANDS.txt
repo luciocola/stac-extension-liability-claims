@@ -1,0 +1,49 @@
+# Commands to Publish to GitHub
+# Copy and paste these commands into a fresh Terminal window
+
+# 1. Install Git (if not already installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+/opt/homebrew/bin/brew install git
+
+# 2. Navigate to the repository
+cd /Users/luciocolaiacomo/4113Eng-wfs/cop_defence_stac/stac-extension-liability-claims
+
+# 3. Configure Git with your account
+/opt/homebrew/bin/git config --global user.name "luciocola"
+/opt/homebrew/bin/git config --global user.email "lucio.colaiacomo@example.com"  # Replace with your actual email
+
+# 4. Initialize Git repository
+/opt/homebrew/bin/git init
+/opt/homebrew/bin/git branch -M main
+
+# 5. Add all files
+/opt/homebrew/bin/git add .
+
+# 6. Create initial commit
+/opt/homebrew/bin/git commit -m "STAC Liability and Claims Extension v1.2.0
+
+Features:
+- ISO 19157-1:2023 data quality support
+- ISO 19115 lineage tracking
+- W3C PROV provenance integration
+- W3C Verifiable Credentials 2.0 support
+- NASA UMM compatibility
+- OGC compliance for defense/emergency response
+
+New in v1.2.0:
+- Verifiable Credentials 2.0 integration
+- liability:verifiable_credentials field
+- EdDSA, ECDSA, BBS+ cryptographic proofs
+- DID integration (did:web, did:key, did:ion)
+- Selective disclosure capabilities
+- Comprehensive examples and documentation"
+
+# 7. Add GitHub remote
+/opt/homebrew/bin/git remote add origin https://github.com/luciocola/stac-extension-liability-claims.git
+
+# 8. Push to GitHub
+/opt/homebrew/bin/git push -u origin main
+
+# Done! Your repository will be available at:
+# https://github.com/luciocola/stac-extension-liability-claims
