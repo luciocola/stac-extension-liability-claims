@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - ISO 19157-1:2023 Data Quality Support (2025-12-21)
+
+- **ISO 19157-1:2023 Integration** (`json-schema/iso19157-quality.json`)
+  - Comprehensive data quality framework aligned with ISO 19157-1:2023 standard
+  - Support for all ISO 19157 quality categories: completeness, logical consistency, positional accuracy, temporal quality, thematic quality, metaquality, and usability
+  - Standardized quality measures with official ISO 19157 register codes
+  - Structured evaluation methods (directInternal, directExternal, indirect)
+  - Multiple result types: quantitative, conformance, descriptive, and coverage results
+  - Enhanced lineage documentation inherited from ISO 19115
+  - **Full backward compatibility** with existing ISO 19115/19115-4 quality reports
+  
+- **New Quality Categories**
+  - **Metaquality**: Quality of quality information (confidence, representativity, homogeneity)
+  - **Usability**: Fitness for purpose assessment with detailed use case evaluation
+  - **Temporal Quality**: Enhanced temporal accuracy with consistency and validity checks
+  
+- **Integration Documentation** (`ISO19157-INTEGRATION.md`)
+  - Comprehensive migration guide from ISO 19115 to ISO 19157
+  - Best practices for ISO 19157 implementation
+  - Mapping tables between ISO 19115 and ISO 19157 elements
+  - Examples demonstrating identity and provenance compatibility
+  
+- **New Example** (`examples/item-with-iso19157-quality.json`)
+  - Complete demonstration of ISO 19157-1:2023 quality report
+  - Shows all major quality categories and result types
+  - Includes metaquality (confidence) and usability assessments
+  - Full W3C PROV provenance integration demonstrating identity preservation
+  - Documents evaluation methods with standardized ISO 19157 measures
+
+### Changed
+
+- **liability:quality field** now supports both:
+  - ISO 19157-1:2023 (RECOMMENDED) for comprehensive quality framework
+  - ISO 19115/19115-4 (backward compatibility) for existing implementations
+- Enhanced README with ISO 19157 documentation and migration guidance
+- Updated schema descriptions to emphasize ISO 19157 as recommended approach
+- Improved provenance compatibility documentation across all quality frameworks
+
+### Backward Compatibility
+
+- **100% backward compatible** with existing ISO 19115/19115-4 quality reports
+- All existing `liability:quality` field content remains valid
+- No breaking changes to API or schema structure
+- Organizations can migrate to ISO 19157 at their own pace
+- W3C PROV integration unchanged - full identity and provenance compatibility maintained
+
+## [Unreleased] - Previous Changes
+
 ### Added - SHACL Validation and CI/CD Pipeline (2025-12-13)
 
 - **SHACL Validation Rules** (`shacl/liability-claims-shapes.ttl`)

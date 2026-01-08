@@ -1,0 +1,75 @@
+== Introduction
+
+=== Background
+
+The SpatioTemporal Asset Catalog (STAC) specification has emerged as the de facto standard for organizing and discovering geospatial data, particularly Earth observation imagery. However, as STAC adoption has grown across government, commercial, and research sectors, a critical gap has emerged: the lack of standardized mechanisms for documenting legal liability, tracking claims, and maintaining comprehensive provenance information.
+
+Organizations operating geospatial data infrastructures face multiple challenges:
+
+* **Legal Compliance**: Environmental agencies need to document incidents, affected areas, and remediation efforts with precise geospatial references
+* **Insurance Claims**: Property and casualty insurers require structured geospatial data linking damage assessments to specific locations and events
+* **Data Quality**: Research institutions and commercial data providers must demonstrate data lineage and quality metrics to satisfy regulatory requirements
+* **Provenance Tracking**: Government agencies implementing open data initiatives need complete audit trails from data acquisition through processing to publication
+
+Existing STAC extensions focus primarily on domain-specific metadata (e.g., Earth Observation, SAR, Landsat) or technical characteristics (e.g., projection, version). No extension addresses the intersection of legal accountability, data quality, and provenance tracking required for liability-sensitive applications.
+
+=== Objectives
+
+This Engineering Report documents the design, implementation, and validation of the STAC Liability and Claims Extension version 1.1.0. The primary objectives were:
+
+1. **Develop Comprehensive Liability Metadata Schema**: Create JSON Schema definitions covering claim identification, status tracking, responsible parties, affected areas, damage assessment, and legal jurisdictions
+
+2. **Integrate International Quality Standards**: Implement full ISO 19115 and ISO 19115-4 data quality metadata including completeness, positional accuracy, lineage, and imagery-specific quality elements
+
+3. **Enable Semantic Web Interoperability**: Incorporate W3C PROV (Provenance) model support with JSON-LD context for RDF uplift and SPARQL queries
+
+4. **Ensure Validation and Compliance**: Develop comprehensive validation frameworks including JSON Schema validation, SHACL semantic validation, and automated CI/CD pipelines
+
+5. **Demonstrate Standards Interoperability**: Assess and document compatibility with related metadata standards including NASA UMM, OGC TrainingDML-AI, and DGIWG metadata profiles
+
+6. **Align with OGC Building Blocks**: Structure the extension for submission to OGC Building Blocks registry with proper references to existing building blocks (e.g., `ogc.ogc-utils.prov`)
+
+=== Scope
+
+This Engineering Report covers the following aspects of the STAC Liability and Claims Extension:
+
+**In Scope:**
+
+* Extension schema design and field definitions
+* ISO 19115/19115-4 quality metadata integration
+* W3C PROV provenance model implementation
+* JSON-LD context for semantic web integration
+* SHACL validation rules for provenance graphs
+* Interoperability assessments with NASA UMM and TrainingDML-AI
+* CI/CD pipeline implementation
+* Example implementations for common use cases
+* OGC Building Blocks alignment
+
+**Out of Scope:**
+
+* STAC API implementation details (covered in separate STAC-API-COMPATIBILITY.md document)
+* Specific insurance claim processing workflows
+* Legal interpretation of liability laws across jurisdictions
+* Blockchain or distributed ledger integration (mentioned as future work)
+* Client-side visualization tools
+* Authentication and authorization mechanisms (handled at API level)
+
+=== Document Structure
+
+This Engineering Report is organized as follows:
+
+* **Section 2 (Topics)**: Detailed technical description of extension architecture, schema design, validation approaches, and interoperability analysis
+* **Section 3 (Outlook)**: Future development roadmap and potential enhancements
+* **Section 4 (Security, Privacy and Ethical Considerations)**: Discussion of security implications, privacy concerns, and ethical considerations
+* **Annex A**: Comprehensive bibliography of referenced standards and specifications
+* **Annex B**: Abbreviations and acronyms
+
+=== Intended Audience
+
+This Engineering Report is intended for:
+
+* **Standards Developers**: Organizations implementing STAC extensions or developing related geospatial metadata standards
+* **Software Engineers**: Developers building STAC catalogs, APIs, or client applications that need to handle liability and provenance metadata
+* **Data Managers**: GIS professionals responsible for metadata management in liability-sensitive environments
+* **Policy Makers**: Government agencies establishing data governance frameworks for geospatial information
+* **Researchers**: Academic institutions investigating provenance tracking and data quality frameworks

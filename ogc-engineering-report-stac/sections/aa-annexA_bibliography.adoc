@@ -1,0 +1,42 @@
+[appendix,obligation=informative]
+[[annex-bibliography]]
+[bibliography]
+== Bibliography
+
+* [[[stac-spec,STAC Specification]]], Radiant Earth Foundation: STAC Specification 1.0.0, https://github.com/radiantearth/stac-spec
+
+* [[[iso19115,ISO 19115-1:2014]]], ISO: ISO 19115-1:2014 Geographic information — Metadata — Part 1: Fundamentals
+
+* [[[iso19115-4,ISO 19115-4:2024]]], ISO: ISO 19115-4:2024 Geographic information — Metadata — Part 4: Imagery and gridded data
+
+* [[[prov-dm,W3C PROV-DM]]], W3C: PROV-DM: The PROV Data Model, https://www.w3.org/TR/prov-dm/
+
+* [[[prov-json,W3C PROV-JSON]]], W3C: PROV-JSON: The PROV JSON Serialization, https://www.w3.org/Submission/prov-json/
+
+* [[[shacl,W3C SHACL]]], W3C: Shapes Constraint Language (SHACL), https://www.w3.org/TR/shacl/
+
+* [[[json-ld,W3C JSON-LD]]], W3C: JSON-LD 1.1 - A JSON-based Serialization for Linked Data, https://www.w3.org/TR/json-ld11/
+
+* [[[ogc-bblocks,OGC Building Blocks]]], OGC: OGC Building Blocks Registry, https://github.com/opengeospatial/bblocks
+
+* [[[nasa-umm,NASA UMM]]], NASA: Unified Metadata Model (UMM), https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/cmr/umm
+
+* [[[trainingdml-ai,OGC TrainingDML-AI]]], OGC: OGC TrainingDML-AI Part 1: Conceptual Model Standard, https://docs.ogc.org/is/23-008r5/23-008r5.html
+
+* [[[dgiwg-metadata,DGIWG]]], Defence Geospatial Information Working Group: DGIWG Metadata Foundation (DMTF), https://www.dgiwg.org/dgiwg-standards/
+
+* [[[rfc3339,RFC 3339]]], IETF: RFC 3339 - Date and Time on the Internet: Timestamps, https://www.rfc-editor.org/rfc/rfc3339
+
+* [[[iso4217,ISO 4217]]], ISO: ISO 4217 Currency codes, https://www.iso.org/iso-4217-currency-codes.html
+
+* [[[geojson,RFC 7946]]], IETF: RFC 7946 - The GeoJSON Format, https://www.rfc-editor.org/rfc/rfc7946
+
+* [[[json-schema,JSON Schema]]], JSON Schema: JSON Schema Draft 2020-12, https://json-schema.org/draft/2020-12/schema
+
+* [[[schema-org,Schema.org]]], Schema.org: Structured Data Vocabulary, https://schema.org/
+
+* [[[fibo,FIBO]]], EDM Council: Financial Industry Business Ontology, https://spec.edmcouncil.org/fibo/
+
+* [[[dqv,W3C DQV]]], W3C: Data Quality Vocabulary, https://www.w3.org/TR/vocab-dqv/
+
+* [[[sparql,W3C SPARQL]]], W3C: SPARQL 1.1 Query Language, https://www.w3.org/TR/sparql11-query/

@@ -1,0 +1,42 @@
+[appendix,obligation="normative"]
+[[annex-reference]]
+== Abbreviations/Acronyms
+
+[heading=Abbreviated Terms]
+=== {blank}
+
+API:: Application Programming Interface
+CCPA:: California Consumer Privacy Act
+CI/CD:: Continuous Integration/Continuous Deployment
+CRS:: Coordinate Reference System
+DGIWG:: Defence Geospatial Information Working Group
+DMTF:: DGIWG Metadata Foundation
+DQV:: Data Quality Vocabulary (W3C)
+EPSG:: European Petroleum Survey Group (geodetic parameter dataset)
+FIBO:: Financial Industry Business Ontology
+GDPR:: General Data Protection Regulation
+GeoJSON:: Geographic JavaScript Object Notation
+GIS:: Geographic Information System
+ISO:: International Organization for Standardization
+JSON:: JavaScript Object Notation
+JSON-LD:: JSON for Linking Data
+JSON Schema:: JSON Schema specification for validation
+ML:: Machine Learning
+NASA:: National Aeronautics and Space Administration
+OGC:: Open Geospatial Consortium
+PII:: Personally Identifiable Information
+PROV:: Provenance (W3C standard)
+PROV-DM:: PROV Data Model
+PROV-JSON:: PROV JSON Serialization
+RDF:: Resource Description Framework
+RFC:: Request for Comments
+RMSE:: Root Mean Square Error
+SHACL:: Shapes Constraint Language
+SPARQL:: SPARQL Protocol and RDF Query Language
+STAC:: SpatioTemporal Asset Catalog
+TrainingDML-AI:: OGC Training Data Markup Language for AI
+Trivy:: Security vulnerability scanner
+UMM:: Unified Metadata Model (NASA)
+URI:: Uniform Resource Identifier
+W3C:: World Wide Web Consortium
+XML:: Extensible Markup Language

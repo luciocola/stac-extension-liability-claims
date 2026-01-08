@@ -1,0 +1,36 @@
+[security]
+== Security, Privacy and Ethical Considerations 
+
+=== Security Considerations
+
+**Access Control**: Liability claims often contain sensitive information including personal identifiable information (PII), financial data, and confidential legal strategy. The extension deliberately does not implement access control mechanisms at the metadata level, instead deferring to STAC API authentication and authorization frameworks (OAuth 2.0, OpenID Connect). Organizations MUST implement proper API-level security.
+
+**Data Classification**: The `liability:claim_status` and related fields may reveal ongoing legal proceedings. Organizations should implement data classification policies and restrict access to items with sensitive claim statuses (e.g., `under_investigation`, `pending`) to authorized personnel only.
+
+**Provenance Integrity**: PROV graphs and ISO 19115 lineage can be targets for tampering in legal disputes. Organizations should consider digital signatures or blockchain anchoring for provenance metadata requiring legal admissibility.
+
+=== Privacy Considerations
+
+**Personal Information**: The `liability:affected_parties` field may contain personal contact information. Organizations MUST comply with applicable privacy regulations (GDPR, CCPA, etc.) and implement:
+- Data minimization: collect only necessary contact information
+- Consent management: obtain appropriate consent for PII storage
+- Right to erasure: implement deletion workflows for affected parties
+- Anonymization: consider pseudonymization for archived claims
+
+**Geographic Privacy**: Precise coverage areas (`liability:coverage_area` geometry) may reveal locations of individuals or sensitive infrastructure. Consider spatial generalization (reducing geometry precision) for public-facing catalogs.
+
+**Financial Privacy**: Damage estimates (`liability:damages_estimated`) and currency information may be confidential during active legal proceedings. Implement field-level access controls or omit sensitive financial data from public metadata.
+
+=== Ethical Considerations
+
+**Transparency vs Confidentiality**: The extension promotes transparency through comprehensive provenance tracking, but organizations must balance this with legitimate confidentiality concerns in active legal proceedings. Recommendation: use Collection-level embargo metadata to restrict access during investigation phases.
+
+**Algorithmic Accountability**: When using provenance metadata to document automated decision-making (e.g., AI-based damage assessment), organizations have ethical obligations to ensure:
+- Algorithmic fairness and bias mitigation
+- Explainability of automated assessments
+- Human oversight for high-stakes decisions
+- Documentation of training data provenance for ML models
+
+**Environmental Justice**: Environmental liability claims often disproportionately affect marginalized communities. Organizations using this extension for environmental incident tracking should ensure equitable access to claim information and avoid perpetuating information asymmetries.
+
+**Data Stewardship**: Long-term preservation of liability metadata carries ethical responsibilities for future accountability. Organizations should implement retention policies that balance legal requirements with storage costs and privacy rights.

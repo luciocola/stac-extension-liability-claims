@@ -1,0 +1,49 @@
+[executive_summary]
+== Executive Summary
+
+[overview]
+== Overview
+
+This Engineering Report documents the development and implementation of the STAC Liability and Claims Extension (v1.1.0), a comprehensive specification for documenting liability information, legal claims, and provenance metadata in geospatial data catalogs. The extension addresses critical gaps in tracking legal accountability, incident documentation, and data quality lineage within the SpatioTemporal Asset Catalog (STAC) ecosystem.
+
+The extension integrates three major standardization efforts: ISO 19115/19115-4 for geospatial data quality metadata, W3C PROV for semantic web provenance tracking, and OGC Building Blocks for interoperable geospatial components. This multi-standard approach enables organizations to maintain comprehensive audit trails, satisfy legal compliance requirements, and integrate with both traditional geospatial workflows and modern semantic web infrastructures.
+
+Key achievements include full JSON Schema validation, SHACL semantic validation rules, automated CI/CD pipelines, and demonstrated interoperability with NASA UMM (5/5 compatibility) and OGC TrainingDML-AI (4/5 compatibility) metadata standards.
+
+[future_outlook]
+== Future Outlook
+
+The STAC Liability and Claims Extension represents a significant advancement in geospatial metadata standards by bridging traditional ISO-based quality frameworks with emerging semantic web technologies. Future developments will focus on:
+
+1. **Enhanced STAC API Integration**: Development of filtering and query extensions specifically for liability claims and provenance graphs
+2. **Machine Learning Integration**: Expansion of quality metadata to support ML model training datasets and automated quality assessment
+3. **Blockchain Provenance**: Integration with distributed ledger technologies for immutable provenance records
+4. **Real-time Claims Processing**: Support for streaming STAC catalogs with live liability claim updates
+
+The extension is positioned for submission to the OGC Building Blocks registry, which will further enhance its adoption and standardization across the geospatial community.
+
+[value_proposition]
+== Value Proposition
+
+Organizations managing geospatial data face increasing legal, regulatory, and operational requirements for transparency and accountability. The STAC Liability and Claims Extension provides:
+
+**For Government Agencies**: Comprehensive audit trails for environmental incidents, disaster response operations, and public safety investigations. Full compliance with ISO 19115 enables seamless integration with existing GIS infrastructure.
+
+**For Insurance Companies**: Structured geospatial claims management with precise coverage areas, damage assessment tracking, and evidence linking. Integration with standard STAC APIs enables automated claims processing workflows.
+
+**For Research Institutions**: Complete data provenance tracking from raw observations through processing pipelines to published datasets. W3C PROV support enables semantic queries across distributed research data repositories.
+
+**For Commercial Data Providers**: Standardized liability documentation protects against legal exposure while demonstrating data quality through ISO 19115-compliant quality reports. Improved customer confidence through transparent provenance disclosure.
+
+The extension's dual support for ISO 19115 and W3C PROV ensures organizations can maintain a single source of truth while meeting diverse stakeholder requirements across geospatial and semantic web domains.
+
+[contributors]
+== Contributors
+
+All questions regarding this submission should be directed to the editor or the submitters:
+
+|===
+|Name |Affiliation |OGC member
+
+|Lucio Colaiacomo |Secure Dimensions GmbH | Yes
+|===

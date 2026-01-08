@@ -26,11 +26,16 @@ This extension supports several important use cases:
 
 This extension includes comprehensive support for data quality reporting based on international standards:
 
-- **ISO 19115** - Core data quality elements (completeness, logical consistency, positional accuracy, temporal accuracy, thematic accuracy, attribute accuracy, topological consistency, lineage)
-- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, snow coverage, processing level, usability assessment)
+- **ISO 19157-1:2023** (RECOMMENDED) - Comprehensive data quality framework with metaquality, usability, and standardized evaluation methods. Provides registered quality measures with unique identifiers for consistent reporting across organizations.
+- **ISO 19115** - Core data quality elements (completeness, logical consistency, positional accuracy, temporal accuracy, thematic accuracy, attribute accuracy, topological consistency, lineage) - maintained for backward compatibility
+- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, snow coverage, processing level, usability assessment) - maintained for backward compatibility
 - **DGIWG** - Defence Geospatial Information Working Group quality elements (absolute/relative positional accuracy, gridded data accuracy, quantitative/non-quantitative attribute correctness, format/domain consistency, temporal validity)
 
-Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts ISO 19115-compliant quality reports. A standalone JSON Schema for quality reports is provided at `json-schema/iso19115-quality.json`.
+**Migration**: Existing ISO 19115/19115-4 quality reports are fully supported. Organizations can migrate to ISO 19157-1:2023 for enhanced capabilities including metaquality (quality of quality), usability assessment, and standardized measure identifiers. See [ISO19157-INTEGRATION.md](ISO19157-INTEGRATION.md) for detailed migration guide.
+
+Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts both ISO 19157-1:2023 and ISO 19115-compliant quality reports. Standalone JSON Schemas are provided:
+- `json-schema/iso19157-quality.json` (ISO 19157-1:2023 - RECOMMENDED)
+- `json-schema/iso19115-quality.json` (ISO 19115/19115-4 - backward compatibility)
 
 ### Enhanced Lineage Support (ISO 19115-4 Aligned)
 
@@ -65,6 +70,19 @@ See `examples/item-with-iso19115-lineage.json` for a complete example showing mu
 - **Interoperability**: Bridge between geospatial (ISO 19115) and semantic web (PROV) communities
 
 Both `liability:quality` (ISO 19115) and `liability:prov` (W3C PROV) can be used together for maximum interoperability. See [PROV-ISO19115-MAPPING.md](PROV-ISO19115-MAPPING.md) for detailed mapping guidelines and conversion strategies.
+
+### Verifiable Credentials 2.0 Support
+
+**NEW in v1.2.0:** The extension now supports W3C Verifiable Credentials Data Model 2.0 for cryptographically verifiable liability claims, quality reports, and provenance information through the `liability:verifiable_credentials` field. This enables:
+
+- **Cryptographic Verification**: Digital signatures proving authenticity of claims and quality assessments
+- **Selective Disclosure**: Reveal only necessary information using SD-JWT or BBS+ signatures
+- **Decentralized Trust**: Use DIDs (Decentralized Identifiers) for issuer/subject identification
+- **Tamper Evidence**: Detect unauthorized modifications to metadata
+- **Compliance Evidence**: Verifiable proof of ISO 19157 quality standards compliance
+- **Legal Standing**: Digitally signed liability claims with non-repudiation
+
+Verifiable Credentials can wrap existing `liability:quality`, `liability:prov`, or claim metadata to provide cryptographic assurance. See [VC-2.0-INTEGRATION.md](VC-2.0-INTEGRATION.md) for detailed integration guide, examples, and best practices.
 
 ### Interoperability with Metadata Standards
 
@@ -103,8 +121,9 @@ The fields in the table below can be used in these parts of STAC documents:
 | liability:evidence_refs           | \[string\]                | References to evidence documents, images, or other supporting materials (URIs or STAC Asset keys) |
 | liability:notes                   | string                    | Additional notes or comments about the claim |
 | liability:origin                  | string                    | Origin or source organization of the claim data |
-| liability:quality                 | Quality Report Object or \[Quality Report Object\] | ISO 19115/19115-4/DGIWG-compliant data quality report(s). See [Quality Schema](json-schema/iso19115-quality.json) |
+| liability:quality                 | Quality Report Object or \[Quality Report Object\] | ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4/DGIWG-compliant data quality report(s). See [ISO 19157 Schema](json-schema/iso19157-quality.json) and [ISO 19115 Schema](json-schema/iso19115-quality.json). ISO 19157 provides metaquality, usability assessment, and standardized measures. Both formats maintain full provenance compatibility with W3C PROV. |
 | liability:prov                    | PROV Document Object      | **NEW in v1.1.0.** W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. See [W3C PROV](https://www.w3.org/TR/prov-overview/) |
+| liability:verifiable_credentials  | \[Verifiable Credential Object\] | **NEW in v1.2.0.** Array of W3C Verifiable Credentials 2.0 providing cryptographically signed assertions about quality, provenance, or liability claims. See [VC-2.0-INTEGRATION.md](VC-2.0-INTEGRATION.md) |
 
 ### Asset-Level Fields
 
@@ -226,14 +245,14 @@ security:
 
 **NEW in v1.1.0:** The `liability:prov` field provides W3C PROV-JSON compliant provenance tracking alongside ISO 19115 lineage. This enables interoperability with W3C PROV tools and semantic web applications.
 
-#### PROV vs ISO 19115 Lineage
+#### PROV vs ISO 19157 / ISO 19115 Lineage
 
-Both fields serve provenance needs but use different models:
+Both fields serve provenance and quality needs but use different models:
 
-- **`liability:quality` (ISO 19115 lineage)**: Geospatial standard focused on data quality and processing history. Preferred for GIS workflows.
-- **`liability:prov` (W3C PROV)**: Semantic web standard for general provenance using entities, activities, and agents. Enables integration with PROV tools.
+- **`liability:quality` (ISO 19157 / ISO 19115 lineage)**: Geospatial standards focused on data quality and processing history. ISO 19157-1:2023 recommended for comprehensive quality framework with metaquality and usability assessment. ISO 19115 maintained for backward compatibility. Preferred for GIS workflows.
+- **`liability:prov` (W3C PROV)**: Semantic web standard for machine-readable provenance graphs using entities, activities, and agents. Enables SPARQL queries and RDF integration. Preferred for linked data and semantic web applications.
 
-You can use **both fields together** for maximum interoperability.
+You can use **both fields together** for maximum interoperability. Both formats maintain full **identity and provenance compatibility** - quality reports can be tracked as PROV entities, and quality assessments as PROV activities. See [ISO19157-INTEGRATION.md](ISO19157-INTEGRATION.md) for detailed integration guidance.
 
 #### PROV Core Concepts
 

@@ -226,20 +226,25 @@
         ,
         "liability:quality": {
           "oneOf": [
+            {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"},
+            {
+              "type": "array",
+              "items": {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"}
+            },
             {"$ref": "#/definitions/iso19115_quality_report"},
             {
               "type": "array",
               "items": {"$ref": "#/definitions/iso19115_quality_report"}
             }
           ],
-          "description": "ISO 19115-like data quality report(s) and elements (simplified representation). Use ISO 19115 structures where possible."
+          "description": "Data quality report(s) using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
         },
         "liability:prov": {
           "oneOf": [
             { "$ref": "#/definitions/prov_document" },
             { "$ref": "prov-ref.json#" }
           ],
-          "description": "W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. For OGC Building Blocks compatibility, prefer referencing ogc.ogc-utils.prov"
+          "description": "W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. For OGC Building Blocks compatibility, prefer referencing ogc.ogc-utils.prov. Maintains identity and provenance compatibility across all quality frameworks."
         }
       },
       "patternProperties": {
@@ -286,13 +291,18 @@
         },
         "liability:quality": {
           "oneOf": [
+            {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"},
+            {
+              "type": "array",
+              "items": {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"}
+            },
             {"$ref": "#/definitions/iso19115_quality_report"},
             {
               "type": "array",
               "items": {"$ref": "#/definitions/iso19115_quality_report"}
             }
           ],
-          "description": "ISO 19115-like data quality report(s)"
+          "description": "Data quality report(s) using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility)"
         },
         "liability:access_control": {
           "type": "object",
