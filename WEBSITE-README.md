@@ -7,7 +7,10 @@ This is the official company website for 4113Engineering, showcasing our experti
 The website highlights:
 - Company expertise in geospatial standards (ISO 19115, OGC, W3C PROV)
 - STAC extension development and implementation
-- Featured projects including the STAC Liability and Claims Extension
+- Featured projects including:
+  - STAC Liability and Claims Extension
+  - Common Operating Picture (COP)
+  - COP Exporter
 - Technical capabilities in data quality, provenance, and lineage
 - Use cases for various industries and applications
 
@@ -51,6 +54,8 @@ The website will be available at: `https://luciocola.github.io/stac-extension-li
 
 The website is based on the work done in the luciocola repositories, particularly:
 - STAC Liability and Claims Extension
+- Common Operating Picture (COP)
+- COP Exporter
 - ISO 19115 and ISO 19115-4 compliance
 - W3C PROV provenance support
 - OGC Building Blocks standards
@@ -58,9 +63,12 @@ The website is based on the work done in the luciocola repositories, particularl
 ## Contact
 
 - **Owner**: Lucio Colaiacomo (@luciocola)
-- **Website**: https://secure-dimensions.de
+- **Website**: https://4113engineering.com
 - **GitHub**: https://github.com/luciocola
-- **Repository**: https://github.com/luciocola/stac-extension-liability-claims
+- **Repositories**: 
+  - https://github.com/luciocola/stac-extension-liability-claims
+  - https://github.com/luciocola/common-operating-picture
+  - https://github.com/luciocola/copexporter
 
 ## License
 
