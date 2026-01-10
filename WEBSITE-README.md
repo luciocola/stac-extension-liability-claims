@@ -10,7 +10,7 @@ The website highlights:
 - Featured projects including:
   - STAC Liability and Claims Extension
   - Common Operating Picture (COP)
-  - COP Exporter
+  - Share Common Operating Picture
 - Technical capabilities in data quality, provenance, and lineage
 - Use cases for various industries and applications
 
@@ -55,7 +55,7 @@ The website will be available at: `https://luciocola.github.io/stac-extension-li
 The website is based on the work done in the luciocola repositories, particularly:
 - STAC Liability and Claims Extension
 - Common Operating Picture (COP)
-- COP Exporter
+- Share Common Operating Picture
 - ISO 19115 and ISO 19115-4 compliance
 - W3C PROV provenance support
 - OGC Building Blocks standards
@@ -68,7 +68,7 @@ The website is based on the work done in the luciocola repositories, particularl
 - **Repositories**: 
   - https://github.com/luciocola/stac-extension-liability-claims
   - https://github.com/luciocola/common-operating-picture
-  - https://github.com/luciocola/copexporter
+  - https://github.com/luciocola/share-common-operating-picture
 
 ## License
 
