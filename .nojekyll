@@ -1,0 +1,9 @@
+# GitHub Pages Configuration
+
+# This file helps GitHub Pages recognize this as a static site
+# The website can be accessed at: https://luciocola.github.io/stac-extension-liability-claims/
+
+# Main website files:
+# - index.html (main page)
+# - styles.css (stylesheet)
+# - WEBSITE-README.md (documentation)
