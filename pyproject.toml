@@ -42,3 +42,8 @@ Issues = "https://github.com/yourusername/stac-extension-liability-claims/issues
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# This is a STAC extension providing JSON schemas and documentation only
+# No Python packages to install
+packages = []
