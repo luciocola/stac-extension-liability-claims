@@ -303,6 +303,9 @@ jobs:
   security-scan:
     name: Security and Dependency Scan
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
 
     steps:
       - name: Checkout code
