@@ -29,7 +29,9 @@ ISO 19157-1:2023 introduces several advanced quality categories beyond ISO 19115
 ISO 19157 provides a catalog of **standardized data quality measures** with unique identifiers:
 
 - Each measure has a numeric code (e.g., Measure 28 = "Mean value of positional uncertainties")
-- Measures defined in official ISO 19157 register: https://iso19157.quality.fgi.fi/
+- Measures defined in ISO 19157-3:2026 Data Quality Measures Register (expected April 2026)
+- Official register URI: https://def.isotc211.org/dataqualitymeasures/ (permanent)
+- Development register: https://defs-hosted.opengis.net/prez-hosted/catalogs/hosted:iso-19157-3
 - Enables consistent quality reporting across organizations
 
 ### Structured Evaluation Methods
@@ -234,7 +236,7 @@ Prefer ISO 19157 registered measures with official codes:
 }
 ```
 
-Reference: https://iso19157.quality.fgi.fi/
+Reference: ISO 19157-3 Data Quality Measures Register - https://def.isotc211.org/dataqualitymeasures/ (permanent URI, expected April 2026)
 
 ### 2. Document Evaluation Methods
 
@@ -353,11 +355,16 @@ pyshacl -s shacl/liability-claims-shapes.ttl \
 
 ## Standards References
 
-- **ISO 19157-1:2023**: Geographic information - Data quality - Part 1: General requirements
+- **ISO 19157-1:2023**: Geographic information - Data quality - Part 1: General requirements (published)
+- **ISO 19157-3:2026**: Geographic information - Data quality - Part 3: Data quality measures register (expected April 2026, final draft stage)
 - **ISO 19115-1:2014**: Geographic information - Metadata - Part 1: Fundamentals
 - **ISO 19115-4**: Geographic information - Metadata - Part 4: Imagery and gridded data (backward compatibility)
 - **W3C PROV**: PROV Data Model (https://www.w3.org/TR/prov-dm/)
-- **ISO 19157 Register**: https://iso19157.quality.fgi.fi/
+
+### Data Quality Measures Register
+
+- **Permanent URI**: https://def.isotc211.org/dataqualitymeasures/ (will resolve after ISO 19157-3 publication in April 2026)
+- **Development Register**: https://defs-hosted.opengis.net/prez-hosted/catalogs/hosted:iso-19157-3 (currently active)
 
 ## Support
 

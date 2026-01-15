@@ -3,14 +3,26 @@
 - **Title:** Liability and Claims
 - **Identifier:** <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json>
 - **Field Name Prefix:** liability
-- **Scope:** Item, Collection
+- **Scope:** Item, Collection, Assets, Item Assets, Summaries
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @luciocola Https://secure-dimensions.de
 - **Version**: 1.1.0
 - **JSON-LD Context:** [context.jsonld](./context.jsonld)
 - **OGC Compliance:** Aligned with OGC Building Blocks standards (see [OGC-COMPLIANCE-ACTIONS.md](./OGC-COMPLIANCE-ACTIONS.md))
+- **T21-DQ4IPT Compatibility:** Fully compatible with OGC Testbed-21 Data Quality Extension (see [T21-DQ4IPT-COMPATIBILITY-REPORT.md](./T21-DQ4IPT-COMPATIBILITY-REPORT.md))
 
 This extension provides fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, and insurance information related to spatial data assets.
+
+## Compatibility with OGC T21-DQ4IPT
+
+This extension is **fully compatible** with the [OGC Testbed-21 Data Quality for Identity, Provenance, and Trust (T21-DQ4IPT)](https://github.com/xxx/dq) extension. Both extensions can be used together in the same STAC Items and Collections for comprehensive metadata:
+
+- **T21-DQ4IPT (`dq:quality`)** - Technical ISO 19157 data quality reporting
+- **Liability-Claims (`liability:quality`)** - Legal/regulatory quality + ISO 19115 backward compatibility
+- **Liability-Claims (`liability:prov`)** - W3C PROV provenance (complements T21-DQ4IPT's quality tracking)
+- **Liability-Claims security fields** - Classification and access control
+
+**Compatibility Rating:** 4.5/5 stars - See [T21-DQ4IPT-COMPATIBILITY-REPORT.md](./T21-DQ4IPT-COMPATIBILITY-REPORT.md) for detailed analysis and [examples/dual-extension-item.json](./examples/dual-extension-item.json) for working example.
 
 ## Use Cases
 

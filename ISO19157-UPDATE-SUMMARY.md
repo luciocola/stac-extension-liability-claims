@@ -309,7 +309,7 @@ See [ISO19157-INTEGRATION.md](ISO19157-INTEGRATION.md) for detailed migration ex
 ## Standards References
 
 - **ISO 19157-1:2023**: Geographic information - Data quality - Part 1: General requirements
-- **ISO 19157 Register**: https://iso19157.quality.fgi.fi/ (Official measure catalog)
+- **ISO 19157-3 Data Quality Measures Register**: https://def.isotc211.org/dataqualitymeasures/ (permanent URI, expected publication April 2026)
 - **ISO 19115-1:2014**: Geographic information - Metadata (backward compatibility)
 - **W3C PROV**: Provenance Data Model - https://www.w3.org/TR/prov-dm/
 

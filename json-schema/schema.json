@@ -53,6 +53,15 @@
           "properties": {
             "type": {
               "const": "Collection"
+            },
+            "summaries": {
+              "$ref": "#/definitions/summaries"
+            },
+            "item_assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/asset_all_fields"
+              }
             }
           }
         },
@@ -1020,6 +1029,74 @@
         }
       },
       "additionalProperties": true
+    },
+    "summaries": {
+      "$comment": "Collection-level summaries of liability-claims fields (aligned with T21-DQ4IPT pattern)",
+      "type": "object",
+      "description": "Summarized information about the range of values in the Collection for liability-claims fields",
+      "properties": {
+        "liability:claim_status": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["pending", "under_investigation", "accepted", "rejected", "settled", "closed"]
+          },
+          "description": "Array of unique claim status values in the collection"
+        },
+        "liability:claim_type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["environmental", "property_damage", "personal_injury", "financial", "operational", "other"]
+          },
+          "description": "Array of unique claim type values in the collection"
+        },
+        "liability:security_classification": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["public", "internal", "confidential", "restricted", "classified"]
+          },
+          "description": "Array of unique security classification levels in the collection"
+        },
+        "liability:responsible_party": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique responsible parties in the collection"
+        },
+        "liability:damages_estimated": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "minimum": {"type": "number", "description": "Minimum estimated damages"},
+                "maximum": {"type": "number", "description": "Maximum estimated damages"}
+              },
+              "required": ["minimum", "maximum"]
+            },
+            {
+              "type": "array",
+              "items": {"type": "number"},
+              "description": "Array of unique damage estimate values"
+            }
+          ],
+          "description": "Range or array of damage estimates in the collection"
+        },
+        "liability:legal_jurisdiction": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique legal jurisdictions in the collection"
+        },
+        "liability:origin": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique data origins in the collection"
+        }
+      },
+      "patternProperties": {
+        "^(?!liability:)": {}
+      },
+      "additionalProperties": false
     }
   }
 }
