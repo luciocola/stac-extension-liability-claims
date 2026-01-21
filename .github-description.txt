@@ -1,0 +1,1 @@
+STAC Extension for Liability Claims, Data Quality (ISO 19157/19115), and Provenance (W3C PROV, Verifiable Credentials)

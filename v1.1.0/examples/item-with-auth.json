@@ -1,0 +1,188 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "environmental-incident-2024-secure",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2024-11-15T10:30:00Z",
+    "start_datetime": "2024-11-15T08:00:00Z",
+    "end_datetime": "2024-11-15T18:00:00Z",
+    "liability:claim_id": "ENV-2024-SECURE-001",
+    "liability:claim_type": "environmental",
+    "liability:claim_status": "under_investigation",
+    "liability:claim_date": "2024-11-20T09:00:00Z",
+    "liability:incident_date": "2024-11-15T10:30:00Z",
+    "liability:responsible_party": "Industrial Corp XYZ",
+    "liability:affected_parties": [
+      {
+        "name": "Local Municipality",
+        "role": "claimant",
+        "contact": "claims@municipality.gov"
+      }
+    ],
+    "liability:damages_estimated": 500000,
+    "liability:damages_currency": "USD",
+    "liability:legal_jurisdiction": "State of California",
+    "liability:insurance_provider": "Global Insurance Inc.",
+    "liability:policy_number": "ENV-POL-123456",
+    "liability:evidence_refs": [
+      "satellite-imagery-secure",
+      "investigation-report"
+    ],
+    "liability:notes": "Confidential investigation - restricted access required",
+    "liability:origin": "Environmental Protection Agency"
+  },
+  "assets": {
+    "satellite-imagery-secure": {
+      "href": "https://assets.claims.example.com/api/v1/evidence/sat-2024-11-15.tif",
+      "title": "Satellite Imagery - Confidential Evidence",
+      "type": "image/tiff; application=geotiff",
+      "roles": ["data", "evidence"],
+      "file:checksum": "1220e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "liability:security_classification": "confidential",
+      "liability:access_restrictions": [
+        "legal_hold",
+        "authorized_investigators_only",
+        "privacy_act_protected"
+      ],
+      "liability:access_control": {
+        "required_auth": true,
+        "auth_methods": ["apiKey", "oauth2"],
+        "auth_schemes": {
+          "apiKey": {
+            "type": "apiKey",
+            "description": "API Key authentication for authorized investigators",
+            "in": "header",
+            "name": "X-Claims-API-Key"
+          }
+        }
+      },
+      "liability:alternate": {
+        "API_Key_Access": {
+          "href": "https://assets.claims.example.com/api/v1/evidence/sat-2024-11-15.tif",
+          "title": "Download Asset via API Key",
+          "description": "Download evidence using X-Claims-API-Key header. Obtain key from https://claims.example.com/auth/api-key",
+          "type": "image/tiff; application=geotiff",
+          "auth": {
+            "refs": ["apiKey"],
+            "roles": ["investigator", "legal_counsel"],
+            "schemes": {
+              "description": "X-Claims-API-Key authenticates authorized personnel for evidence access",
+              "type": "apiKey",
+              "in": "header",
+              "name": "X-Claims-API-Key",
+              "required": true
+            }
+          }
+        },
+        "Browser_Session": {
+          "href": "https://portal.claims.example.com/evidence/sat-2024-11-15.tif",
+          "title": "Download via Authenticated Portal Session",
+          "description": "Login at https://portal.claims.example.com to establish session, then access evidence",
+          "type": "image/tiff; application=geotiff"
+        }
+      }
+    },
+    "investigation-report": {
+      "href": "https://assets.claims.example.com/api/v1/reports/inv-2024-001.pdf",
+      "title": "Investigation Report - Restricted",
+      "type": "application/pdf",
+      "roles": ["metadata", "evidence"],
+      "file:checksum": "1220a3c5e1234567890abcdef1234567890abcdef1234567890abcdef123456789",
+      "liability:security_classification": "restricted",
+      "liability:access_restrictions": [
+        "attorney_client_privilege",
+        "work_product_doctrine",
+        "court_sealed"
+      ],
+      "liability:access_control": {
+        "required_auth": true,
+        "auth_methods": ["oauth2"],
+        "auth_schemes": {
+          "oauth2": {
+            "type": "oauth2",
+            "description": "OAuth2 authentication for legal team access",
+            "flows": {
+              "authorizationCode": {
+                "authorizationUrl": "https://auth.claims.example.com/oauth/authorize",
+                "tokenUrl": "https://auth.claims.example.com/oauth/token",
+                "scopes": {
+                  "evidence:read": "Read evidence documents",
+                  "reports:read": "Read investigation reports"
+                }
+              }
+            }
+          }
+        }
+      },
+      "liability:alternate": {
+        "OAuth_Access": {
+          "href": "https://assets.claims.example.com/api/v1/reports/inv-2024-001.pdf",
+          "title": "Download via OAuth2 Token",
+          "description": "Obtain OAuth2 token with 'reports:read' scope and include as Bearer token in Authorization header",
+          "type": "application/pdf",
+          "auth": {
+            "refs": ["oauth2"],
+            "roles": ["legal_counsel", "claim_adjuster"],
+            "schemes": {
+              "description": "OAuth2 authorization for legal team members",
+              "type": "oauth2",
+              "flows": {
+                "authorizationCode": {
+                  "authorizationUrl": "https://auth.claims.example.com/oauth/authorize",
+                  "tokenUrl": "https://auth.claims.example.com/oauth/token",
+                  "method": "post",
+                  "parameters": {
+                    "scope": {
+                      "description": "Required OAuth scopes",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                        "type": "string",
+                        "examples": "reports:read evidence:read"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "public-notice": {
+      "href": "https://public.claims.example.com/notices/env-2024-001.html",
+      "title": "Public Notice",
+      "type": "text/html",
+      "roles": ["metadata"],
+      "liability:security_classification": "public",
+      "liability:access_control": {
+        "required_auth": false
+      }
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://stac.claims.example.com/items/environmental-incident-2024-secure.json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://stac.claims.example.com/collections/liability-claims-secure.json"
+    }
+  ]
+}

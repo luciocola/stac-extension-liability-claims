@@ -51,3 +51,27 @@ htmlcov/
 *.tmp
 *.bak
 T21-DQ4IPT-ycespb-main-patch-1c88-schemas/
+
+# GitHub Pages
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

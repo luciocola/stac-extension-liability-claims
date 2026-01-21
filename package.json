@@ -1,28 +1,38 @@
 {
   "name": "stac-liability-claims",
-  "version": "1.0.0",
-  "description": "STAC Extension for Liability and Claims Management",
-  "main": "json-schema/schema.json",
+  "version": "1.1.0",
+  "description": "STAC Extension for Liability and Claims Management with ISO 19157 Quality and W3C PROV Provenance",
+  "main": "v1.1.0/schema.json",
   "scripts": {
     "test": "npm run check-markdown && npm run check-examples",
     "check-markdown": "remark . -qf --no-stdout",
     "check-examples": "node scripts/validate-examples.js",
-    "format-examples": "prettier --write examples/*.json"
+    "format-examples": "prettier --write examples/*.json v1.1.0/examples/*.json"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/stac-extension-liability-claims.git"
+    "url": "https://github.com/stac-extensions/liability-claims.git"
   },
   "keywords": [
     "stac",
+    "stac-extension",
     "geospatial",
     "liability",
     "claims",
     "insurance",
-    "stac-extension"
+    "data-quality",
+    "iso-19157",
+    "iso-19115",
+    "provenance",
+    "w3c-prov",
+    "verifiable-credentials"
   ],
-  "author": "Your Name",
+  "author": "Lucio Colaiacomo <lucio@secure-dimensions.de>",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stac-extensions/liability-claims/issues"
+  },
+  "homepage": "https://stac-extensions.github.io/liability-claims/",
   "devDependencies": {
     "@stac-extensions/validate": "^1.0.0",
     "ajv": "^8.12.0",

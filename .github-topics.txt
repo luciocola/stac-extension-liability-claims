@@ -1,0 +1,15 @@
+stac
+stac-extension
+geospatial
+liability
+claims
+insurance
+data-quality
+iso-19157
+iso-19115
+provenance
+w3c-prov
+verifiable-credentials
+legal-compliance
+ogc
+stac-api
