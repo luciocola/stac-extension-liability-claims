@@ -236,18 +236,10 @@
         ,
         "liability:quality": {
           "oneOf": [
-            {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"},
-            {
-              "type": "array",
-              "items": {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"}
-            },
-            {"$ref": "#/definitions/iso19115_quality_report"},
-            {
-              "type": "array",
-              "items": {"$ref": "#/definitions/iso19115_quality_report"}
-            }
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-quality.json#/definitions/iso19157_data_quality"},
+            {"$ref": "#/definitions/iso19115_quality_report"}
           ],
-          "description": "Data quality report(s) using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
+          "description": "Data quality report using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
         },
         "liability:prov": {
           "oneOf": [
@@ -301,18 +293,10 @@
         },
         "liability:quality": {
           "oneOf": [
-            {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"},
-            {
-              "type": "array",
-              "items": {"$ref": "iso19157-quality.json#/definitions/iso19157_data_quality"}
-            },
-            {"$ref": "#/definitions/iso19115_quality_report"},
-            {
-              "type": "array",
-              "items": {"$ref": "#/definitions/iso19115_quality_report"}
-            }
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-quality.json#/definitions/iso19157_data_quality"},
+            {"$ref": "#/definitions/iso19115_quality_report"}
           ],
-          "description": "Data quality report(s) using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility)"
+          "description": "Data quality report using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility)"
         },
         "liability:access_control": {
           "type": "object",
@@ -1101,3 +1085,4 @@
     }
   }
 }
+
