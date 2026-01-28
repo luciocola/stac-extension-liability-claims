@@ -236,10 +236,7 @@
           "description": "Data quality report using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
         },
         "liability:prov": {
-          "oneOf": [
-            { "$ref": "#/definitions/prov_document" },
-            { "$ref": "prov-ref.json#" }
-          ],
+          "$ref": "#/definitions/prov_document",
           "description": "W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. For OGC Building Blocks compatibility, prefer referencing ogc.ogc-utils.prov. Maintains identity and provenance compatibility across all quality frameworks."
         }
       },
