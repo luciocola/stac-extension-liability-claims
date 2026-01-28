@@ -49,11 +49,18 @@
   "links": [
     {
       "rel": "self",
+      "type": "application/geo+json",
       "href": "https://example.com/stac/items/liability-claim-001.json"
     },
     {
       "rel": "root",
+      "type": "application/json",
       "href": "https://example.com/stac/catalog.json"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/liability-claims.json"
     }
   ],
   "assets": {
@@ -61,7 +68,9 @@
       "href": "https://example.com/evidence/photo1.jpg",
       "type": "image/jpeg",
       "title": "Site Photograph",
+      "roles": ["data"],
       "liability:security_classification": "internal"
     }
-  }
+  },
+  "collection": "liability-claims"
 }

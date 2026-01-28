@@ -1,7 +1,7 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
   ],
   "type": "Collection",
   "id": "liability-claims-2024",
@@ -15,6 +15,13 @@
     "environmental"
   ],
   "license": "proprietary",
+  "providers": [
+    {
+      "name": "National Claims Registry",
+      "roles": ["producer", "licensor"],
+      "url": "https://example.com"
+    }
+  ],
   "liability:origin": "NationalClaimsRegistry",
   "extent": {
     "spatial": {
@@ -38,24 +45,48 @@
       "financial",
       "operational"
     ],
-    "liability:damages_currency": [
-      "USD",
-      "EUR",
-      "GBP"
-    ]
+    "liability:security_classification": ["internal", "confidential"],
+    "liability:responsible_party": ["ABC Corporation", "XYZ Industries"],
+    "liability:damages_estimated": {
+      "minimum": 10000,
+      "maximum": 5000000
+    },
+    "liability:legal_jurisdiction": ["California, USA", "New York, USA"]
+  },
+  "item_assets": {
+    "evidence": {
+      "type": "image/jpeg",
+      "title": "Evidence Photograph",
+      "roles": ["data"],
+      "liability:security_classification": "internal"
+    },
+    "report": {
+      "type": "application/pdf",
+      "title": "Incident Report",
+      "roles": ["metadata"],
+      "liability:security_classification": "confidential"
+    }
   },
   "links": [
     {
       "rel": "self",
+      "type": "application/json",
       "href": "https://example.com/stac/collections/liability-claims-2024.json"
     },
     {
       "rel": "root",
+      "type": "application/json",
       "href": "https://example.com/stac/catalog.json"
     },
     {
+      "rel": "items",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/collections/liability-claims-2024/items"
+    },
+    {
       "rel": "item",
-      "href": "https://example.com/stac/items/environmental-incident-2024-001.json"
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/liability-claim-001.json"
     }
   ]
 }
