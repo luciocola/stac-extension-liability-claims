@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/iso19157-quality.json#",
+  "$id": "https://stac-extensions.github.io/liability-claims/json-schema/iso19157-quality.json#",
   "title": "ISO 19157-1:2023 Data Quality",
   "description": "JSON Schema for ISO 19157-1:2023 Geographic information - Data quality reports (aligned with 2023 revision)",
   "oneOf": [
@@ -11,7 +11,7 @@
     }
   ],
   "definitions": {
-    "dq_scope": {
+    "scope": {
       "type": "object",
       "description": "ISO 19157 DQ_Scope - Extent or characteristics of the data specified by the scope",
       "properties": {
@@ -49,17 +49,17 @@
       },
       "required": ["level"]
     },
-    "dq_result": {
+    "result": {
       "type": "object",
       "description": "ISO 19157 DQ_Result - Generalization of more specific result classes",
       "oneOf": [
-        {"$ref": "#/definitions/dq_quantitative_result"},
-        {"$ref": "#/definitions/dq_conformance_result"},
-        {"$ref": "#/definitions/dq_descriptive_result"},
-        {"$ref": "#/definitions/dq_coverage_result"}
+        {"$ref": "#/definitions/quantitative_result"},
+        {"$ref": "#/definitions/conformance_result"},
+        {"$ref": "#/definitions/descriptive_result"},
+        {"$ref": "#/definitions/coverage_result"}
       ]
     },
-    "dq_quantitative_result": {
+    "quantitative_result": {
       "type": "object",
       "description": "ISO 19157 DQ_QuantitativeResult - Numerical result from applying a data quality measure",
       "properties": {
@@ -84,7 +84,7 @@
       },
       "required": ["resultType", "value"]
     },
-    "dq_conformance_result": {
+    "conformance_result": {
       "type": "object",
       "description": "ISO 19157 DQ_ConformanceResult - Result of a conformance test",
       "properties": {
@@ -112,7 +112,7 @@
       },
       "required": ["resultType", "specification", "pass"]
     },
-    "dq_descriptive_result": {
+    "descriptive_result": {
       "type": "object",
       "description": "ISO 19157 DQ_DescriptiveResult - Textual expression of a data quality result",
       "properties": {
@@ -124,7 +124,7 @@
       },
       "required": ["resultType", "statement"]
     },
-    "dq_coverage_result": {
+    "coverage_result": {
       "type": "object",
       "description": "ISO 19157 DQ_CoverageResult - Result of a data quality measure in the form of coverage",
       "properties": {
@@ -146,7 +146,7 @@
       },
       "required": ["resultType", "spatialRepresentationType"]
     },
-    "dq_measure_reference": {
+    "measure_reference": {
       "type": "object",
       "description": "ISO 19157 DQ_MeasureReference - Reference to a data quality measure",
       "properties": {
@@ -171,7 +171,7 @@
         }
       }
     },
-    "dq_evaluation_method": {
+    "evaluation_method": {
       "type": "object",
       "description": "ISO 19157 DQ_EvaluationMethod - Description of the evaluation method and procedure",
       "properties": {
@@ -213,7 +213,7 @@
         }
       }
     },
-    "dq_element": {
+    "element": {
       "type": "object",
       "description": "ISO 19157 DQ_Element - Abstract superclass for data quality elements",
       "properties": {
@@ -222,16 +222,16 @@
           "description": "Clause in the standalone quality report where this data quality element is described"
         },
         "measure": {
-          "$ref": "#/definitions/dq_measure_reference",
+          "$ref": "#/definitions/measure_reference",
           "description": "Reference to the measure used"
         },
         "evaluationMethod": {
-          "$ref": "#/definitions/dq_evaluation_method",
+          "$ref": "#/definitions/evaluation_method",
           "description": "Evaluation information"
         },
         "result": {
           "type": "array",
-          "items": {"$ref": "#/definitions/dq_result"},
+          "items": {"$ref": "#/definitions/result"},
           "minItems": 1,
           "description": "Result(s) of applying the data quality measure"
         },
@@ -246,9 +246,9 @@
       },
       "required": ["result"]
     },
-    "dq_completeness": {
+    "completeness": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -264,9 +264,9 @@
       ],
       "description": "ISO 19157 DQ_Completeness - Presence and absence of features, their attributes and relationships"
     },
-    "dq_logical_consistency": {
+    "logical_consistency": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -287,9 +287,9 @@
       ],
       "description": "ISO 19157 DQ_LogicalConsistency - Degree of adherence to logical rules of data structure, attribution and relationships"
     },
-    "dq_positional_accuracy": {
+    "positional_accuracy": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -310,9 +310,9 @@
       ],
       "description": "ISO 19157 DQ_PositionalAccuracy - Accuracy of position of features"
     },
-    "dq_temporal_quality": {
+    "temporal_quality": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -332,9 +332,9 @@
       ],
       "description": "ISO 19157 DQ_TemporalQuality - Quality of temporal attributes and relationships of features"
     },
-    "dq_thematic_quality": {
+    "thematic_quality": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -354,9 +354,9 @@
       ],
       "description": "ISO 19157 DQ_ThematicQuality - Accuracy of quantitative attributes and correctness of non-quantitative attributes and classifications"
     },
-    "dq_metaquality": {
+    "metaquality": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -376,9 +376,9 @@
       ],
       "description": "ISO 19157 DQ_Metaquality - Quality of quality information (confidence, representativity, homogeneity)"
     },
-    "dq_usability": {
+    "usability": {
       "allOf": [
-        {"$ref": "#/definitions/dq_element"},
+        {"$ref": "#/definitions/element"},
         {
           "type": "object",
           "properties": {
@@ -402,7 +402,7 @@
           "description": "General explanation of data producer's knowledge about the lineage of a dataset"
         },
         "scope": {
-          "$ref": "#/definitions/dq_scope",
+          "$ref": "#/definitions/scope",
           "description": "Scope to which the lineage information applies"
         },
         "processSteps": {
@@ -496,20 +496,20 @@
       "description": "ISO 19157-1:2023 DQ_DataQuality - Quality information for geographic data",
       "properties": {
         "scope": {
-          "$ref": "#/definitions/dq_scope",
+          "$ref": "#/definitions/scope",
           "description": "Scope of the quality information"
         },
         "report": {
           "type": "array",
           "items": {
             "oneOf": [
-              {"$ref": "#/definitions/dq_completeness"},
-              {"$ref": "#/definitions/dq_logical_consistency"},
-              {"$ref": "#/definitions/dq_positional_accuracy"},
-              {"$ref": "#/definitions/dq_temporal_quality"},
-              {"$ref": "#/definitions/dq_thematic_quality"},
-              {"$ref": "#/definitions/dq_metaquality"},
-              {"$ref": "#/definitions/dq_usability"}
+              {"$ref": "#/definitions/completeness"},
+              {"$ref": "#/definitions/logical_consistency"},
+              {"$ref": "#/definitions/positional_accuracy"},
+              {"$ref": "#/definitions/temporal_quality"},
+              {"$ref": "#/definitions/thematic_quality"},
+              {"$ref": "#/definitions/metaquality"},
+              {"$ref": "#/definitions/usability"}
             ]
           },
           "description": "Quantitative quality information for the data"

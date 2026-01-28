@@ -48,10 +48,10 @@ ISO 19157 formalizes three evaluation method types:
 
 ISO 19157 supports four distinct result types:
 
-1. **Quantitative Result** (`dq_quantitative_result`): Numeric measurements
-2. **Conformance Result** (`dq_conformance_result`): Pass/fail against specifications
-3. **Descriptive Result** (`dq_descriptive_result`): Textual descriptions
-4. **Coverage Result** (`dq_coverage_result`): Spatial quality variation maps
+1. **Quantitative Result** (`quantitative_result`): Numeric measurements
+2. **Conformance Result** (`conformance_result`): Pass/fail against specifications
+3. **Descriptive Result** (`descriptive_result`): Textual descriptions
+4. **Coverage Result** (`coverage_result`): Spatial quality variation maps
 
 ## Migration from ISO 19115 to ISO 19157
 

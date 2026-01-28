@@ -801,10 +801,10 @@ title = root.find('.//mri:title/gco:CharacterString', ns).text
 **Step 2: Transform Quality Information**
 ```python
 # Extract data quality info
-dq_elements = root.findall('.//mdq:DQ_DataQuality', ns)
+elements = root.findall('.//mdq:DQ_DataQuality', ns)
 
 quality_reports = []
-for dq in dq_elements:
+for dq in elements:
     scope = dq.find('.//mdq:scope/mdq:DQ_Scope/mdq:level', ns).get('codeListValue')
     # ... transform to JSON
 ```

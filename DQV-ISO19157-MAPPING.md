@@ -169,10 +169,10 @@ ISO 19157 scope levels map to DQV category contexts:
 
 | ISO 19157 Result | DQV Mapping | RDF Type |
 |-----------------|-------------|----------|
-| `dq_quantitative_result` | `dqv:value` | `xsd:decimal`, `xsd:integer` |
-| `dq_conformance_result` | `dqv:conformsTo` + `dqv:isSuccessful` | `xsd:boolean` |
-| `dq_descriptive_result` | `rdf:value` (literal) | `xsd:string` |
-| `dq_coverage_result` | Custom (spatial data) | `geo:Feature` or raster reference |
+| `quantitative_result` | `dqv:value` | `xsd:decimal`, `xsd:integer` |
+| `conformance_result` | `dqv:conformsTo` + `dqv:isSuccessful` | `xsd:boolean` |
+| `descriptive_result` | `rdf:value` (literal) | `xsd:string` |
+| `coverage_result` | Custom (spatial data) | `geo:Feature` or raster reference |
 
 **Example - Conformance Result:**
 ```turtle

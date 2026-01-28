@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/iso19115-quality.json#",
+  "$id": "https://stac-extensions.github.io/liability-claims/json-schema/iso19115-quality.json#",
   "title": "ISO 19115 Data Quality (simplified)",
   "description": "Standalone simplified JSON Schema for ISO 19115-like data quality reports",
   "oneOf": [
@@ -11,7 +11,7 @@
     }
   ],
   "definitions": {
-    "iso19115_dq_conformance_result": {
+    "iso19115_conformance_result": {
       "type": "object",
       "properties": {
         "specification": { "type": "string" },
@@ -21,7 +21,7 @@
       "required": ["specification", "pass"],
       "additionalProperties": true
     },
-    "iso19115_dq_measure": {
+    "iso19115_measure": {
       "type": "object",
       "not": {
         "required": ["type"]
@@ -36,82 +36,82 @@
       },
       "additionalProperties": true
     },
-    "iso19115_dq_completeness": {
+    "iso19115_completeness": {
       "type": "object",
       "properties": {
         "type": { "const": "completeness" },
         "scope": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" },
-        "conformance": { "$ref": "#/definitions/iso19115_dq_conformance_result" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" },
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
       },
       "required": ["type", "measure"],
       "additionalProperties": true
     },
-    "iso19115_dq_logical_consistency": {
+    "iso19115_logical_consistency": {
       "type": "object",
       "properties": {
         "type": { "const": "logicalConsistency" },
         "description": { "type": "string" },
         "testsPerformed": { "type": "array", "items": { "type": "string" } },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
     },
-    "iso19115_dq_positional_accuracy": {
+    "iso19115_positional_accuracy": {
       "type": "object",
       "properties": {
         "type": { "const": "positionalAccuracy" },
         "accuracyValue": { "type": "number" },
         "units": { "type": "string" },
         "method": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
     },
-    "iso19115_dq_thematic_accuracy": {
+    "iso19115_thematic_accuracy": {
       "type": "object",
       "properties": {
         "type": { "const": "thematicAccuracy" },
         "description": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type", "measure"],
       "additionalProperties": true
     },
-    "iso19115_dq_temporal_accuracy": {
+    "iso19115_temporal_accuracy": {
       "type": "object",
       "properties": {
         "type": { "const": "temporalAccuracy" },
         "description": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type", "measure"],
       "additionalProperties": true
     },
-    "iso19115_dq_attribute_accuracy": {
+    "iso19115_attribute_accuracy": {
       "type": "object",
       "properties": {
         "type": { "const": "attributeAccuracy" },
         "attribute": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type", "attribute", "measure"],
       "additionalProperties": true
     },
-    "iso19115_dq_topological_consistency": {
+    "iso19115_topological_consistency": {
       "type": "object",
       "properties": {
         "type": { "const": "topologicalConsistency" },
         "description": { "type": "string" },
         "tests": { "type": "array", "items": { "type": "string" } },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
     },
-    "iso19115_dq_lineage": {
+    "iso19115_lineage": {
       "type": "object",
       "properties": {
         "type": { "const": "lineage" },
@@ -129,7 +129,7 @@
         "calibrationAccuracy": { "type": "number", "description": "Radiometric calibration accuracy" },
         "units": { "type": "string" },
         "method": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -141,7 +141,7 @@
         "sensorType": { "type": "string" },
         "calibrationStatus": { "type": "string", "enum": ["calibrated", "uncalibrated", "partial", "unknown"] },
         "calibrationDate": { "type": "string", "format": "date-time" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -152,7 +152,7 @@
         "type": { "const": "cloudCoverage" },
         "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
         "assessmentMethod": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -163,7 +163,7 @@
         "type": { "const": "snowCoverage" },
         "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
         "assessmentMethod": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -176,7 +176,7 @@
         "description": { "type": "string" },
         "processingDate": { "type": "string", "format": "date-time" },
         "processor": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type", "level"],
       "additionalProperties": true
@@ -188,7 +188,7 @@
         "usabilityScore": { "type": "number", "minimum": 0, "maximum": 1 },
         "limitations": { "type": "array", "items": { "type": "string" } },
         "intendedUse": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -201,7 +201,7 @@
         "verticalAccuracy": { "type": "number" },
         "units": { "type": "string" },
         "method": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -213,7 +213,7 @@
         "accuracyValue": { "type": "number" },
         "units": { "type": "string" },
         "method": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -225,7 +225,7 @@
         "accuracyValue": { "type": "number" },
         "units": { "type": "string" },
         "method": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -236,7 +236,7 @@
         "type": { "const": "nonQuantitativeAttributeCorrectness" },
         "attribute": { "type": "string" },
         "correctnessRate": { "type": "number", "minimum": 0, "maximum": 1 },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -248,7 +248,7 @@
         "attribute": { "type": "string" },
         "accuracyValue": { "type": "number" },
         "units": { "type": "string" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -259,7 +259,7 @@
         "type": { "const": "formatConsistency" },
         "description": { "type": "string" },
         "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -270,7 +270,7 @@
         "type": { "const": "domainConsistency" },
         "description": { "type": "string" },
         "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -281,12 +281,12 @@
         "type": { "const": "temporalValidity" },
         "validFrom": { "type": "string", "format": "date-time" },
         "validTo": { "type": "string", "format": "date-time" },
-        "measure": { "$ref": "#/definitions/iso19115_dq_measure" }
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
       },
       "required": ["type"],
       "additionalProperties": true
     },
-    "iso19115_dq_element": {
+    "iso19115_element": {
       "type": "object",
       "properties": {
         "elementType": {
@@ -320,14 +320,14 @@
         "summary": { "type": "string" },
         "detail": {
           "oneOf": [
-            { "$ref": "#/definitions/iso19115_dq_completeness" },
-            { "$ref": "#/definitions/iso19115_dq_logical_consistency" },
-            { "$ref": "#/definitions/iso19115_dq_positional_accuracy" },
-            { "$ref": "#/definitions/iso19115_dq_thematic_accuracy" },
-            { "$ref": "#/definitions/iso19115_dq_temporal_accuracy" },
-            { "$ref": "#/definitions/iso19115_dq_attribute_accuracy" },
-            { "$ref": "#/definitions/iso19115_dq_topological_consistency" },
-            { "$ref": "#/definitions/iso19115_dq_lineage" },
+            { "$ref": "#/definitions/iso19115_completeness" },
+            { "$ref": "#/definitions/iso19115_logical_consistency" },
+            { "$ref": "#/definitions/iso19115_positional_accuracy" },
+            { "$ref": "#/definitions/iso19115_thematic_accuracy" },
+            { "$ref": "#/definitions/iso19115_temporal_accuracy" },
+            { "$ref": "#/definitions/iso19115_attribute_accuracy" },
+            { "$ref": "#/definitions/iso19115_topological_consistency" },
+            { "$ref": "#/definitions/iso19115_lineage" },
             { "$ref": "#/definitions/iso19115_4_radiometric_accuracy" },
             { "$ref": "#/definitions/iso19115_4_sensor_quality" },
             { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
@@ -342,10 +342,10 @@
             { "$ref": "#/definitions/dgiwg_format_consistency" },
             { "$ref": "#/definitions/dgiwg_domain_consistency" },
             { "$ref": "#/definitions/dgiwg_temporal_validity" },
-            { "$ref": "#/definitions/iso19115_dq_measure" }
+            { "$ref": "#/definitions/iso19115_measure" }
           ]
         },
-        "conformance": { "$ref": "#/definitions/iso19115_dq_conformance_result" }
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
       },
       "required": ["elementType"],
       "additionalProperties": true
@@ -357,7 +357,7 @@
         "scope": { "type": "string" },
         "date": { "type": "string", "format": "date-time" },
         "version": { "type": "string" },
-        "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_dq_element" } },
+        "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_element" } },
         "summary": { "type": "string" }
       },
       "additionalProperties": true

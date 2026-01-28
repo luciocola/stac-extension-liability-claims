@@ -58,9 +58,9 @@ The standard explicitly states:
 | `AI_DataQuality` extends `QualityElement` (ISO 19157) | `liability:quality` field with ISO 19115 quality reports | ✅ **Perfect** |
 | Quality scope: dataset/feature level | `liability:quality` applicable to Items/Collections | ✅ **Perfect** |
 | `AI_ClassBalanceDegree` quality element | Can be represented as ISO 19115 `completeness` or custom measure | ✅ **Compatible** |
-| `Completeness` (label commission/omission) | `iso19115_dq_completeness` with commission/omission | ✅ **Perfect** |
-| `Thematic accuracy` (class accuracy) | `iso19115_dq_thematic_accuracy` with classification correctness | ✅ **Perfect** |
-| Positional uncertainty in field GPS | `iso19115_dq_positional_accuracy` with absolute/relative accuracy | ✅ **Perfect** |
+| `Completeness` (label commission/omission) | `iso19115_completeness` with commission/omission | ✅ **Perfect** |
+| `Thematic accuracy` (class accuracy) | `iso19115_thematic_accuracy` with classification correctness | ✅ **Perfect** |
+| Positional uncertainty in field GPS | `iso19115_positional_accuracy` with absolute/relative accuracy | ✅ **Perfect** |
 
 **Example Use Case:** ML training dataset for building detection
 ```json

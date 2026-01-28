@@ -362,10 +362,10 @@ This document provides a comprehensive comparison between **ISO 19115-4** (Geogr
 
 | ISO 19115-4 | ISO 19157-3 | Migration |
 |-------------|-------------|-----------|
-| Simple value + units | `dq_quantitative_result` | Add resultType, valueRecordType, errorStatistic |
-| Conformance pass/fail | `dq_conformance_result` | Add formal specification citation structure |
-| Text description | `dq_descriptive_result` | Direct mapping with resultType field |
-| ❌ Not supported | `dq_coverage_result` | NEW: Spatial quality variation maps |
+| Simple value + units | `quantitative_result` | Add resultType, valueRecordType, errorStatistic |
+| Conformance pass/fail | `conformance_result` | Add formal specification citation structure |
+| Text description | `descriptive_result` | Direct mapping with resultType field |
+| ❌ Not supported | `coverage_result` | NEW: Spatial quality variation maps |
 
 **Example - Conformance Result:**
 ```json

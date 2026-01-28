@@ -1,22 +1,22 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/iso19157-scope.json#",
+  "$id": "https://stac-extensions.github.io/liability-claims/json-schema/iso19157-scope.json#",
   "title": "ISO 19157 Data Quality Scope and Extent",
   "description": "JSON Schema for ISO 19157 DQ_Scope and related extent elements with DQV semantic annotations",
   "oneOf": [
-    {"$ref": "#/definitions/dq_data_quality"},
+    {"$ref": "#/definitions/data_quality"},
     {
       "type": "array",
-      "items": {"$ref": "#/definitions/dq_data_quality"}
+      "items": {"$ref": "#/definitions/data_quality"}
     }
   ],
   "definitions": {
-    "dq_data_quality": {
+    "data_quality": {
       "type": "object",
       "description": "ISO 19157 DQ_DataQuality - Overall quality information container",
       "properties": {
         "scope": {
-          "$ref": "#/definitions/dq_scope",
+          "$ref": "#/definitions/scope",
           "description": "Extent and characteristics of the data for which quality is reported"
         },
         "report": {
@@ -24,7 +24,7 @@
           "description": "Quality reports (see iso19157-quality.json for detailed schema)"
         },
         "standaloneQualityReport": {
-          "$ref": "#/definitions/dq_standalone_quality_report",
+          "$ref": "#/definitions/standalone_quality_report",
           "description": "Reference to an external quality report"
         },
         "derivedElement": {
@@ -37,7 +37,7 @@
       },
       "required": ["scope"]
     },
-    "dq_scope": {
+    "scope": {
       "type": "object",
       "description": "ISO 19157 DQ_Scope - Extent or characteristics of the data specified by the scope. Maps to dqv:inCategory for semantic lifting.",
       "properties": {
@@ -284,7 +284,7 @@
       },
       "required": ["minimumValue", "maximumValue"]
     },
-    "dq_standalone_quality_report": {
+    "standalone_quality_report": {
       "type": "object",
       "description": "ISO 19157 DQ_StandaloneQualityReport - Reference to an external quality report",
       "properties": {

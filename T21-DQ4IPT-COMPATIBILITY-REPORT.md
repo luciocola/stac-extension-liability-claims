@@ -486,7 +486,7 @@ import json
 import requests
 
 # Load schemas
-dq_schema = requests.get("https://xxx.github.io/dq/v0.1.0/schema.json").json()
+schema = requests.get("https://xxx.github.io/dq/v0.1.0/schema.json").json()
 liability_schema = requests.get("https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json").json()
 
 # Load STAC item
@@ -494,7 +494,7 @@ with open("item.json") as f:
     item = json.load(f)
 
 # Validate against both schemas
-jsonschema.validate(item, dq_schema)  # T21-DQ4IPT validation
+jsonschema.validate(item, schema)  # T21-DQ4IPT validation
 jsonschema.validate(item, liability_schema)  # Liability-claims validation
 
 print("✅ Item valid for both extensions")
