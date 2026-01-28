@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/json-schema/iso19157-scope.json#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-scope.json#",
   "title": "ISO 19157 Data Quality Scope and Extent",
   "description": "JSON Schema for ISO 19157 DQ_Scope and related extent elements with DQV semantic annotations",
   "oneOf": [
