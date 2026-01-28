@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/liability-claims/v1.1.0/prov-ref.json#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.1.0/prov-ref.json#",
   "$comment": "External reference to W3C PROV-JSON schema. This file serves as a bridge to OGC Building Blocks ogc.ogc-utils.prov",
   "title": "W3C PROV-JSON Schema Reference",
   "description": "This schema references the canonical W3C PROV-JSON specification. For OGC Building Blocks compatibility, implementations should prefer ogc.ogc-utils.prov from https://ogcincubator.github.io/bblock-prov-schema/",
