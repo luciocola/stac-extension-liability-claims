@@ -102,6 +102,23 @@
         "positionalAccuracy": "dqv:AccuracyMetric",
         "temporalAccuracy": "dqv:TemporalAccuracyMetric",
         "thematicAccuracy": "dqv:AccuracyMetric",
+        "usability": "dqv:UsabilityMetric",
+        "report": {
+          "@id": "dqv:QualityMeasurement",
+          "@type": "@id",
+          "@container": "@list"
+        },
+        "category": "dqv:inCategory",
+        "subcategory": "dqv:inDimension",
+        "measure": "dqv:isMeasurementOf",
+        "result": {
+          "@id": "dqv:value",
+          "@type": "@json"
+        },
+        "evaluationMethod": {
+          "@id": "dqv:computedOn",
+          "@type": "@json"
+        },
         "lineage": {
           "@id": "prov:has_provenance",
           "@type": "@json"
@@ -116,6 +133,46 @@
           "@id": "prov:Entity",
           "@type": "@id",
           "@container": "@list"
+        }
+      }
+    },
+    "liability:lineage": {
+      "@id": "prov:has_provenance",
+      "@type": "@json",
+      "@context": {
+        "statement": "prov:value",
+        "processStep": {
+          "@id": "prov:Activity",
+          "@type": "@id",
+          "@container": "@list"
+        },
+        "source": {
+          "@id": "prov:Entity",
+          "@type": "@id",
+          "@container": "@list"
+        },
+        "scope": {
+          "@id": "prov:hadPlan",
+          "@type": "@json"
+        }
+      }
+    },
+    "liability:dataQualityInfo": {
+      "@id": "dqv:hasQualityAnnotation",
+      "@type": "@json",
+      "@context": {
+        "scope": {
+          "@id": "dqv:inCategory",
+          "@type": "xsd:string"
+        },
+        "report": {
+          "@id": "dqv:QualityMeasurement",
+          "@type": "@id",
+          "@container": "@list"
+        },
+        "lineage": {
+          "@id": "prov:has_provenance",
+          "@type": "@json"
         }
       }
     },

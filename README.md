@@ -40,7 +40,7 @@ This extension includes comprehensive support for data quality reporting based o
 
 - **ISO 19157-1:2023** (RECOMMENDED) - Comprehensive data quality framework with metaquality, usability, and standardized evaluation methods. Provides registered quality measures with unique identifiers for consistent reporting across organizations.
 - **ISO 19115** - Core data quality elements (completeness, logical consistency, positional accuracy, temporal accuracy, thematic accuracy, attribute accuracy, topological consistency, lineage) - maintained for backward compatibility
-- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, snow coverage, processing level, usability assessment) - maintained for backward compatibility
+- **ISO 19115-4** - Imagery and gridded data quality extensions (radiometric accuracy, sensor quality, cloud coverage, snow coverage, processing level, usability assessment) - maintained for backward compatibility. **NEW**: Now integrated with HEIF/HEIC imagery processing for automatic metadata extraction from modern image formats.
 - **DGIWG** - Defence Geospatial Information Working Group quality elements (absolute/relative positional accuracy, gridded data accuracy, quantitative/non-quantitative attribute correctness, format/domain consistency, temporal validity)
 
 **Migration**: Existing ISO 19115/19115-4 quality reports are fully supported. Organizations can migrate to ISO 19157-1:2023 for enhanced capabilities including metaquality (quality of quality), usability assessment, and standardized measure identifiers. See [ISO19157-INTEGRATION.md](ISO19157-INTEGRATION.md) for detailed migration guide.
@@ -102,6 +102,64 @@ The extension's ISO 19115 foundation provides high compatibility with major geos
 
 - **NASA UMM (Unified Metadata Model)** - 5/5 compatibility rating through ISO 19115 alignment. See [UMM Compatibility Assessment](UMM-COMPATIBILITY.md) for detailed crosswalk.
 - **OGC TrainingDML-AI** - 4/5 compatibility rating for ML training data quality/provenance metadata. See [TrainingDML-AI Compatibility Assessment](TRAININGDML-AI-COMPATIBILITY.md) for use cases and mapping guidance.
+
+### HEIF/HEIC Imagery Metadata Support
+
+**NEW**: The extension now includes automatic ISO 19115-4 metadata extraction for **HEIF/HEIC** imagery formats (High Efficiency Image Format). When processing HEIF imagery through compatible tools (e.g., QGIS HEIF/TTL Importer, IPFS Imagery Uploader), the following metadata is automatically extracted and can be included in STAC items:
+
+**Extracted ISO 19115-4 Elements:**
+- **Processing Level** (L0, L1A, L1B, L2A) - Radiometric/geometric correction status
+- **Sensor Quality** - Calibration status and sensor health from EXIF
+- **Acquisition Information** - Platform (camera make/model), sensor type, acquisition datetime
+- **Usability Assessment** - Fitness for geospatial applications (0.0-1.0 score)
+- **Gridded Data Representation** - Image dimensions, spatial structure
+- **Radiometric Accuracy** - Quality of radiometric measurements (when available)
+- **Cloud Coverage** - Imagery obscuration percentage (when applicable)
+
+**Integration Points:**
+- Metadata embedded in `liability:quality` field as ISO 19115-4 quality reports
+- Provenance tracking in `liability:prov` using W3C PROV-O
+- Compatible with STAC Processing Extension for georeferencing workflows
+- BLAKE3 cryptographic hashing for integrity verification
+
+**Supported Tools:**
+- [QGIS HEIF/TTL Importer](https://github.com/luciocola/QGIS-GIMI_importer) - Automatic georeferencing with ISO 19115-4 metadata extraction
+- IPFS Imagery Uploader (QGIS plugin) - Upload HEIF imagery to IPFS with quality metadata
+- Compatible with TB21 GIMI format (embedded RDF metadata)
+
+**Example STAC Item with HEIF ISO 19115-4 Metadata:**
+```json
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "heif-imagery-001",
+  "properties": {
+    "datetime": "2026-01-28T14:30:00Z",
+    "liability:quality": [{
+      "type": "processingLevel",
+      "level": "L0",
+      "description": "HEIF imagery - unprocessed sensor data"
+    }, {
+      "type": "sensorQuality",
+      "sensorType": "iPhone 12 Pro",
+      "calibrationStatus": "unknown"
+    }, {
+      "type": "usabilityAssessment",
+      "usabilityScore": 0.9,
+      "intendedUse": "Geospatial imagery analysis"
+    }]
+  },
+  "assets": {
+    "image": {
+      "href": "./imagery.heic",
+      "type": "image/heif",
+      "roles": ["data"]
+    }
+  }
+}
+```
+
+See [ISO19115-4-vs-ISO19157-3-COMPATIBILITY.md](ISO19115-4-vs-ISO19157-3-COMPATIBILITY.md) for detailed mapping between ISO 19115-4 imagery quality elements and ISO 19157-3 data quality measures.
 
 ## Fields
 
