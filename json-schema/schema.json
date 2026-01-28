@@ -68,12 +68,6 @@
         },
         {
           "$ref": "#/definitions/stac_extensions"
-        },
-        {
-          "$ref": "#/definitions/require_any_field"
-        },
-        {
-          "$ref": "#/definitions/fields"
         }
       ]
     }
