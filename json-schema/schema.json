@@ -3,6 +3,7 @@
   "$id": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json#",
   "title": "Liability and Claims Extension",
   "description": "STAC Liability and Claims Extension for Items and Collections",
+  "stac_version": "1.0.0",
   "version": "1.1.0",
   "oneOf": [
     {
