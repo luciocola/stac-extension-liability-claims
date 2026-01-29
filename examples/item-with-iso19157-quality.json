@@ -202,7 +202,7 @@
       ],
       "lineage": {
         "statement": "Sentinel-2 L1C data atmospherically corrected to L2A using Sen2Cor 2.11, followed by cloud masking and geometric validation",
-        "processSteps": [
+        "processStep": [
           {
             "description": "Atmospheric correction from L1C to L2A using Sen2Cor algorithm",
             "rationale": "Remove atmospheric effects to obtain bottom-of-atmosphere reflectance",
@@ -282,23 +282,9 @@
         "sources": [
           {
             "description": "Sentinel-2A Multi-Spectral Instrument Level-1C Top-of-Atmosphere reflectance",
-            "sourceCitation": {
-              "title": "Sentinel-2A MSI L1C Tile 10TGK",
-              "date": "2025-06-15T10:30:00Z",
-              "identifier": "S2A_MSIL1C_20250615T103031_N0509_R108_T10TGK_20250615T123456",
-              "url": "https://scihub.copernicus.eu/dhus/#/home"
-            },
-            "sourceReferenceSystem": {
-              "code": "32610",
-              "codeSpace": "EPSG",
-              "version": "10.0"
-            },
-            "sourceMetadata": [
-              {
-                "title": "Sentinel-2 L1C Product Metadata",
-                "url": "https://scihub.copernicus.eu/dhus/odata/v1/Products('12345678-1234-1234-1234-123456789012')/Nodes('MTD_MSIL1C.xml')/$value"
-              }
-            ]
+            "sourceCitation": "Sentinel-2A MSI L1C Tile 10TGK (S2A_MSIL1C_20250615T103031_N0509_R108_T10TGK_20250615T123456)",
+            "sourceReferenceSystem": "EPSG:32610",
+            "sourceMetadata": "https://scihub.copernicus.eu/dhus/odata/v1/Products('12345678-1234-1234-1234-123456789012')/Nodes('MTD_MSIL1C.xml')/$value"
           }
         ],
         "additionalDocumentation": [
