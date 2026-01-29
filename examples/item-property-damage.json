@@ -1,7 +1,7 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
   ],
   "type": "Feature",
   "id": "property-damage-2023-042",
@@ -43,7 +43,8 @@
       "href": "https://example.com/surveys/damage-assessment.tif",
       "type": "image/tiff; application=geotiff",
       "title": "Drone Survey - Damage Assessment",
-      "roles": ["data", "evidence"]
+      "roles": ["data", "evidence"],
+      "liability:security_classification": "confidential"
     }
   },
   "links": [

@@ -2,7 +2,7 @@
   "type": "Collection",
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
   ],
   "id": "collection-with-quality-001",
   "title": "Claims Collection with Quality Metadata",

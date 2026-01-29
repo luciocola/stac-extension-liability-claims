@@ -1,7 +1,7 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.0.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
   ],
   "type": "Feature",
   "id": "environmental-incident-2024-001",
@@ -63,7 +63,8 @@
       "href": "https://example.com/imagery/2024-01-15.tif",
       "type": "image/tiff; application=geotiff",
       "title": "Incident Day Satellite Imagery",
-      "roles": ["data", "evidence"]
+      "roles": ["data", "evidence"],
+      "liability:security_classification": "internal"
     }
   },
   "links": [

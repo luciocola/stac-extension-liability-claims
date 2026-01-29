@@ -176,7 +176,8 @@
       "type": "image/tiff; application=geotiff; profile=cloud-optimized",
       "title": "True Color Composite",
       "roles": ["visual", "data"],
-      "cop:asset_type": "cog"
+      "cop:asset_type": "cog",
+      "liability:security_classification": "internal"
     },
     "nir": {
       "href": "https://storage.example.com/flood-2026/S2A_L2A_20260120_B8A.tif",
@@ -184,6 +185,7 @@
       "title": "Near-Infrared Band",
       "roles": ["data"],
       "cop:asset_type": "cog",
+      "liability:security_classification": "internal",
       "eo:bands": [
         {
           "name": "B8A",
@@ -199,7 +201,8 @@
       "title": "Flood Extent Polygon",
       "description": "Water extent derived from NDWI threshold classification",
       "roles": ["data"],
-      "cop:asset_type": "feature"
+      "cop:asset_type": "feature",
+      "liability:security_classification": "internal"
     }
   },
   "links": [
