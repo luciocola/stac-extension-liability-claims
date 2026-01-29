@@ -1,0 +1,302 @@
+{
+  "stac_version": "1.0.0",
+  "assets": {
+    "PRODUCT": {
+      "file:checksum": "1e2041c7582b0bdfd84015346bbe862322cca234b662cd4a42f4a69f0568aeb0d12c",
+      "alternate": {
+        "FACTS_Browser_Cookie": {
+          "description": "In order to download the asset via a Web Browser, you first need to establish a connection with your wallet via https://assets.ogc.secd.eu/link so that the Asset Controller can request proof for FACTS Certificates via that secure and private connection when you try to fetch the Asset. Once you have a connection established, you can use the Download link above to fetch the GeoPackage.",
+          "href": "https://assets.ogc.secd.eu/files/2b54ab4249525ed0f26650746c5f6110d727867ed1e2cb777531f95fc0974de2",
+          "title": "Download Asset via Web Browser session cookie",
+          "type": "image/jpeg"
+        },
+        "FACTS_API_Key": {
+          "auth": {
+            "refs": ["apiKey"],
+            "roles": ["download"],
+            "schemes": {
+              "flows": {
+                "authorizationCode": {
+                  "authorizationApi": "https://wallet.ogc.secd.eu/user/x-facts-key",
+                  "method": "get",
+                  "responseField": "x-facts-key",
+                  "parameters": {
+                    "expires_in": {
+                      "schema": {
+                        "examples": "300",
+                        "type": "string"
+                      },
+                      "in": "query",
+                      "description": "the validity of the token in seconds",
+                      "required": "true"
+                    }
+                  }
+                }
+              },
+              "in": "header",
+              "name": "X-FACTS-Key",
+              "description": "X-FACTS-Key represents the connection between your Wallet and the Asset Controller to request proof of required FACTS Certificates.",
+              "type": "apiKey",
+              "required": "true"
+            }
+          },
+          "description": "In order to download the asset via the API, you first need to fetch an API-Key token (X-FACTS-Key) via https://wallet.ogc.secd.eu/connections/select which must be submitted as HTTP Header `X-FACTS-Key` with the asset URL from `Copy URL`. ",
+          "href": "https://assets.ogc.secd.eu/files/2b54ab4249525ed0f26650746c5f6110d727867ed1e2cb777531f95fc0974de2",
+          "title": "Download Asset via X-FACTS-Key",
+          "type": "image/jpeg"
+        }
+      },
+      "href": "https://ipfs.ogc.secd.eu/files/2b54ab4249525ed0f26650746c5f6110d727867ed1e2cb777531f95fc0974de2",
+      "title": "Product",
+      "type": "image/jpeg"
+    }
+  },
+  "bbox": [133.87, -23.68, 133.9, -23.64],
+  "geometry": {
+    "coordinates": [[[133.9, -23.68], [133.9, -23.64], [133.87, -23.64], [133.87, -23.68], [133.9, -23.68]]],
+    "type": "Polygon"
+  },
+  "links": [
+    {
+      "rel": "collection",
+      "href": "https://ic.ogc.secd.eu/stac/collections/test_dq4ipt/",
+      "type": "application/json"
+    },
+    {
+      "rel": "derived_from",
+      "href": "https://emc.spacebel.be/collections/PROBA.HRC.1A/items/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001?httpAccept=application%2Fgeo%2Bjson%3Bprofile%3Dhttps%3A%2F%2Fstacspec.org",
+      "type": "application/geo+json",
+      "title": "Source metadata"
+    }
+  ],
+  "collection": "test_dq4ipt",
+  "id": "asset_1769618338417",
+  "type": "Feature",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://stac-extensions.github.io/alternate-assets/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "properties": {
+    "processing:level": "L1",
+    "datetime": "2026-01-28T16:38:58Z",
+    "start_datetime": "2016-02-04T07:28:52Z",
+    "end_datetime": "2016-02-04T07:28:52Z",
+    "processing:facility": "Secure Dimensions Processes",
+    "processing:lineage": "Watermarking Process",
+    "processing:datetime": "2026-01-28T16:38:58Z",
+    "liability:quality": {
+      "scope": "series",
+      "elements": [{
+        "elementType": "logicalConsistency",
+        "summary": "Conformance to CEOS ARD CARD4L-NRB specification",
+        "detail": {
+          "type": "logicalConsistency",
+          "description": "Data product specification conformance assessment",
+          "measure": {
+            "description": "The measure will take the value true if all the requirements in the referred data product specification are fulfilled.",
+            "valueType": "boolean",
+            "value": true,
+            "reference": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+            "method": "Data product specification passed (ISO 19157 code 101)"
+          }
+        },
+        "conformance": {
+          "specification": "CEOS ARD Normalised Radar Backscatter (CARD4L-NRB)",
+          "explanation": "Product conforms to CEOS ARD NRB specification published 2021-10-14",
+          "pass": true
+        }
+      }]
+    },
+    "liability:prov": {
+      "prefix": {
+        "ex": "http://example.org/",
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#"
+      },
+      "entity": {
+        "ex:source_image": {
+          "prov:type": "prov:Entity",
+          "prov:label": "PROBA-1 HRC Source Image",
+          "prov:location": "https://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/browse/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_BID.PNG",
+          "prov:value": {
+            "file:checksum": "1220ecff1a367594707fe3603f73fdd6091b039b8e0b98c48d92643f84bc229cc471",
+            "format": "image/png",
+            "dimensions": "1026x1026"
+          }
+        },
+        "ex:watermarked_image": {
+          "prov:type": "prov:Entity",
+          "prov:label": "Watermarked Product",
+          "prov:location": "https://assets.ogc.secd.eu/files/2b54ab4249525ed0f26650746c5f6110d727867ed1e2cb777531f95fc0974de2",
+          "prov:value": {
+            "file:checksum": "1e2041c7582b0bdfd84015346bbe862322cca234b662cd4a42f4a69f0568aeb0d12c",
+            "format": "image/jpeg",
+            "dimensions": "1026x1026"
+          }
+        }
+      },
+      "activity": {
+        "ex:watermarking_process": {
+          "prov:type": "prov:Activity",
+          "prov:label": "Trusted Watermarking Process",
+          "prov:startTime": "2026-01-28T16:38:55Z",
+          "prov:endTime": "2026-01-28T16:38:58Z",
+          "prov:location": "Secure Dimensions Processes"
+        }
+      },
+      "agent": {
+        "ex:geoserver": {
+          "prov:type": "prov:SoftwareAgent",
+          "prov:label": "Geoserver 3.0-SNAPSHOT"
+        },
+        "ex:esa_esrin": {
+          "prov:type": "prov:Organization",
+          "prov:label": "ESA ESRIN"
+        },
+        "ex:secure_dimensions": {
+          "prov:type": "prov:Organization",
+          "prov:label": "Secure Dimensions"
+        }
+      },
+      "wasGeneratedBy": {
+        "_:wgb1": {
+          "prov:entity": "ex:watermarked_image",
+          "prov:activity": "ex:watermarking_process",
+          "prov:time": "2026-01-28T16:38:58Z"
+        }
+      },
+      "used": {
+        "_:used1": {
+          "prov:activity": "ex:watermarking_process",
+          "prov:entity": "ex:source_image",
+          "prov:time": "2026-01-28T16:38:55Z"
+        }
+      },
+      "wasAttributedTo": {
+        "_:wat1": {
+          "prov:entity": "ex:source_image",
+          "prov:agent": "ex:esa_esrin"
+        },
+        "_:wat2": {
+          "prov:entity": "ex:watermarked_image",
+          "prov:agent": "ex:secure_dimensions"
+        }
+      },
+      "wasAssociatedWith": {
+        "_:waw1": {
+          "prov:activity": "ex:watermarking_process",
+          "prov:agent": "ex:geoserver"
+        }
+      },
+      "wasDerivedFrom": {
+        "_:wdf1": {
+          "prov:generatedEntity": "ex:watermarked_image",
+          "prov:usedEntity": "ex:source_image",
+          "prov:activity": "ex:watermarking_process"
+        }
+      }
+    },
+    "processing:software": {
+      "name": "Geoserver",
+      "version": "3.0-SNAPSHOT"
+    },
+    "ipt": {
+      "output": {
+        "image_height": 1026,
+        "file:checksum": "1e2041c7582b0bdfd84015346bbe862322cca234b662cd4a42f4a69f0568aeb0d12c",
+        "metadata_url": "https://ic.ogc.secd.eu/stac/collections/test_dq4ipt/items/asset_1769618338417",
+        "image_url": "https://assets.ogc.secd.eu/files/2b54ab4249525ed0f26650746c5f6110d727867ed1e2cb777531f95fc0974de2",
+        "image_width": 1026,
+        "image_type": "image/jpeg"
+      },
+      "input": {
+        "image": {
+          "image_height": 1026,
+          "file:checksum": "1220ecff1a367594707fe3603f73fdd6091b039b8e0b98c48d92643f84bc229cc471",
+          "image_url": "https://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/browse/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_BID.PNG",
+          "image_width": 1026,
+          "image_type": "image/png;charset=UTF-8"
+        },
+        "metadata": {
+          "metadata_url": "https://emc.spacebel.be/collections/PROBA.HRC.1A/items/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001?httpAccept=application%2Fgeo%2Bjson%3Bprofile%3Dhttps%3A%2F%2Fstacspec.org",
+          "vc_url": "https://emc.spacebel.be/collections/PROBA.HRC.1A/items/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001?httpAccept=application/vc%2Bld%2Bjson",
+          "VC_verification": true,
+          "VC": {
+            "relatedResource": [
+              {
+                "digestMultibase": "zQmYRMC8UMw4ipWvivUKvzvTWrjbKk1oywH1QpoY6w3tCQX",
+                "id": "https://schemas.opengis.net/eo-geojson/1.0/eo-geojson.jsonld"
+              },
+              {
+                "digestMultibase": "zQmeHnYH1jaUefpeAbARzC46rJSzSte8uWn52GGcQWXMcmn",
+                "id": "http://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/browse/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_BID.PNG"
+              },
+              {
+                "digestMultibase": "zQmPFZfx6KoEAgPpFosgJEKQ17K7sJpsSZWtyNo7vwBHXyr",
+                "id": "http://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/thumbnail/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_TIMG.jpg"
+              }
+            ],
+            "credentialSubject": {
+              "date": "2016-02-04T07:28:52Z/2016-02-04T07:28:52Z",
+              "bbox": [133.87, -23.68, 133.9, -23.64],
+              "geometry": {
+                "coordinates": [[[133.9, -23.68], [133.9, -23.64], [133.87, -23.64], [133.87, -23.68], [133.9, -23.68]]],
+                "type": "Polygon"
+              },
+              "links": {
+                "data": [{
+                  "href": "https://tpm-ds.eo.esa.int/oads/data/PROBA1-HRC/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP",
+                  "title": "Download",
+                  "type": "application/x-binary"
+                }],
+                "previews": [
+                  {
+                    "href": "http://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/browse/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_BID.PNG",
+                    "title": "QUICKLOOK",
+                    "type": "image/png"
+                  },
+                  {
+                    "href": "http://tpm-ds.eo.esa.int/oads/meta/PROBA1-HRC/thumbnail/PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001.SIP.ZIP_TIMG.jpg",
+                    "title": "THUMBNAIL",
+                    "type": "image/jpeg"
+                  }
+                ]
+              },
+              "id": "did:web:emc.spacebel.be:collections:PROBA.HRC.1A:items:PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001",
+              "title": "PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001",
+              "updated": "2024-04-30T11:28:07Z"
+            },
+            "issuanceDate": "2026-01-28T16:38:55Z",
+            "id": "did:web:emc.spacebel.be:collections:PROBA.HRC.1A:items:PR1_OPER_HRC_HRC_1P_20160204T072852_S23-066_E133-088_0001",
+            "proof": {
+              "created": "2026-01-28T16:38:55.635Z",
+              "jws": "eyJhbGciOiJFUzI1NksiLCJraWQiOiJiQnpXOHlHeEt1RUNMal9JeFNyTkN1eVJKOUppZ2ptTU9DeDJGZHpDcnFBIiwiY3JpdCI6WyJiNjQiXSwiYjY0IjpmYWxzZX0..F-9ZEZgudlLNeH2akG7tWjPeaO1vKRQnVlX5swphy7IsyA5f-kslJucgU_YHjnqwdqdSL9Wf_bA8PK1TdA4pdQ",
+              "proofPurpose": "assertionMethod",
+              "type": "EcdsaSecp256k1Signature2019",
+              "verificationMethod": "did:web:emc.spacebel.be:organisations:esa_esrin#owner"
+            },
+            "type": ["VerifiableCredential", "Feature"],
+            "@context": [
+              "https://www.w3.org/2018/credentials/v1",
+              "https://schemas.opengis.net/eo-geojson/1.0/eo-geojson.jsonld",
+              {
+                "digestMultibase": {
+                  "@type": "https://w3id.org/security#multibase",
+                  "@id": "https://w3id.org/security#digestMultibase"
+                },
+                "relatedResource": {
+                  "@type": "@id",
+                  "@id": "https://www.w3.org/2018/credentials#relatedResource"
+                }
+              }
+            ],
+            "issuer": "did:web:emc.spacebel.be:organisations:esa_esrin"
+          }
+        },
+        "image_hash_verified": true
+      }
+    }
+  }
+}

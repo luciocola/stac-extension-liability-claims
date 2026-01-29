@@ -1,0 +1,216 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/cop/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+  ],
+  "id": "cop-satellite-flood-assessment",
+  "properties": {
+    "datetime": "2026-01-20T10:30:00Z",
+    "title": "Flood Damage Assessment - Sentinel-2 Imagery",
+    "description": "High-resolution satellite imagery for flood extent mapping and damage assessment",
+    
+    "cop:mission": "Red River Flood Response 2026",
+    "cop:classification": "internal",
+    "cop:releasability": "1:N",
+    "cop:platform": "Sentinel-2A",
+    "cop:sensor": "MSI",
+    "cop:dggs_zone_id": "R312603625536",
+    "cop:dggs_crs": "rHEALPix-R12",
+    "cop:software_identifier": "Sen2Cor/2.10",
+    
+    "liability:claim_id": "FLOOD-2026-001",
+    "liability:claim_type": "environmental",
+    "liability:origin": "Emergency Management Agency",
+    "liability:quality": {
+      "reportId": "QR-FLOOD-2026-001",
+      "scope": "feature",
+      "date": "2026-01-20T14:00:00Z",
+      "version": "1.0",
+      "summary": "Quality assessment for flood mapping imagery - minimal cloud coverage, suitable for damage assessment",
+      "elements": [
+        {
+          "elementType": "cloudCoverage",
+          "summary": "Excellent visibility - minimal cloud interference",
+          "detail": {
+            "type": "cloudCoverage",
+            "coveragePercentage": 4.2,
+            "assessmentMethod": "Sentinel-2 Scene Classification Layer (SCL)",
+            "measure": {
+              "description": "Percentage of scene covered by clouds and cloud shadows",
+              "value": 4.2,
+              "valueType": "percentage",
+              "units": "%",
+              "method": "Sen2Cor atmospheric correction and scene classification",
+              "reference": "https://step.esa.int/main/snap-supported-plugins/sen2cor/"
+            }
+          },
+          "conformance": {
+            "specification": "Emergency Response Imagery Requirements - Cloud Coverage Standard",
+            "pass": true,
+            "explanation": "Cloud coverage <10% meets requirements for operational flood mapping"
+          }
+        },
+        {
+          "elementType": "snowCoverage",
+          "summary": "Minimal snow coverage",
+          "detail": {
+            "type": "snowCoverage",
+            "coveragePercentage": 0.8,
+            "assessmentMethod": "NDSI-based snow detection (NDSI > 0.4)",
+            "measure": {
+              "description": "Snow and ice coverage percentage",
+              "value": 0.8,
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "processingLevel",
+          "summary": "Level-2A surface reflectance product",
+          "detail": {
+            "type": "processingLevel",
+            "level": "L2A",
+            "description": "Bottom-of-atmosphere reflectance with atmospheric correction and cloud screening",
+            "processingDate": "2026-01-20T11:45:00Z",
+            "processor": "Sen2Cor v2.10",
+            "measure": {
+              "description": "Sentinel-2 processing level",
+              "value": "L2A",
+              "valueType": "code"
+            }
+          },
+          "conformance": {
+            "specification": "Copernicus Sentinel-2 Level-2A Product Definition Document v14.9",
+            "pass": true,
+            "explanation": "Atmospheric correction successfully applied, suitable for water detection"
+          }
+        },
+        {
+          "elementType": "radiometricAccuracy",
+          "summary": "Radiometric calibration quality",
+          "detail": {
+            "type": "radiometricAccuracy",
+            "description": "Radiometric accuracy after calibration and atmospheric correction",
+            "calibrationAccuracy": 3.8,
+            "units": "%",
+            "method": "On-board calibration with vicarious validation over desert sites",
+            "measure": {
+              "description": "Radiometric uncertainty for surface reflectance",
+              "value": 3.8,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          },
+          "conformance": {
+            "specification": "ISO 19115-4:2015 Radiometric Quality Requirements",
+            "pass": true,
+            "explanation": "Uncertainty <5% enables quantitative water/vegetation analysis"
+          }
+        },
+        {
+          "elementType": "positionalAccuracy",
+          "summary": "Geometric accuracy for flood mapping",
+          "detail": {
+            "type": "positionalAccuracy",
+            "accuracyValue": 8.5,
+            "units": "m",
+            "method": "Multi-temporal ground control point validation",
+            "measure": {
+              "description": "Root Mean Square Error (RMSE) horizontal positional accuracy",
+              "value": 8.5,
+              "valueType": "absolute",
+              "units": "m",
+              "method": "GCP validation with 200 control points"
+            }
+          },
+          "conformance": {
+            "specification": "Sentinel-2 Multi-Spectral Instrument Geometric Accuracy Specification",
+            "pass": true,
+            "explanation": "RMSE <10m requirement satisfied for operational mapping"
+          }
+        },
+        {
+          "elementType": "usabilityAssessment",
+          "summary": "Fitness for flood damage assessment",
+          "detail": {
+            "type": "usabilityAssessment",
+            "usabilityScore": 0.92,
+            "limitations": [
+              "Limited penetration through dense vegetation canopy",
+              "Water detection may be affected by turbidity in flooded areas"
+            ],
+            "intendedUse": "Emergency flood extent mapping and damage assessment",
+            "measure": {
+              "description": "Composite usability score for flood mapping application",
+              "value": 0.92,
+              "valueType": "fraction"
+            }
+          },
+          "conformance": {
+            "specification": "Emergency Response Satellite Imagery Usability Standard v3.1",
+            "pass": true,
+            "explanation": "Usability score >0.85 indicates high suitability for operational use"
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-97.5, 49.0],
+        [-96.5, 49.0],
+        [-96.5, 50.0],
+        [-97.5, 50.0],
+        [-97.5, 49.0]
+      ]
+    ]
+  },
+  "bbox": [-97.5, 49.0, -96.5, 50.0],
+  "assets": {
+    "visual": {
+      "href": "https://storage.example.com/flood-2026/S2A_L2A_20260120_visual.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "True Color Composite",
+      "roles": ["visual", "data"],
+      "cop:asset_type": "cog"
+    },
+    "nir": {
+      "href": "https://storage.example.com/flood-2026/S2A_L2A_20260120_B8A.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Near-Infrared Band",
+      "roles": ["data"],
+      "cop:asset_type": "cog",
+      "eo:bands": [
+        {
+          "name": "B8A",
+          "common_name": "nir08",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.033
+        }
+      ]
+    },
+    "water_mask": {
+      "href": "https://storage.example.com/flood-2026/water_extent_20260120.geojson",
+      "type": "application/geo+json",
+      "title": "Flood Extent Polygon",
+      "description": "Water extent derived from NDWI threshold classification",
+      "roles": ["data"],
+      "cop:asset_type": "feature"
+    }
+  },
+  "links": [
+    {
+      "rel": "collection",
+      "href": "./collection.json"
+    },
+    {
+      "rel": "derived_from",
+      "href": "https://scihub.copernicus.eu/dhus/odata/v1/Products('S2A_MSIL2A_20260120')",
+      "title": "Source Sentinel-2 L2A Product"
+    }
+  ]
+}

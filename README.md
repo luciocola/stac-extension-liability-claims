@@ -161,6 +161,44 @@ The extension's ISO 19115 foundation provides high compatibility with major geos
 
 See [ISO19115-4-vs-ISO19157-3-COMPATIBILITY.md](ISO19115-4-vs-ISO19157-3-COMPATIBILITY.md) for detailed mapping between ISO 19115-4 imagery quality elements and ISO 19157-3 data quality measures.
 
+### Cloud Coverage and Conformance Statements
+
+**Quick Reference**: The extension provides full ISO 19115-4 support for **cloud coverage assessment** and **conformance statements** essential for satellite imagery quality reporting.
+
+**Key Features:**
+- ✅ `cloudCoverage` element with percentage and assessment method
+- ✅ `snowCoverage` element for snow/ice monitoring
+- ✅ `conformance` result for pass/fail against specifications
+- ✅ Integration with all ISO 19115-4 imagery quality elements
+
+**Example Usage:**
+```json
+{
+  "liability:quality": {
+    "elements": [{
+      "elementType": "cloudCoverage",
+      "detail": {
+        "type": "cloudCoverage",
+        "coveragePercentage": 8.5,
+        "assessmentMethod": "Automated scene classification"
+      },
+      "conformance": {
+        "specification": "Sentinel-2 Product Specification",
+        "pass": true,
+        "explanation": "Cloud coverage <10% meets operational requirements"
+      }
+    }]
+  }
+}
+```
+
+**Documentation:**
+- 📖 Complete guide: [CLOUD-COVERAGE-CONFORMANCE-GUIDE.md](CLOUD-COVERAGE-CONFORMANCE-GUIDE.md)
+- 📋 COP integration example: [examples/item-cop-with-cloud-coverage.json](examples/item-cop-with-cloud-coverage.json)
+- 🎯 Imagery quality example: [examples/item-with-imagery-quality.json](examples/item-with-imagery-quality.json)
+
+**Schema Compatibility:** The cloud coverage and conformance schemas are **100% identical to ISO 19115-4**, providing full interoperability with standard geospatial metadata workflows.
+
 ## Fields
 
 The fields in the table below can be used in these parts of STAC documents:
