@@ -1,0 +1,391 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "type": "Feature",
+  "id": "sentinel2-l2a-quality-example",
+  "bbox": [11.0, 45.0, 12.0, 46.0],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [11.0, 45.0],
+      [12.0, 45.0],
+      [12.0, 46.0],
+      [11.0, 46.0],
+      [11.0, 45.0]
+    ]]
+  },
+  "properties": {
+    "datetime": "2025-06-16T10:30:00Z",
+    "title": "Sentinel-2 L2A with DQV Quality Annotations",
+    "description": "Example demonstrating ISO 19157 quality metadata with W3C DQV semantic lifting",
+    
+    "liability:dataQualityInfo": [{
+      "$comment": "Complete data quality information container with scope, reports, and lineage",
+      "scope": {
+        "level": "dataset",
+        "levelDescription": ["Sentinel-2 Level-2A atmospherically corrected surface reflectance product"],
+        "extent": {
+          "description": "Northern Italy - Lombardy region",
+          "geographicExtent": [{
+            "westBoundLongitude": 11.0,
+            "eastBoundLongitude": 12.0,
+            "southBoundLatitude": 45.0,
+            "northBoundLatitude": 46.0
+          }],
+          "temporalExtent": [{
+            "extent": {
+              "begin": "2025-06-16T10:25:00Z",
+              "end": "2025-06-16T10:35:00Z"
+            }
+          }]
+        }
+      },
+      
+      "report": [
+        {
+          "$comment": "Positional Accuracy - ISO 19157 Measure 28 mapped to dqv:AccuracyMetric",
+          "category": "positionalAccuracy",
+          "subcategory": "absoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties"],
+            "measureDescription": "Mean positional uncertainty assessed through ground control point comparison"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "RMSE calculation using 50 ground control points surveyed with differential GPS (accuracy < 1cm)",
+            "dateTime": "2025-06-16T14:00:00Z",
+            "evaluationProcedure": {
+              "title": "Sentinel-2 Geometric Quality Assessment Procedure",
+              "date": "2024-01-15T00:00:00Z",
+              "identifier": "S2-GEO-QA-001"
+            }
+          },
+          "result": [{
+            "resultType": "quantitative",
+            "value": [12.3],
+            "valueUnit": "meter",
+            "valueRecordType": "Real",
+            "errorStatistic": "RMSE"
+          }]
+        },
+        {
+          "$comment": "Thematic Quality - Radiometric accuracy mapped to dqv:AccuracyMetric",
+          "category": "thematicQuality",
+          "subcategory": "quantitativeAttributeAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "60",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Value domain conformance rate"],
+            "measureDescription": "Radiometric calibration accuracy for multispectral bands against certified reference targets"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Pre-flight radiometric calibration using NIST-traceable reference targets",
+            "dateTime": "2025-05-15T10:00:00Z"
+          },
+          "result": [{
+            "resultType": "quantitative",
+            "value": [97.5],
+            "valueUnit": "percent",
+            "errorStatistic": "accuracy"
+          }]
+        },
+        {
+          "$comment": "Completeness - Commission errors mapped to dqv:CompletenessMetric",
+          "category": "completeness",
+          "subcategory": "commission",
+          "measure": {
+            "measureIdentification": {
+              "code": "4",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Rate of excess items"],
+            "measureDescription": "Cloud mask commission errors (clear pixels misclassified as cloud)"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Manual validation of 1000 random pixels against visual interpretation",
+            "dateTime": "2025-06-16T15:00:00Z"
+          },
+          "result": [{
+            "resultType": "quantitative",
+            "value": [2.5],
+            "valueUnit": "percent",
+            "errorStatistic": "commission rate"
+          }]
+        },
+        {
+          "$comment": "Metaquality - Confidence in quality assessment mapped to custom DQV dimension",
+          "category": "metaquality",
+          "subcategory": "confidence",
+          "measure": {
+            "measureIdentification": {
+              "code": "129",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Confidence in data quality result"],
+            "measureDescription": "Confidence in positional accuracy measurement based on GCP distribution and survey precision"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "indirect",
+            "evaluationMethodDescription": "Statistical analysis of GCP residuals and spatial distribution; sensor calibration certificate validated",
+            "dateTime": "2025-06-16T14:30:00Z"
+          },
+          "result": [{
+            "resultType": "quantitative",
+            "value": [0.95],
+            "valueUnit": "probability",
+            "valueRecordType": "Real"
+          }]
+        },
+        {
+          "$comment": "Usability - Cloud coverage assessment mapped to dqv:UsabilityMetric",
+          "category": "usability",
+          "usabilityDescription": "Scene affected by cloud coverage limiting usability for land cover classification",
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Automated cloud detection using Sen2Cor Scene Classification Layer (SCL)",
+            "dateTime": "2025-06-16T08:30:00Z"
+          },
+          "result": [{
+            "resultType": "descriptive",
+            "statement": "Cloud coverage: 15.5% of scene area (predominantly southern portion). Clear areas (84.5%) suitable for agricultural monitoring and land cover classification. Cloud shadow affects 3.2% of scene."
+          }]
+        },
+        {
+          "$comment": "Conformance Result - INSPIRE compliance mapped to dqv:conformsTo",
+          "category": "positionalAccuracy",
+          "measure": {
+            "nameOfMeasure": ["INSPIRE Positional Accuracy Requirement"],
+            "measureDescription": "Conformance to INSPIRE Data Specification on Orthoimagery horizontal positional accuracy requirement"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Comparison against INSPIRE requirement of ≤20m RMSE for orthoimage resolution 10m-50m",
+            "dateTime": "2025-06-16T14:00:00Z"
+          },
+          "result": [{
+            "resultType": "conformance",
+            "specification": {
+              "title": "INSPIRE Data Specification on Orthoimagery - Technical Guidelines",
+              "date": "2013-12-10T00:00:00Z",
+              "dateType": "publication",
+              "edition": "3.0",
+              "identifier": "D2.8.III.4"
+            },
+            "explanation": "Measured RMSE of 12.3m meets INSPIRE requirement of ≤20m for 10m resolution imagery",
+            "pass": true
+          }]
+        }
+      ],
+      
+      "lineage": {
+        "$comment": "Lineage information mapped to prov:Activity and prov:Entity",
+        "statement": "Sentinel-2A MSI Level-2A product generated from Level-1C top-of-atmosphere reflectance using Sen2Cor atmospheric correction processor. Product includes surface reflectance in 10 multispectral bands, Scene Classification Layer (SCL), and quality indicators.",
+        
+        "scope": {
+          "level": "dataset",
+          "levelDescription": ["Surface reflectance product with atmospheric correction"]
+        },
+        
+        "processStep": [{
+          "description": "Atmospheric correction to surface reflectance (Processing Level L2A)",
+          "rationale": "Convert top-of-atmosphere reflectance to bottom-of-atmosphere surface reflectance for vegetation analysis and land cover classification",
+          "dateTime": "2025-06-16T08:30:00Z",
+          
+          "processor": [{
+            "role": "processor",
+            "party": [{
+              "name": "ESA Copernicus Ground Segment",
+              "contactInfo": {
+                "onlineResource": [{
+                  "linkage": "https://scihub.copernicus.eu",
+                  "name": "Copernicus Open Access Hub",
+                  "description": "European Space Agency Copernicus data distribution system"
+                }]
+              }
+            }]
+          }],
+          
+          "processingInformation": {
+            "identifier": "Sen2Cor v2.10",
+            "softwareReference": {
+              "title": "Sen2Cor Software Release Notes",
+              "edition": "2.10",
+              "date": [{
+                "date": "2025-01-01T00:00:00Z",
+                "dateType": "publication"
+              }],
+              "onlineResource": [{
+                "linkage": "http://step.esa.int/main/snap-supported-plugins/sen2cor/",
+                "name": "Sen2Cor Home Page"
+              }]
+            },
+            "procedureDescription": "Atmospheric correction using LIBRADTRAN radiative transfer model with MODTRAN atmospheric profiles. Scene classification performed to identify clouds, cloud shadows, vegetation, water, snow/ice.",
+            "algorithm": [{
+              "citation": {
+                "title": "Sen2Cor Algorithm Theoretical Basis Document (ATBD)",
+                "edition": "2.10",
+                "date": [{
+                  "date": "2024-12-15T00:00:00Z",
+                  "dateType": "publication"
+                }],
+                "citedResponsibleParty": [{
+                  "role": "publisher",
+                  "party": [{
+                    "name": "European Space Agency"
+                  }]
+                }]
+              },
+              "description": "Atmospheric correction algorithm based on LIBRADTRAN radiative transfer code with Look-Up Tables (LUTs) for aerosol optical thickness (AOT) and water vapor retrieval"
+            }]
+          },
+          
+          "source": [{
+            "description": "Sentinel-2A MSI Level-1C Top-of-Atmosphere Reflectance",
+            "scope": {
+              "level": "dataset",
+              "levelDescription": ["Top-of-atmosphere reflectance, orthorectified"]
+            },
+            "sourceSpatialResolution": {
+              "distance": {
+                "value": 10,
+                "uom": "meter"
+              },
+              "levelOfDetail": "10m, 20m, and 60m bands depending on spectral channel"
+            },
+            "sourceCitation": {
+              "title": "S2A_MSIL1C_20250616T102031_N0510_R065_T32TNR_20250616T120533",
+              "date": [{
+                "date": "2025-06-16T10:30:00Z",
+                "dateType": "creation"
+              }],
+              "identifier": [{
+                "code": "a3f7b8c9-1234-5678-abcd-ef1234567890",
+                "codeSpace": "ESA PDGS"
+              }]
+            },
+            "processedLevel": "L1C"
+          }],
+          
+          "output": [{
+            "description": "Sentinel-2A MSI Level-2A Surface Reflectance",
+            "scope": {
+              "level": "dataset",
+              "levelDescription": ["Bottom-of-atmosphere surface reflectance, atmospherically corrected"]
+            },
+            "sourceSpatialResolution": {
+              "distance": {
+                "value": 10,
+                "uom": "meter"
+              }
+            },
+            "processedLevel": "L2A"
+          }],
+          
+          "report": [{
+            "name": "Sen2Cor Processing Report",
+            "description": "Sen2Cor v2.10 completed successfully. AOT retrieval: mean=0.15, stddev=0.03. Water vapor retrieval: mean=2.1 g/cm². Scene classification: 84.5% clear land, 15.5% cloud, 3.2% cloud shadow.",
+            "fileType": "text/plain"
+          }]
+        }],
+        
+        "source": [{
+          "description": "Ground Control Points - Differential GPS Survey",
+          "scope": {
+            "level": "feature",
+            "levelDescription": ["50 ground control points distributed across scene"]
+          },
+          "sourceSpatialResolution": {
+            "distance": {
+              "value": 0.01,
+              "uom": "meter"
+            },
+            "levelOfDetail": "Sub-centimeter differential GPS accuracy"
+          },
+          "sourceCitation": {
+            "title": "Northern Italy GCP Database - Lombardy Region",
+            "date": [{
+              "date": "2025-06-15T00:00:00Z",
+              "dateType": "revision"
+            }],
+            "citedResponsibleParty": [{
+              "role": "originator",
+              "party": [{
+                "name": "Regional Geospatial Authority of Lombardy"
+              }]
+            }]
+          }
+        }]
+      }
+    }],
+    
+    "liability:responsible_party": {
+      "name": "European Space Agency",
+      "organization": "ESA Copernicus Programme",
+      "email": "copernicus@esa.int",
+      "url": "https://www.copernicus.eu"
+    },
+    
+    "liability:origin": "ESA Copernicus Ground Segment - Sentinel-2 Mission"
+  },
+  
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-dqv-quality.json",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "license",
+      "href": "https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/TermsConditions",
+      "title": "Copernicus Sentinel Data Terms and Conditions"
+    },
+    {
+      "rel": "derived_from",
+      "href": "https://scihub.copernicus.eu/dhus/odata/v1/Products('a3f7b8c9-1234-5678-abcd-ef1234567890')",
+      "title": "Source L1C Product"
+    }
+  ],
+  
+  "assets": {
+    "B04": {
+      "href": "https://example.com/sentinel2/B04.jp2",
+      "title": "Band 4 - Red (665nm) - 10m",
+      "type": "image/jp2",
+      "roles": ["data"],
+      "eo:bands": [{
+        "name": "B04",
+        "common_name": "red",
+        "center_wavelength": 0.665,
+        "gsd": 10
+      }]
+    },
+    "SCL": {
+      "href": "https://example.com/sentinel2/SCL.jp2",
+      "title": "Scene Classification Layer - 20m",
+      "type": "image/jp2",
+      "roles": ["metadata"],
+      "description": "Scene classification: clouds, cloud shadows, vegetation, water, snow/ice, etc."
+    },
+    "quality_report": {
+      "href": "https://example.com/sentinel2/quality_report.xml",
+      "title": "ISO 19157 XML Quality Report",
+      "type": "application/xml",
+      "roles": ["metadata"],
+      "description": "Standalone quality report in ISO 19157 XML format"
+    }
+  }
+}

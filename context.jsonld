@@ -10,6 +10,8 @@
     "schema": "http://schema.org/",
     "fibo-fnd": "https://spec.edmcouncil.org/fibo/ontology/FND/",
     "legal": "http://www.w3.org/ns/legal#",
+    "ceosard": "https://ceos.org/ard/ontology#",
+    "iso19157": "https://def.isotc211.org/iso19157/-3/dqm/1.0/",
     
     "liability": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#liability:",
     
@@ -194,6 +196,47 @@
       "@id": "schema:requiredRole",
       "@type": "xsd:string",
       "@container": "@list"
+    },
+    
+    "ard:geometric_accuracy": {
+      "@id": "iso19157:DQ_AbsoluteExternalPositionalAccuracy",
+      "@type": "xsd:decimal"
+    },
+    "ard:geometric_accuracy_unit": {
+      "@id": "iso19157:valueUnit",
+      "@type": "xsd:string"
+    },
+    "ard:geometric_accuracy_type": {
+      "@id": "iso19157:measureDescription",
+      "@type": "xsd:string"
+    },
+    "ard:radiometric_accuracy": {
+      "@id": "iso19157:DQ_ThematicClassificationCorrectness",
+      "@type": "xsd:decimal"
+    },
+    "ard:radiometric_accuracy_unit": {
+      "@id": "iso19157:valueUnit",
+      "@type": "xsd:string"
+    },
+    "ard:cloud_coverage": {
+      "@id": "ceosard:cloudCoveragePercentage",
+      "@type": "xsd:decimal"
+    },
+    "ard:data_mask_coverage": {
+      "@id": "ceosard:dataMaskPercentage",
+      "@type": "xsd:decimal"
+    },
+    "ard:specification_compliance": {
+      "@id": "ceosard:conformsToSpecification",
+      "@type": "xsd:boolean"
+    },
+    "ard:pfs_threshold_compliance": {
+      "@id": "ceosard:thresholdRequirementsStatus",
+      "@type": "xsd:string"
+    },
+    "ard:pfs_target_compliance": {
+      "@id": "ceosard:targetRequirementsAchievement",
+      "@type": "xsd:decimal"
     }
   }
 }

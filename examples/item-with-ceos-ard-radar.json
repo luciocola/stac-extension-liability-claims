@@ -1,0 +1,480 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json",
+    "https://stac-extensions.github.io/ceos-ard/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/sar/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "sentinel1-nrb-ard-20250610",
+  "bbox": [
+    12.0,
+    41.5,
+    13.0,
+    42.5
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [12.0, 41.5],
+        [13.0, 41.5],
+        [13.0, 42.5],
+        [12.0, 42.5],
+        [12.0, 41.5]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2025-06-10T05:15:00Z",
+    "start_datetime": "2025-06-10T05:10:00Z",
+    "end_datetime": "2025-06-10T05:20:00Z",
+    
+    "platform": "sentinel-1a",
+    "constellation": "sentinel-1",
+    "instruments": ["c-sar"],
+    
+    "ceosard:type": "radar",
+    "ceosard:specification": "NRB",
+    "ceosard:specification_version": "1.2",
+    
+    "ard:geometric_accuracy": 7.2,
+    "ard:geometric_accuracy_unit": "meter",
+    "ard:geometric_accuracy_type": "CE90",
+    "ard:radiometric_accuracy": 0.5,
+    "ard:radiometric_accuracy_unit": "dB",
+    "ard:data_mask_coverage": 2.1,
+    "ard:specification_compliance": true,
+    "ard:pfs_threshold_compliance": "all",
+    "ard:pfs_target_compliance": 92.0,
+    
+    "liability:responsible_party": "ESA Copernicus Program",
+    "liability:origin": "Copernicus Sentinel-1 Mission",
+    "liability:notes": "CEOS-ARD Normalized Radar Backscatter v1.2 compliant product. Geometric accuracy meets Target requirements (<10m circular error 90%).",
+    
+    "sar:instrument_mode": "IW",
+    "sar:frequency_band": "C",
+    "sar:center_frequency": 5.405,
+    "sar:polarizations": ["VV", "VH"],
+    "sar:product_type": "GRD",
+    "sar:resolution_range": 20,
+    "sar:resolution_azimuth": 22,
+    "sar:pixel_spacing_range": 10,
+    "sar:pixel_spacing_azimuth": 10,
+    "sar:looks_range": 5,
+    "sar:looks_azimuth": 1,
+    "sar:looks_equivalent_number": 4.4,
+    "sar:observation_direction": "right",
+    
+    "proj:code": "EPSG:32633",
+    "proj:bbox": [
+      290000,
+      4595000,
+      400000,
+      4705000
+    ],
+    
+    "processing:facility": "ESA Ground Segment",
+    "processing:level": "L1",
+    "processing:software": {
+      "IPF": "3.71"
+    },
+    
+    "liability:quality": {
+      "scope": {
+        "level": "dataset"
+      },
+      "report": [
+        {
+          "category": "positionalAccuracy",
+          "subcategory": "absoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+              "authority": {
+                "title": "International Organization for Standardization",
+                "alternateTitle": ["ISO"],
+                "url": "https://www.iso.org"
+              }
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties (1D)"],
+            "measureDescription": "CEOS-ARD NRB 1.2 Requirement 1.7.11: Geometric Accuracy Assessment. Circular Error 90% (CE90) for geolocation accuracy."
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Validation against surveyed ground control points",
+            "referenceDoc": [
+              {
+                "title": "Sentinel-1 SAR Geometric Validation Report",
+                "date": "2025-05-01T00:00:00Z",
+                "uri": "https://sentinel.esa.int/documents/247904/4704686/Sentinel-1-Geometric-Validation"
+              }
+            ],
+            "dateTime": "2025-06-10T08:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [7.2],
+              "valueUnit": "meter",
+              "valueRecordType": "Real",
+              "errorStatistic": "CE90 (Circular Error 90%)"
+            }
+          ],
+          "metaquality": {
+            "confidence": 0.90,
+            "representativity": 0.85,
+            "homogeneity": 0.82
+          }
+        },
+        {
+          "category": "thematicQuality",
+          "measure": {
+            "measureIdentification": {
+              "code": "66",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["Relative radiometric accuracy"],
+            "measureDescription": "CEOS-ARD NRB 1.2 Requirement 1.7.8: Radiometric Accuracy. Backscatter coefficient uncertainty assessment."
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Backscatter coefficient calibration verification",
+            "referenceDoc": [
+              {
+                "title": "Sentinel-1 Radiometric Calibration and Validation",
+                "date": "2024-11-15T00:00:00Z",
+                "uri": "https://sentinel.esa.int/documents/247904/1653442/Sentinel-1-Radiometric-Calibration-V2.0.pdf"
+              }
+            ],
+            "dateTime": "2025-06-10T08:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [0.5],
+              "valueUnit": "dB",
+              "valueRecordType": "Real",
+              "errorStatistic": "Absolute radiometric accuracy"
+            }
+          ]
+        },
+        {
+          "category": "completeness",
+          "measure": {
+            "measureIdentification": {
+              "code": "7",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["Rate of missing items"],
+            "measureDescription": "CEOS-ARD NRB 1.2 Requirement 1.7.13: Data Mask. Assessment of missing data coverage."
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Data mask analysis for missing pixels",
+            "dateTime": "2025-06-10T07:30:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [2.1],
+              "valueUnit": "percentage",
+              "valueRecordType": "Real"
+            }
+          ]
+        },
+        {
+          "category": "usability",
+          "measure": {
+            "measureIdentification": {
+              "code": "136",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["Fitness for purpose"],
+            "measureDescription": "CEOS-ARD compliance assessment for Normalized Radar Backscatter v1.2"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "CEOS-ARD Product Family Specification compliance assessment",
+            "dateTime": "2025-06-10T09:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "conformance",
+              "pass": true,
+              "specification": {
+                "title": "CEOS-ARD Normalized Radar Backscatter Product Family Specification v1.2",
+                "date": "2022-06-15T00:00:00Z",
+                "identifier": "CARD4L-PFS-NRB-v1.2",
+                "uri": "https://ceos.org/ard/files/PFS/NRB/v1.2/CARD4L-PFS_Normalised_Radar_Backscatter-v1.2.pdf"
+              },
+              "explanation": "Product meets all Threshold requirements and 92% of Target requirements for CEOS-ARD NRB v1.2"
+            }
+          ]
+        }
+      ],
+      "lineage": {
+        "statement": "Sentinel-1 GRD product processed to Normalized Radar Backscatter through radiometric terrain correction and normalization",
+        "scope": {
+          "level": "dataset"
+        },
+        "processStep": [
+          {
+            "description": "Radiometric terrain correction using Copernicus DEM GLO-30",
+            "rationale": "CEOS-ARD NRB requirement 1.7.5: Radiometric terrain correction to normalize backscatter to sigma-nought",
+            "stepDateTime": "2025-06-10T06:30:00Z",
+            "processor": [
+              {
+                "name": "Sentinel-1 Processing Team",
+                "organizationName": "European Space Agency",
+                "role": "processor"
+              }
+            ],
+            "reference": [
+              {
+                "title": "SNAP S1 Toolbox RTC Processing",
+                "url": "https://step.esa.int/main/doc/tutorials/sar-processing/",
+                "date": "2024-11-01T00:00:00Z"
+              }
+            ],
+            "processingInformation": {
+              "identifier": "SNAP-9.0-RTC",
+              "softwareReference": [
+                {
+                  "title": "SNAP",
+                  "version": "9.0.0",
+                  "identifier": "SNAP"
+                }
+              ],
+              "procedureDescription": "Range-Doppler terrain correction with ellipsoid correction",
+              "runTimeParameters": "--demName='Copernicus 30m Global DEM' --pixelSpacingInMeter=10"
+            }
+          },
+          {
+            "description": "Speckle filtering using refined Lee filter",
+            "rationale": "CEOS-ARD NRB requirement 1.7.10: Speckle filtering for noise reduction",
+            "stepDateTime": "2025-06-10T06:45:00Z",
+            "processor": [
+              {
+                "name": "Sentinel-1 Processing Team",
+                "organizationName": "European Space Agency",
+                "role": "processor"
+              }
+            ],
+            "processingInformation": {
+              "identifier": "SNAP-9.0-SPECKLE",
+              "procedureDescription": "Refined Lee adaptive speckle filter",
+              "runTimeParameters": "--filterSizeX=5 --filterSizeY=5"
+            }
+          },
+          {
+            "description": "Conversion to decibel scale and export to GeoTIFF",
+            "rationale": "CEOS-ARD NRB requirement 1.7.4: Backscatter coefficient in dB scale",
+            "stepDateTime": "2025-06-10T07:00:00Z"
+          }
+        ],
+        "source": [
+          {
+            "description": "Sentinel-1A IW GRD Level-1 product",
+            "sourceCitation": "S1A_IW_GRDH_1SDV_20250610T051507_20250610T051532_054321_06A2B3_1234",
+            "sourceReferenceSystem": "EPSG:32633",
+            "sourceMetadata": "https://scihub.copernicus.eu/dhus/odata/v1/Products('abcdef01-2345-6789-abcd-ef0123456789')/Nodes('manifest.safe')/$value"
+          }
+        ]
+      }
+    },
+    
+    "liability:prov": {
+      "prefix": {
+        "ex": "http://example.org/",
+        "ceosard": "https://ceos.org/ard/",
+        "s1": "https://sentinel.esa.int/s1/"
+      },
+      "entity": {
+        "ex:source-grd": {
+          "prov:type": "s1:GRD",
+          "prov:label": "Sentinel-1A GRD IW 20250610",
+          "prov:value": "S1A_IW_GRDH_1SDV_20250610T051507_20250610T051532_054321_06A2B3_1234"
+        },
+        "ex:ard-product": {
+          "prov:type": "ceosard:NormalizedRadarBackscatter",
+          "prov:label": "CEOS-ARD NRB Product",
+          "ceosard:specification": "NRB",
+          "ceosard:specification_version": "1.2",
+          "prov:wasDerivedFrom": "ex:source-grd",
+          "prov:wasGeneratedBy": "ex:rtc-processing"
+        },
+        "ex:quality-report": {
+          "prov:type": "ISO19157QualityReport",
+          "prov:wasGeneratedBy": "ex:quality-assessment",
+          "prov:wasAttributedTo": "ex:validation-team"
+        }
+      },
+      "activity": {
+        "ex:rtc-processing": {
+          "prov:type": "ceosard:RadiometricTerrainCorrection",
+          "prov:label": "RTC and speckle filtering",
+          "prov:startTime": "2025-06-10T06:30:00Z",
+          "prov:endTime": "2025-06-10T07:00:00Z",
+          "prov:used": "ex:source-grd"
+        },
+        "ex:quality-assessment": {
+          "prov:type": "ceosard:ARDQualityValidation",
+          "prov:label": "CEOS-ARD compliance validation",
+          "prov:startTime": "2025-06-10T08:00:00Z",
+          "prov:endTime": "2025-06-10T09:00:00Z",
+          "prov:used": "ex:ard-product"
+        }
+      },
+      "agent": {
+        "ex:snap": {
+          "prov:type": "prov:SoftwareAgent",
+          "prov:label": "SNAP 9.0.0"
+        },
+        "ex:validation-team": {
+          "prov:type": "prov:Organization",
+          "prov:label": "ESA SAR Quality Validation Team"
+        }
+      },
+      "wasGeneratedBy": {
+        "_:wGB1": {
+          "prov:entity": "ex:ard-product",
+          "prov:activity": "ex:rtc-processing",
+          "prov:time": "2025-06-10T07:00:00Z"
+        },
+        "_:wGB2": {
+          "prov:entity": "ex:quality-report",
+          "prov:activity": "ex:quality-assessment",
+          "prov:time": "2025-06-10T09:00:00Z"
+        }
+      },
+      "wasAssociatedWith": {
+        "_:wAW1": {
+          "prov:activity": "ex:rtc-processing",
+          "prov:agent": "ex:snap"
+        },
+        "_:wAW2": {
+          "prov:activity": "ex:quality-assessment",
+          "prov:agent": "ex:validation-team"
+        }
+      }
+    }
+  },
+  "assets": {
+    "VV": {
+      "href": "./data/S1A_IW_NRB_20250610_VV.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VV polarization backscatter (sigma-nought, dB)",
+      "roles": ["data"],
+      "sar:polarizations": ["VV"],
+      "raster:bands": [
+        {
+          "nodata": -9999,
+          "data_type": "float32",
+          "unit": "dB",
+          "scale": 1.0,
+          "offset": 0
+        }
+      ],
+      "liability:security_classification": "public"
+    },
+    "VH": {
+      "href": "./data/S1A_IW_NRB_20250610_VH.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VH polarization backscatter (sigma-nought, dB)",
+      "roles": ["data"],
+      "sar:polarizations": ["VH"],
+      "raster:bands": [
+        {
+          "nodata": -9999,
+          "data_type": "float32",
+          "unit": "dB",
+          "scale": 1.0,
+          "offset": 0
+        }
+      ]
+    },
+    "local-incidence-angle": {
+      "href": "./data/S1A_IW_NRB_20250610_LIA.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Local incidence angle (CEOS-ARD Req 1.7.12)",
+      "roles": ["metadata"],
+      "raster:bands": [
+        {
+          "nodata": 0,
+          "data_type": "float32",
+          "unit": "degree",
+          "scale": 1.0,
+          "offset": 0
+        }
+      ]
+    },
+    "data-mask": {
+      "href": "./data/S1A_IW_NRB_20250610_mask.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Data mask (CEOS-ARD Req 1.7.13)",
+      "roles": ["metadata"],
+      "classification:classes": [
+        {
+          "value": 0,
+          "name": "no-data",
+          "description": "Missing or invalid data"
+        },
+        {
+          "value": 1,
+          "name": "valid",
+          "description": "Valid backscatter measurement"
+        }
+      ]
+    },
+    "metadata": {
+      "href": "./data/S1A_IW_GRDH_20250610_manifest.safe",
+      "type": "application/xml",
+      "title": "Sentinel-1 SAFE Manifest",
+      "roles": ["metadata"]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-ceos-ard-radar.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "ceos-ard-specification",
+      "href": "https://ceos.org/ard/files/PFS/NRB/v1.2/CARD4L-PFS_Normalised_Radar_Backscatter-v1.2.pdf",
+      "type": "application/pdf",
+      "title": "CEOS Analysis Ready Data - Normalized Radar Backscatter Product Family Specification v1.2"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://sentinel.esa.int/documents/247904/1877131/Sentinel-1-Product-Definition",
+      "type": "application/pdf",
+      "title": "Sentinel-1 Product Definition"
+    },
+    {
+      "rel": "license",
+      "href": "https://scihub.copernicus.eu/twiki/pub/SciHubWebPortal/TermsConditions/TC_Sentinel_Data_31072014.pdf",
+      "type": "application/pdf",
+      "title": "Copernicus Sentinel Data Terms and Conditions"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.2.0/schema.json#",
   "title": "Liability and Claims Extension",
   "description": "STAC Liability and Claims Extension for Items and Collections. v1.2.0 adds optional CEOS-ARD integration for Analysis Ready Data quality certification.",
   "stac_version": "1.0.0",

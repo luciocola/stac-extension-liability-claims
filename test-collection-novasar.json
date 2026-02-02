@@ -1,0 +1,51 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+    ],
+    "extent": {
+        "spatial": {
+            "bbox": [[
+                    -62.87262834116111,
+                    -55.94470669421993,
+                    173.246741777445,
+                    38.42053289934906
+                ]]
+        },
+        "temporal": {
+            "interval": [[
+                    "2019-11-02T00:00:00.000Z",
+                    "2025-10-08T23:59:59.999Z"
+                ]]
+        }
+    },
+    "license": "CC-BY-4.0",
+    "liability:quality": {
+        "scope": {
+            "level": "series"
+        },
+        "report": [
+            {
+                "category": "completeness",
+                "result": [{
+                        "resultType": "conformance",
+                        "pass": true,
+                        "specification": {
+                            "title": "CEOS-ARD NRB"
+                        },
+                        "type": "ConformanceResult",
+                        "explanation": "This collection is conformant with the CEOS ARD NRB Specification"
+                    }
+                ]
+            }
+        ]
+    },
+    "assets": {
+    },
+    "description": "NovaSAR-1 CEOS-ARD (level 2) HH,HV polarizations",
+    "links": [
+    ],
+    "id": "novasar_l2ard_hh_hv",
+    "type": "Collection",
+    "title": "novasar_l2ard_hh_hv"
+}

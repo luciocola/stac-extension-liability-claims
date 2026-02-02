@@ -7,6 +7,116 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - ISO TC211 Official Schema Alignment (In Progress)
+
+- **ISO 19157 TC211 Alignment** (Hybrid approach - backward compatible with v1.1.0)
+  - Schema updated to align with official ISO TC211 JSON schemas: https://github.com/ISO-TC211/XML
+  - Support both v1.1.0 style (`category`, `resultType`) and ISO TC211 style (`type` discriminators)
+  - Accept both inline citations and structured CI_Citation references
+  - ConformanceResult accepts both `"type": "ConformanceResult"` (ISO) and `"resultType": "conformance"` (v1.1.0)
+  - Quality elements support optional `type` field (e.g., `"type": "AbsolutePositionalAccuracy"`) alongside existing `category`
+  - Full backward compatibility: all v1.1.0 items validate without changes
+  - Migration guide: [ISO-TC211-ALIGNMENT.md](./ISO-TC211-ALIGNMENT.md)
+
+### Added - Schema Formalization & Semantic Lifting
+
+- **Queryable ARD Quality Fields** (OGC T21-DQ4IPT Schema Formalization requirement)
+  - Added 10 new top-level `ard:*` fields for simple API queries without navigating nested ISO 19157 structures
+  - `ard:geometric_accuracy`, `ard:geometric_accuracy_unit`, `ard:geometric_accuracy_type` - Flattened positional accuracy metrics
+  - `ard:radiometric_accuracy`, `ard:radiometric_accuracy_unit` - Flattened radiometric/thematic accuracy metrics
+  - `ard:cloud_coverage` (optical sensors), `ard:data_mask_coverage` (radar sensors) - Sensor-specific coverage metrics
+  - `ard:specification_compliance`, `ard:pfs_threshold_compliance`, `ard:pfs_target_compliance` - Multi-dimensional CEOS-ARD PFS compliance tracking
+  - Enables CQL2 queries like `ard:geometric_accuracy <= 10 AND ard:cloud_coverage < 20`
+  - Fields mirror values from authoritative ISO 19157 reports in `liability:quality.report[]` (no duplication, read-only derivations)
+  
+- **Semantic Lifting Workflow** (OGC T21-DQ4IPT Semantic Lifting requirement)
+  - Enhanced `context.jsonld` with CEOS-ARD ontology namespace (`ceosard: https://ceos.org/ard/ontology#`)
+  - Enhanced `context.jsonld` with ISO 19157-3 ontology namespace (`iso19157: https://def.isotc211.org/iso19157/-3/dqm/1.0/`)
+  - All `ard:*` fields mapped to formal ontology concepts for automatic JSON→RDF conversion
+  - Geometric accuracy → `iso19157:DQ_AbsoluteExternalPositionalAccuracy`
+  - Radiometric accuracy → `iso19157:DQ_ThematicClassificationCorrectness`
+  - Compliance metrics → `ceosard:conformsToSpecification`, `ceosard:thresholdRequirementsStatus`, `ceosard:targetRequirementsAchievement`
+  - Enables semantic web interoperability and SPARQL queries across distributed catalogs
+  
+- **New Semantic Example**
+  - `examples/semantic-lifting-example.ttl`: RDF/Turtle representation of Sentinel-2 ARD with complete ontology mappings
+  - Demonstrates automatic JSON-LD to RDF conversion using enhanced context
+  - Includes 4 SPARQL query examples (geometric accuracy filtering, cloud coverage + compliance, metaquality confidence, provenance chain)
+  - Shows integration of CEOS-ARD, ISO 19157, W3C DQV, and W3C PROV ontologies
+  
+- **Documentation Enhancements**
+  - Added "Schema Formalization: Queryable ARD Quality Fields" section to README.md
+  - Detailed table of all `ard:*` fields with types, descriptions, and examples
+  - CQL2 JSON and CQL2 Text query examples for common use cases
+  - STAC API search request examples with curl commands
+  - Comparison of nested vs flattened query approaches (demonstrates queryability improvement)
+  - JSON Schema documentation for all `ard:*` fields in `json-schema/schema.json`
+
+### Changed
+
+- **Extension Maturity**: Advancing toward STAC Extension "Candidate" status
+  - Addresses OGC T21-DQ4IPT #1 priority gap (CEOS-ARD formalization)
+  - Implements Schema Formalization requirement (explicit metric mappings for API queries)
+  - Implements Semantic Lifting requirement (JSON-LD ontology mappings for RDF conversion)
+  - Enhances discoverability through queryable quality fields
+  - Enables semantic interoperability through formal ontology integration
+
+### Backward Compatibility
+
+- **100% Backward Compatible**: All new `ard:*` fields are optional
+- All existing v1.2.0 items validate unchanged
+- ISO 19157 quality report structure unchanged (authoritative source maintained)
+- W3C PROV provenance structure unchanged
+- CEOS-ARD certification fields unchanged
+
+## [1.2.0] - 2025-12-22
+
+### Added - CEOS-ARD Integration
+
+- **CEOS Analysis Ready Data Extension Integration**
+  - Optional integration with [CEOS-ARD STAC Extension v0.2.0](https://github.com/stac-extensions/ceos-ard)
+  - Supports both **optical sensors** (Surface Reflectance SR, Surface Temperature ST, Aquatic Reflectance AR, Nighttime Lights NLSR)
+  - Supports **radar sensors** (Normalized Radar Backscatter NRB, Polarimetric Radar POL, Ocean Radar Backscatter ORB, Geocoded Single-Look Complex GSLC)
+  - Addresses OGC T21-DQ4IPT Engineering Report (OGC 26-999) priority gap for ARD formalization
+  - Enables Analysis Ready Data certification workflows with quality metadata
+  
+- **Quality Framework Alignment**
+  - CEOS-ARD geometric accuracy requirements (Req 1.8, 1.7.11) mapped to ISO 19157 `positionalAccuracy`
+  - CEOS-ARD radiometric uncertainty requirements (Req 1.12, 1.7.8) mapped to ISO 19157 `thematicAccuracy`
+  - CEOS-ARD per-pixel quality masks (Req 2.x, 1.7.13) mapped to ISO 19157 `completeness`
+  - CEOS-ARD compliance assessment mapped to ISO 19157 `usability` conformance results
+  - Documented quality mapping in [INTEGRATION-PLAN.md](./INTEGRATION-PLAN.md)
+  
+- **New Examples**
+  - `examples/item-with-ceos-ard-optical.json`: Sentinel-2 Surface Reflectance ARD (SR v5.0.1) with full ISO 19157 quality report
+  - `examples/item-with-ceos-ard-radar.json`: Sentinel-1 Normalized Radar Backscatter ARD (NRB v1.2) with full ISO 19157 quality report
+  - Both examples demonstrate parallel extension usage (liability-claims + CEOS-ARD coexist)
+  - Complete asset role mappings (cloud, cloud-shadow, saturation, data-mask, metadata)
+  
+- **Integration Documentation** (`INTEGRATION-PLAN.md`)
+  - Comprehensive CEOS-ARD integration roadmap
+  - Backward compatibility analysis (100% compatible)
+  - Quality mapping tables (CEOS-ARD requirements → ISO 19157 categories)
+  - Testing strategy and implementation checklist
+  - Future enhancement roadmap (semantic lifting, ML quality measures, real-time monitoring)
+
+### Changed
+
+- **Schema version** bumped from v1.1.0 to v1.2.0 (minor version, **zero breaking changes**)
+- **Schema description** updated to document optional CEOS-ARD integration capability
+- **Extension architecture** supports parallel extension usage:
+  - `liability:*` namespace for liability and ISO 19157 quality fields
+  - `ceosard:*` namespace for CEOS-ARD certification fields
+  - No namespace conflicts, clean separation of concerns
+
+### Backward Compatibility
+
+- **100% backward compatible** with v1.1.0
+- All existing items validate unchanged (CEOS-ARD fields optional)
+- No modifications required to existing implementations
+- Parallel extension architecture ensures zero impact on existing workflows
+- Migration path: zero changes for existing items, opt-in for ARD certification
+
 ### Added - ISO 19157-1:2023 Data Quality Support (2025-12-21)
 
 - **ISO 19157-1:2023 Integration** (`json-schema/iso19157-quality.json`)

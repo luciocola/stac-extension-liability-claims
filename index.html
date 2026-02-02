@@ -5,178 +5,286 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAC Liability and Claims Extension</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #24292e;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
         }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 3rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
         h1 {
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
-        .badges {
-            margin: 20px 0;
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
         }
+        
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .version-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+        
+        .version-card.latest {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .version-card.latest h2,
+        .version-card.latest .badge {
+            color: white;
+        }
+        
+        .version-card h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
         .badge {
             display: inline-block;
-            padding: 3px 7px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 3px;
-            margin-right: 5px;
+            background: #ffd700;
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
-        .badge-maturity { background: #0969da; color: white; }
-        .badge-version { background: #1a7f37; color: white; }
-        .badge-license { background: #8250df; color: white; }
-        code {
-            background: #f6f8fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 85%;
+        
+        .version-card.latest .badge {
+            background: rgba(255,255,255,0.3);
+            color: white;
         }
+        
+        .features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .version-card.latest .features li:before {
+            color: #ffd700;
+        }
+        
         .links {
-            background: #f6f8fa;
-            border: 1px solid #d0d7de;
-            border-radius: 6px;
-            padding: 16px;
-            margin: 20px 0;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
         }
+        
+        .version-card.latest .links {
+            border-top-color: rgba(255,255,255,0.3);
+        }
+        
         .links a {
-            color: #0969da;
+            display: inline-block;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
             text-decoration: none;
-            display: block;
-            margin: 8px 0;
+            border-radius: 5px;
+            transition: background 0.3s ease;
         }
+        
+        .version-card.latest .links a {
+            background: rgba(255,255,255,0.2);
+        }
+        
         .links a:hover {
+            background: #5568d3;
+        }
+        
+        .version-card.latest .links a:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
             text-decoration: underline;
         }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+        
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 4px;
         }
-        .feature {
-            border: 1px solid #d0d7de;
-            border-radius: 6px;
-            padding: 16px;
-        }
-        .feature h3 {
-            margin-top: 0;
-            color: #0969da;
+        
+        .info-box strong {
+            color: #667eea;
         }
     </style>
 </head>
 <body>
-    <h1>🛡️ STAC Liability and Claims Extension</h1>
-    
-    <div class="badges">
-        <span class="badge badge-maturity">Maturity: Proposal</span>
-        <span class="badge badge-version">Version: 1.1.0</span>
-        <span class="badge badge-license">License: Apache-2.0</span>
-    </div>
-
-    <p>
-        STAC Extension for documenting liability information, insurance claims, and legal proceedings 
-        associated with geospatial data assets. Includes comprehensive support for data quality 
-        (ISO 19157-1:2023, ISO 19115/19115-4) and provenance tracking (W3C PROV, Verifiable Credentials 2.0).
-    </p>
-
-    <div class="links">
-        <h3>📚 Documentation</h3>
-        <a href="v1.1.0/README.html">📖 Extension Specification</a>
-        <a href="v1.1.0/schema.json">📄 JSON Schema</a>
-        <a href="v1.1.0/CHANGELOG.html">📝 Changelog</a>
-        <a href="context.jsonld">🔗 JSON-LD Context</a>
-    </div>
-
-    <div class="links">
-        <h3>💻 Code & Examples</h3>
-        <a href="https://github.com/stac-extensions/liability-claims">GitHub Repository</a>
-        <a href="v1.1.0/examples/">Example STAC Items & Collections</a>
-        <a href="https://github.com/stac-extensions/liability-claims/issues">Issue Tracker</a>
-    </div>
-
-    <div class="features">
-        <div class="feature">
-            <h3>📊 Data Quality</h3>
-            <ul>
-                <li>ISO 19157-1:2023 (RECOMMENDED)</li>
-                <li>ISO 19115/19115-4</li>
-                <li>Standardized quality measures</li>
-                <li>Metaquality assessment</li>
-            </ul>
+    <div class="container">
+        <header>
+            <h1>STAC Liability and Claims Extension</h1>
+            <p class="subtitle">Quality metadata and provenance for STAC Items and Collections</p>
+        </header>
+        
+        <div class="info-box">
+            <strong>About:</strong> This extension adds liability tracking, quality metadata (ISO 19157), 
+            and provenance information (W3C PROV) to STAC Items and Collections. It supports CEOS-ARD 
+            certification and semantic web integration.
         </div>
-
-        <div class="feature">
-            <h3>🔍 Provenance</h3>
-            <ul>
-                <li>W3C PROV-DM</li>
-                <li>Semantic web integration</li>
-                <li>SPARQL queries</li>
-                <li>ISO 19115 lineage</li>
-            </ul>
+        
+        <h2 style="margin: 2rem 0 1rem; color: #667eea;">Available Versions</h2>
+        
+        <div class="version-grid">
+            <div class="version-card latest">
+                <span class="badge">LATEST</span>
+                <h2>v1.2.0</h2>
+                <p style="margin-bottom: 1rem;">Released: February 2026</p>
+                
+                <ul class="features">
+                    <li>ISO TC211 Official Schema Alignment</li>
+                    <li>CEOS-ARD Integration (ARD quality fields)</li>
+                    <li>Schema Formalization (queryable fields)</li>
+                    <li>Semantic Lifting (RDF/OWL support)</li>
+                    <li>Hybrid backward compatibility</li>
+                    <li>Enhanced examples (18 total)</li>
+                </ul>
+                
+                <div class="links">
+                    <a href="v1.2.0/schema.json">Schema</a>
+                    <a href="v1.2.0/README.md">Documentation</a>
+                    <a href="v1.2.0/examples/">Examples</a>
+                </div>
+            </div>
+            
+            <div class="version-card">
+                <span class="badge">STABLE</span>
+                <h2>v1.1.0</h2>
+                <p style="margin-bottom: 1rem;">Released: January 2026</p>
+                
+                <ul class="features">
+                    <li>ISO 19157-1:2023 Quality Reports</li>
+                    <li>W3C PROV Provenance</li>
+                    <li>Security Classifications</li>
+                    <li>DQV Integration</li>
+                    <li>OGC Building Blocks Submission</li>
+                    <li>Production-ready</li>
+                </ul>
+                
+                <div class="links">
+                    <a href="v1.1.0/schema.json">Schema</a>
+                    <a href="v1.1.0/README.md">Documentation</a>
+                    <a href="v1.1.0/examples/">Examples</a>
+                </div>
+            </div>
         </div>
-
-        <div class="feature">
-            <h3>✅ Verification</h3>
-            <ul>
-                <li>W3C Verifiable Credentials 2.0</li>
-                <li>Cryptographic signatures</li>
-                <li>Selective disclosure</li>
-                <li>Tamper evidence</li>
-            </ul>
+        
+        <h2 style="margin: 3rem 0 1rem; color: #667eea;">Version Compatibility</h2>
+        
+        <div class="info-box">
+            <p><strong>✓ Full Backward Compatibility:</strong> v1.2.0 is 100% backward compatible with v1.1.0. 
+            All v1.1.0 STAC Items will validate successfully against v1.2.0 schema.</p>
+            <p style="margin-top: 0.5rem;"><strong>Migration:</strong> Existing v1.1.0 users can upgrade to v1.2.0 
+            without changes. New features are optional.</p>
         </div>
-
-        <div class="feature">
-            <h3>⚖️ Legal & Claims</h3>
-            <ul>
-                <li>Insurance claims</li>
-                <li>Damage assessment</li>
-                <li>Responsible parties</li>
-                <li>Legal proceedings</li>
-            </ul>
-        </div>
-    </div>
-
-    <h2>🚀 Usage</h2>
-    <p>Add the extension to your STAC Item or Collection:</p>
-    <pre><code>{
-  "stac_version": "1.0.0",
+        
+        <h2 style="margin: 3rem 0 1rem; color: #667eea;">Quick Start</h2>
+        
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+            <p style="margin-bottom: 1rem;"><strong>Add to your STAC Item:</strong></p>
+            <pre style="background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>{
   "stac_extensions": [
-    "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.2.0/schema.json"
   ],
-  "type": "Feature",
   "properties": {
-    "liability:claim_id": "CLAIM-2025-001",
-    "liability:responsible_party": "Acme Geospatial Inc.",
-    "liability:quality": { ... }
+    "liability:responsible_party": "European Space Agency (ESA)",
+    "liability:origin": "Copernicus Sentinel-2",
+    "liability:quality": { ... },
+    "liability:prov": { ... }
   }
 }</code></pre>
-
-    <h2>📋 Standards Compliance</h2>
-    <ul>
-        <li>✅ ISO 19157-1:2023 (Geographic information - Data quality)</li>
-        <li>✅ ISO 19115/19115-4 (Geographic information - Metadata)</li>
-        <li>✅ W3C PROV (Provenance Data Model)</li>
-        <li>✅ W3C Verifiable Credentials 2.0</li>
-        <li>✅ OGC Building Blocks compliant</li>
-        <li>✅ T21-DQ4IPT compatible</li>
-    </ul>
-
-    <h2>📞 Contact</h2>
-    <p>
-        <strong>Owner:</strong> @luciocola<br>
-        <strong>Organization:</strong> Secure Dimensions<br>
-        <strong>Support:</strong> <a href="https://github.com/stac-extensions/liability-claims/issues">GitHub Issues</a>
-    </p>
-
-    <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #eaecef; color: #57606a; font-size: 14px;">
-        <p>Part of the <a href="https://stacspec.org/">STAC Extensions</a> ecosystem</p>
-    </footer>
+        </div>
+        
+        <h2 style="margin: 3rem 0 1rem; color: #667eea;">Resources</h2>
+        
+        <ul class="features" style="margin-left: 2rem;">
+            <li><a href="https://github.com/luciocola/stac-extension-liability-claims" style="color: #667eea;">GitHub Repository</a></li>
+            <li><a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/CHANGELOG.md" style="color: #667eea;">Changelog</a></li>
+            <li><a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/ISO-TC211-ALIGNMENT.md" style="color: #667eea;">Migration Guide (v1.1.0 → v1.2.0)</a></li>
+            <li><a href="https://github.com/ogcincubator/bblocks-stac" style="color: #667eea;">OGC Building Blocks</a></li>
+        </ul>
+        
+        <footer>
+            <p>Maintained by <a href="https://github.com/luciocola">@luciocola</a></p>
+            <p style="margin-top: 0.5rem;">Licensed under <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/LICENSE">Apache License 2.0</a></p>
+        </footer>
+    </div>
 </body>
 </html>
