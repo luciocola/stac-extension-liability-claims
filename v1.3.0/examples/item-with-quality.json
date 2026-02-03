@@ -1,0 +1,68 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "id": "item-with-quality-001",
+  "bbox": [0, 0, 1, 1],
+  "properties": {
+    "datetime": "2025-11-27T12:00:00Z",
+    "liability:claim_id": "CLM-0001",
+    "liability:claim_type": "environmental",
+    "liability:origin": "EnvAgency",
+    "liability:quality": {
+      "reportId": "QR-2025-0001",
+      "scope": "feature",
+      "date": "2025-11-27T12:00:00Z",
+      "summary": "Quality assessment for claim geometry and attributes",
+      "elements": [
+        {
+          "elementType": "positionalAccuracy",
+          "summary": "Estimated horizontal accuracy",
+          "detail": {
+            "type": "positionalAccuracy",
+            "accuracyValue": 3.5,
+            "units": "m",
+            "method": "GNSS survey",
+            "measure": {
+              "description": "RMS horizontal error",
+              "value": 3.5,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          },
+          "conformance": {
+            "specification": "ISO 19115-2",
+            "pass": true,
+            "explanation": "Measured using GNSS control points"
+          }
+        },
+        {
+          "elementType": "completeness",
+          "summary": "Completeness of reported affected areas",
+          "detail": {
+            "type": "completeness",
+            "scope": "feature",
+            "measure": {
+              "description": "Percentage of affected area captured",
+              "value": 92,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[[0,0],[1,0],[1,1],[0,1],[0,0]]]
+  },
+  "assets": {
+    "data": {
+      "href": "data/item-with-quality-001.tif",
+      "type": "image/tiff"
+    }
+  }
+}

@@ -1,0 +1,427 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "type": "Feature",
+  "id": "satellite-quality-iso19157-demo",
+  "bbox": [-122.5, 37.5, -122.0, 38.0],
+  "properties": {
+    "datetime": "2025-12-21T10:30:00Z",
+    "title": "Satellite Imagery with ISO 19157-1:2023 Quality Assessment",
+    "description": "Example demonstrating ISO 19157-1:2023 data quality framework with W3C PROV provenance",
+    "liability:claim_id": "QUAL-2025-S2-001",
+    "liability:responsible_party": "National Satellite Data Center",
+    "liability:quality": {
+      "scope": {
+        "level": "dataset",
+        "extent": {
+          "description": "Sentinel-2 L2A tile covering agricultural region",
+          "geographicExtent": {
+            "westBoundLongitude": -122.5,
+            "eastBoundLongitude": -122.0,
+            "southBoundLatitude": 37.5,
+            "northBoundLatitude": 38.0
+          },
+          "temporalExtent": {
+            "startDate": "2025-06-15T10:30:00Z",
+            "endDate": "2025-06-15T10:30:00Z"
+          }
+        }
+      },
+      "report": [
+        {
+          "category": "positionalAccuracy",
+          "subcategory": "absoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties"],
+            "measureDescription": "Mean of positional uncertainties for a set of positions where the positional uncertainties are defined as the distance between a measured position and what is considered as the corresponding true position"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Comparison with independently surveyed ground control points",
+            "referenceDoc": [
+              {
+                "title": "Sentinel-2 Geometric Quality Assessment Procedures",
+                "date": "2025-01-15T00:00:00Z",
+                "identifier": "S2-GQAP-2025-v2.1",
+                "uri": "https://example.org/docs/s2-quality-procedures.pdf"
+              }
+            ],
+            "dateTime": "2025-06-16T14:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [12.3],
+              "valueUnit": "meter",
+              "valueRecordType": "Real",
+              "errorStatistic": "RMSE (Root Mean Square Error)"
+            }
+          ]
+        },
+        {
+          "category": "thematicQuality",
+          "subcategory": "thematicClassificationCorrectness",
+          "measure": {
+            "measureIdentification": {
+              "code": "65",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Classification correctness"],
+            "measureDescription": "Comparison of the classes assigned to features or their attributes to a universe of discourse"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Validation against reference land cover dataset",
+            "dateTime": "2025-06-20T10:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [0.94],
+              "valueUnit": "percentage",
+              "valueRecordType": "Real",
+              "errorStatistic": "Overall accuracy"
+            }
+          ]
+        },
+        {
+          "category": "completeness",
+          "subcategory": "omission",
+          "measure": {
+            "measureIdentification": {
+              "code": "7",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Number of missing items"],
+            "measureDescription": "Count of items that should be present but are absent from the dataset"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Automated detection of data gaps in scene coverage",
+            "dateTime": "2025-06-15T12:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [0],
+              "valueRecordType": "Integer"
+            }
+          ]
+        },
+        {
+          "category": "logicalConsistency",
+          "subcategory": "domainConsistency",
+          "measure": {
+            "measureIdentification": {
+              "code": "17",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Value domain conformance"],
+            "measureDescription": "Degree to which values are within the specified value domain"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Validation of pixel values against expected radiometric ranges",
+            "dateTime": "2025-06-15T13:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "conformance",
+              "specification": {
+                "title": "Sentinel-2 L2A Product Specification",
+                "date": "2024-03-01T00:00:00Z",
+                "dateType": "publication",
+                "identifier": "S2-L2A-SPEC-v3.0"
+              },
+              "explanation": "All pixel values fall within valid reflectance ranges (0-10000)",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "category": "metaquality",
+          "subcategory": "confidence",
+          "measure": {
+            "measureIdentification": {
+              "code": "129",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Confidence level"],
+            "measureDescription": "Trustworthiness of a data quality result"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "indirect",
+            "evaluationMethodDescription": "Statistical analysis of quality assessment reproducibility",
+            "dateTime": "2025-06-20T15:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [0.95],
+              "valueUnit": "probability",
+              "valueRecordType": "Real",
+              "errorStatistic": "95% confidence interval"
+            }
+          ]
+        },
+        {
+          "category": "usability",
+          "usabilityDescription": "Dataset suitable for agricultural monitoring and crop classification at 10m resolution",
+          "measure": {
+            "measureIdentification": {
+              "code": "136",
+              "codeSpace": "ISO 19157",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Fitness for purpose"],
+            "measureDescription": "Degree to which a dataset has characteristics that satisfy stated and implied needs when used under specified conditions"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "User feedback assessment from agricultural monitoring applications",
+            "dateTime": "2025-07-01T00:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "descriptive",
+              "statement": "Dataset meets all requirements for agricultural crop mapping applications. Cloud coverage <5%, positional accuracy suitable for field-level analysis, and spectral quality sufficient for vegetation index calculations."
+            }
+          ]
+        }
+      ],
+      "lineage": {
+        "statement": "Sentinel-2 L1C data atmospherically corrected to L2A using Sen2Cor 2.11, followed by cloud masking and geometric validation",
+        "processStep": [
+          {
+            "description": "Atmospheric correction from L1C to L2A using Sen2Cor algorithm",
+            "rationale": "Remove atmospheric effects to obtain bottom-of-atmosphere reflectance",
+            "stepDateTime": "2025-06-15T11:00:00Z",
+            "processor": [
+              {
+                "name": "John Smith",
+                "organizationName": "National Satellite Data Center",
+                "role": "Processing Engineer",
+                "contactInfo": {
+                  "email": "j.smith@nsdc.example.org",
+                  "onlineResource": "https://nsdc.example.org"
+                }
+              }
+            ],
+            "reference": [
+              {
+                "title": "Sen2Cor Software User Manual",
+                "date": "2024-12-01T00:00:00Z",
+                "identifier": "S2-SUM-2.11",
+                "url": "https://step.esa.int/main/snap-supported-plugins/sen2cor/"
+              }
+            ],
+            "processingInformation": {
+              "identifier": "PROC-ATM-CORR-001",
+              "softwareReference": [
+                {
+                  "title": "Sen2Cor",
+                  "version": "2.11.0",
+                  "identifier": "sen2cor-2.11.0"
+                }
+              ],
+              "procedureDescription": "Scene-based atmospheric correction using MODTRAN radiative transfer model with ECMWF atmospheric profiles",
+              "runTimeParameters": "--resolution=10 --aerosol=RURAL --cirrus_correction=TRUE",
+              "algorithm": [
+                {
+                  "title": "Dense Dark Vegetation (DDV) aerosol retrieval",
+                  "description": "Aerosol optical thickness estimation using dense vegetation pixels",
+                  "citation": {
+                    "title": "Aerosol retrieval over land using DDV method",
+                    "identifier": "DOI:10.1016/j.rse.2018.01.001"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "description": "Cloud and cloud shadow masking",
+            "rationale": "Identify and flag cloud-contaminated pixels",
+            "stepDateTime": "2025-06-15T11:30:00Z",
+            "processor": [
+              {
+                "name": "Automated Processing System",
+                "organizationName": "National Satellite Data Center",
+                "role": "softwareAgent"
+              }
+            ],
+            "processingInformation": {
+              "identifier": "PROC-CLOUD-MASK-001",
+              "softwareReference": [
+                {
+                  "title": "FMask",
+                  "version": "4.6",
+                  "identifier": "fmask-4.6"
+                }
+              ],
+              "procedureDescription": "Multi-temporal cloud detection using spectral and thermal thresholds",
+              "documentation": [
+                {
+                  "title": "FMask Algorithm Documentation",
+                  "url": "https://github.com/GERSL/Fmask"
+                }
+              ]
+            }
+          }
+        ],
+        "sources": [
+          {
+            "description": "Sentinel-2A Multi-Spectral Instrument Level-1C Top-of-Atmosphere reflectance",
+            "sourceCitation": "Sentinel-2A MSI L1C Tile 10TGK (S2A_MSIL1C_20250615T103031_N0509_R108_T10TGK_20250615T123456)",
+            "sourceReferenceSystem": "EPSG:32610",
+            "sourceMetadata": "https://scihub.copernicus.eu/dhus/odata/v1/Products('12345678-1234-1234-1234-123456789012')/Nodes('MTD_MSIL1C.xml')/$value"
+          }
+        ],
+        "additionalDocumentation": [
+          {
+            "title": "Sentinel-2 Mission Quality Report",
+            "date": "2025-06-01T00:00:00Z",
+            "identifier": "S2-MQR-2025-Q2",
+            "uri": "https://sentinels.copernicus.eu/documents/247904/4766914/Sentinel-2-Mission-Quality-Report"
+          }
+        ]
+      }
+    },
+    "liability:prov": {
+      "entity": {
+        "output-l2a": {
+          "prov:id": "satellite-quality-iso19157-demo",
+          "prov:type": "Dataset",
+          "prov:label": "Sentinel-2 L2A Atmospherically Corrected Imagery",
+          "prov:wasGeneratedBy": "atm-correction",
+          "prov:wasDerivedFrom": "input-l1c",
+          "prov:wasAttributedTo": "nsdc",
+          "prov:generatedAtTime": "2025-06-15T11:30:00Z"
+        },
+        "input-l1c": {
+          "prov:id": "S2A_MSIL1C_20250615T103031",
+          "prov:type": "Dataset",
+          "prov:label": "Sentinel-2A L1C Top-of-Atmosphere Reflectance"
+        },
+        "quality-report": {
+          "prov:id": "quality-assessment-2025-06-20",
+          "prov:type": "QualityReport",
+          "prov:label": "ISO 19157 Quality Assessment Report",
+          "prov:wasGeneratedBy": "quality-assessment",
+          "prov:wasAttributedTo": "nsdc",
+          "prov:generatedAtTime": "2025-06-20T16:00:00Z"
+        }
+      },
+      "activity": {
+        "atm-correction": {
+          "prov:id": "atm-correction",
+          "prov:type": "Processing",
+          "prov:label": "Atmospheric Correction L1C to L2A",
+          "prov:startTime": "2025-06-15T11:00:00Z",
+          "prov:endTime": "2025-06-15T11:30:00Z",
+          "prov:used": "input-l1c",
+          "prov:wasAssociatedWith": "sen2cor-processor",
+          "prov:wasInformedBy": "data-acquisition"
+        },
+        "quality-assessment": {
+          "prov:id": "quality-assessment",
+          "prov:type": "QualityAssessment",
+          "prov:label": "ISO 19157 Data Quality Evaluation",
+          "prov:startTime": "2025-06-16T14:00:00Z",
+          "prov:endTime": "2025-06-20T16:00:00Z",
+          "prov:used": "output-l2a",
+          "prov:wasAssociatedWith": "quality-team"
+        }
+      },
+      "agent": {
+        "nsdc": {
+          "prov:id": "nsdc",
+          "prov:type": "prov:Organization",
+          "prov:label": "National Satellite Data Center"
+        },
+        "sen2cor-processor": {
+          "prov:id": "sen2cor-processor",
+          "prov:type": "prov:SoftwareAgent",
+          "prov:label": "Sen2Cor 2.11.0",
+          "prov:actedOnBehalfOf": "nsdc"
+        },
+        "quality-team": {
+          "prov:id": "quality-team",
+          "prov:type": "prov:Organization",
+          "prov:label": "Quality Assurance Team",
+          "prov:actedOnBehalfOf": "nsdc"
+        }
+      },
+      "wasDerivedFrom": {
+        "_:wdf1": {
+          "prov:generatedEntity": "output-l2a",
+          "prov:usedEntity": "input-l1c",
+          "prov:activity": "atm-correction"
+        }
+      },
+      "wasAttributedTo": {
+        "_:wat1": {
+          "prov:entity": "output-l2a",
+          "prov:agent": "nsdc"
+        },
+        "_:wat2": {
+          "prov:entity": "quality-report",
+          "prov:agent": "nsdc"
+        }
+      }
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.5],
+      [-122.0, 37.5],
+      [-122.0, 38.0],
+      [-122.5, 38.0],
+      [-122.5, 37.5]
+    ]]
+  },
+  "assets": {
+    "l2a_image": {
+      "href": "./data/S2A_L2A_20250615.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Sentinel-2 L2A Atmospherically Corrected Image",
+      "roles": ["data"]
+    },
+    "quality_report": {
+      "href": "./reports/iso19157-quality-report-20250620.xml",
+      "type": "application/xml",
+      "title": "ISO 19157 Standalone Quality Report (XML)",
+      "roles": ["metadata"]
+    },
+    "quality_summary": {
+      "href": "./reports/iso19157-quality-summary-20250620.pdf",
+      "type": "application/pdf",
+      "title": "ISO 19157 Quality Assessment Summary (PDF)",
+      "roles": ["overview"]
+    }
+  },
+  "links": [
+    {
+      "rel": "derived_from",
+      "href": "https://scihub.copernicus.eu/dhus/odata/v1/Products('12345678-1234-1234-1234-123456789012')",
+      "title": "Source Sentinel-2 L1C Product"
+    },
+    {
+      "rel": "related",
+      "href": "https://sentinels.copernicus.eu/documents/247904/4766914/Sentinel-2-Mission-Quality-Report",
+      "type": "application/pdf",
+      "title": "Sentinel-2 Mission Quality Report"
+    }
+  ]
+}

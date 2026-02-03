@@ -205,6 +205,27 @@
         <div class="version-grid">
             <div class="version-card latest">
                 <span class="badge">LATEST</span>
+                <h2>v1.3.0</h2>
+                <p style="margin-bottom: 1rem;">Released: February 3, 2026</p>
+                
+                <ul class="features">
+                    <li>Canonical ISO 19157/19115 schemas</li>
+                    <li>Structured MD_Scope objects</li>
+                    <li>CI_Citation evaluation support</li>
+                    <li>Array-based QuantitativeResult</li>
+                    <li>LI_Source structured lineage</li>
+                    <li>100% ISO TC211 compatibility</li>
+                </ul>
+                
+                <div class="links">
+                    <a href="v1.3.0/schema.json">Schema</a>
+                    <a href="v1.3.0/README.md">Documentation</a>
+                    <a href="v1.3.0/examples/">Examples</a>
+                </div>
+            </div>
+            
+            <div class="version-card">
+                <span class="badge">STABLE</span>
                 <h2>v1.2.0</h2>
                 <p style="margin-bottom: 1rem;">Released: February 2026</p>
                 
@@ -249,10 +270,10 @@
         <h2 style="margin: 3rem 0 1rem; color: #667eea;">Version Compatibility</h2>
         
         <div class="info-box">
-            <p><strong>✓ Full Backward Compatibility:</strong> v1.2.0 is 100% backward compatible with v1.1.0. 
+            <p><strong>⚠️ v1.3.0 Breaking Changes:</strong> v1.3.0 introduces breaking changes for full ISO compliance. 
+            MD_Scope now requires structured objects, and QuantitativeResult values are arrays. See <a href="v1.3.0/README.md" style="color: #667eea;">migration guide</a>.</p>
+            <p style="margin-top: 0.5rem;"><strong>✓ v1.2.0 Full Backward Compatibility:</strong> v1.2.0 is 100% backward compatible with v1.1.0. 
             All v1.1.0 STAC Items will validate successfully against v1.2.0 schema.</p>
-            <p style="margin-top: 0.5rem;"><strong>Migration:</strong> Existing v1.1.0 users can upgrade to v1.2.0 
-            without changes. New features are optional.</p>
         </div>
         
         <h2 style="margin: 3rem 0 1rem; color: #667eea;">Quick Start</h2>
@@ -261,12 +282,15 @@
             <p style="margin-bottom: 1rem;"><strong>Add to your STAC Item:</strong></p>
             <pre style="background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>{
   "stac_extensions": [
-    "https://luciocola.github.io/stac-extension-liability-claims/v1.2.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
   ],
   "properties": {
     "liability:responsible_party": "European Space Agency (ESA)",
     "liability:origin": "Copernicus Sentinel-2",
-    "liability:quality": { ... },
+    "liability:quality": { 
+      "scope": { "level": "dataset" },
+      "report": [...]
+    },
     "liability:prov": { ... }
   }
 }</code></pre>

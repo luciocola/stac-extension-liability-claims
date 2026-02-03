@@ -1,0 +1,526 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-lineage.json#",
+  "title": "ISO 19157 Lineage and Provenance",
+  "description": "JSON Schema for ISO 19115/19157 lineage elements aligned with W3C PROV-O and DQV",
+  "oneOf": [
+    {"$ref": "#/definitions/li_lineage"},
+    {
+      "type": "array",
+      "items": {"$ref": "#/definitions/li_lineage"}
+    }
+  ],
+  "definitions": {
+    "li_lineage": {
+      "type": "object",
+      "description": "ISO 19115 LI_Lineage - Information about the events, parameters, and source data which constructed the data",
+      "properties": {
+        "statement": {
+          "type": "string",
+          "description": "General explanation of the data producer's knowledge about the lineage of a dataset"
+        },
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Type of resource to which the lineage information applies"
+        },
+        "processStep": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/le_process_step"},
+          "description": "Information about events in the life of a dataset"
+        },
+        "source": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/li_source"},
+          "description": "Information about the source data used in creating the data specified by the scope"
+        },
+        "additionalDocumentation": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_citation"},
+          "description": "Additional documentation relevant to the lineage"
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "description": "ISO 19157 DQ_Scope - Extent or characteristics of the data specified by the scope",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "dataset",
+            "series",
+            "feature",
+            "featureType",
+            "attribute",
+            "attributeType",
+            "tile",
+            "model",
+            "collection",
+            "coverage",
+            "nonGeographicDataset"
+          ],
+          "description": "Hierarchical level of the data specified by the scope"
+        },
+        "extent": {
+          "type": "object",
+          "description": "Geographic, vertical, and temporal extent",
+          "properties": {
+            "description": {"type": "string"},
+            "geographicExtent": {
+              "type": "object",
+              "description": "GeoJSON or ISO 19115 EX_GeographicExtent"
+            },
+            "temporalExtent": {
+              "type": "object",
+              "description": "ISO 19115 EX_TemporalExtent",
+              "properties": {
+                "extent": {
+                  "type": "object",
+                  "properties": {
+                    "begin": {"type": "string", "format": "date-time"},
+                    "end": {"type": "string", "format": "date-time"}
+                  }
+                }
+              }
+            },
+            "verticalExtent": {
+              "type": "object",
+              "description": "ISO 19115 EX_VerticalExtent"
+            }
+          }
+        },
+        "levelDescription": {
+          "type": "string",
+          "description": "Detailed description about the level"
+        }
+      },
+      "required": ["level"]
+    },
+    "le_process_step": {
+      "type": "object",
+      "description": "ISO 19115-2 LE_ProcessStep - Information about an event in the creation process for the data",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the event, including related parameters or tolerances"
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Requirement or purpose for the process step"
+        },
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date, time, and time zone at which the process step occurred"
+        },
+        "processor": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_responsibility"},
+          "description": "Identification of, and means of communicating with, person(s) and organization(s) associated with the process step"
+        },
+        "reference": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_citation"},
+          "description": "Process step documentation"
+        },
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Type of resource created by the process step"
+        },
+        "source": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/li_source"},
+          "description": "Information about the source data used in the process step"
+        },
+        "output": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/li_source"},
+          "description": "Description of the product generated by the process step"
+        },
+        "processingInformation": {
+          "$ref": "#/definitions/le_processing",
+          "description": "Information about the processing applied"
+        },
+        "report": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/le_process_step_report"},
+          "description": "Report generated by the process step"
+        }
+      },
+      "required": ["description"]
+    },
+    "le_processing": {
+      "type": "object",
+      "description": "ISO 19115-2 LE_Processing - Comprehensive information about the procedure(s), process(es) and algorithm(s) applied in the process step",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "Information to identify the processing package that produced the data"
+        },
+        "softwareReference": {
+          "$ref": "#/definitions/ci_citation",
+          "description": "Reference to document describing processing software"
+        },
+        "procedureDescription": {
+          "type": "string",
+          "description": "Additional details about the processing procedures"
+        },
+        "documentation": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_citation"},
+          "description": "Reference to documentation describing the processing"
+        },
+        "runTimeParameters": {
+          "type": "string",
+          "description": "Parameters to control the processing"
+        },
+        "algorithm": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/le_algorithm"},
+          "description": "Details of the methodology by which geographic information was derived from the instrument readings"
+        }
+      }
+    },
+    "le_algorithm": {
+      "type": "object",
+      "description": "ISO 19115-2 LE_Algorithm - Details of the methodology by which geographic information was derived from the instrument readings",
+      "properties": {
+        "citation": {
+          "$ref": "#/definitions/ci_citation",
+          "description": "Information identifying the algorithm and version or date"
+        },
+        "description": {
+          "type": "string",
+          "description": "Information describing the algorithm used to generate the data"
+        }
+      },
+      "required": ["citation", "description"]
+    },
+    "le_process_step_report": {
+      "type": "object",
+      "description": "ISO 19115-2 LE_ProcessStepReport - Report of what occurred during the process step",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the processing report"
+        },
+        "description": {
+          "type": "string",
+          "description": "Textual description of what occurred during the process step"
+        },
+        "fileType": {
+          "type": "string",
+          "description": "Type of file that contains the processing report"
+        }
+      },
+      "required": ["name"]
+    },
+    "li_source": {
+      "type": "object",
+      "description": "ISO 19115 LI_Source - Information about the source data used in creating the data",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the level of the source data"
+        },
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Type and/or extent of the source"
+        },
+        "sourceSpatialResolution": {
+          "type": "object",
+          "description": "Spatial resolution expressed as a scale factor, a ground sample distance, or an angle measure",
+          "properties": {
+            "equivalentScale": {
+              "type": "object",
+              "properties": {
+                "denominator": {"type": "integer"}
+              }
+            },
+            "distance": {
+              "type": "object",
+              "properties": {
+                "value": {"type": "number"},
+                "uom": {"type": "string"}
+              }
+            },
+            "angularDistance": {
+              "type": "object",
+              "properties": {
+                "value": {"type": "number"},
+                "uom": {"type": "string"}
+              }
+            },
+            "levelOfDetail": {
+              "type": "string",
+              "description": "Brief description of the spatial resolution of the resource"
+            }
+          }
+        },
+        "sourceReferenceSystem": {
+          "type": "object",
+          "description": "Spatial reference system used by the source data"
+        },
+        "sourceCitation": {
+          "$ref": "#/definitions/ci_citation",
+          "description": "Recommended reference to be used for the source data"
+        },
+        "sourceMetadata": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_citation"},
+          "description": "Reference to metadata for the source"
+        },
+        "sourceStep": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/le_process_step"},
+          "description": "Information about process steps in which this source was used"
+        },
+        "processedLevel": {
+          "type": "string",
+          "description": "Processing level of the source data"
+        },
+        "resolution": {
+          "type": "object",
+          "description": "Distance between consistent parts of two adjacent pixels"
+        }
+      }
+    },
+    "ci_citation": {
+      "type": "object",
+      "description": "ISO 19115 CI_Citation - Standardized resource reference",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Name by which the cited resource is known"
+        },
+        "alternateTitle": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Short name or other language name by which the cited information is known"
+        },
+        "date": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {"type": "string", "format": "date-time"},
+              "dateType": {
+                "type": "string",
+                "enum": ["creation", "publication", "revision", "expiry", "lastUpdate", "lastRevision", "nextUpdate", "unavailable", "inForce", "adopted", "deprecated", "superseded", "validityBegins", "validityExpires", "released", "distribution"]
+              }
+            },
+            "required": ["date", "dateType"]
+          },
+          "description": "Reference date for the cited resource"
+        },
+        "edition": {
+          "type": "string",
+          "description": "Version of the cited resource"
+        },
+        "editionDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date of the edition"
+        },
+        "identifier": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {"type": "string"},
+              "codeSpace": {"type": "string"},
+              "version": {"type": "string"}
+            }
+          },
+          "description": "Unique identifier for the resource"
+        },
+        "citedResponsibleParty": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_responsibility"},
+          "description": "Roles, name, contact, and position information for an individual or organization"
+        },
+        "presentationForm": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Mode in which the resource is represented"
+        },
+        "series": {
+          "type": "object",
+          "description": "Information about the series"
+        },
+        "otherCitationDetails": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Other information required to complete the citation"
+        },
+        "ISBN": {
+          "type": "string",
+          "description": "International Standard Book Number"
+        },
+        "ISSN": {
+          "type": "string",
+          "description": "International Standard Serial Number"
+        },
+        "onlineResource": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "linkage": {"type": "string", "format": "uri"},
+              "protocol": {"type": "string"},
+              "applicationProfile": {"type": "string"},
+              "name": {"type": "string"},
+              "description": {"type": "string"},
+              "function": {"type": "string"}
+            }
+          }
+        },
+        "graphic": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Graphic that provides an illustration of the resource"
+          }
+        }
+      },
+      "required": ["title"]
+    },
+    "ci_responsibility": {
+      "type": "object",
+      "description": "ISO 19115 CI_Responsibility - Information about the party and their role",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "author",
+            "custodian",
+            "distributor",
+            "originator",
+            "owner",
+            "pointOfContact",
+            "principalInvestigator",
+            "processor",
+            "publisher",
+            "resourceProvider",
+            "sponsor",
+            "user",
+            "coAuthor",
+            "collaborator",
+            "contributor",
+            "editor",
+            "funder",
+            "mediator",
+            "rightsHolder",
+            "stakeholder"
+          ],
+          "description": "Function performed by the responsible party"
+        },
+        "party": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_party"},
+          "description": "Information about the party"
+        },
+        "extent": {
+          "type": "array",
+          "items": {"type": "object"},
+          "description": "Spatial and temporal extent of the role"
+        }
+      },
+      "required": ["role"]
+    },
+    "ci_party": {
+      "type": "object",
+      "description": "ISO 19115 CI_Party - Information about the individual and/or organization",
+      "oneOf": [
+        {"$ref": "#/definitions/ci_individual"},
+        {"$ref": "#/definitions/ci_organisation"}
+      ]
+    },
+    "ci_individual": {
+      "type": "object",
+      "description": "ISO 19115 CI_Individual - Information about the individual",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the individual"
+        },
+        "contactInfo": {
+          "$ref": "#/definitions/ci_contact",
+          "description": "Contact information for the individual"
+        },
+        "positionName": {
+          "type": "string",
+          "description": "Position of the individual in an organization"
+        }
+      }
+    },
+    "ci_organisation": {
+      "type": "object",
+      "description": "ISO 19115 CI_Organisation - Information about the organization",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the organization"
+        },
+        "contactInfo": {
+          "$ref": "#/definitions/ci_contact",
+          "description": "Contact information for the organization"
+        },
+        "individual": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ci_individual"},
+          "description": "Individuals in the organization"
+        },
+        "logo": {
+          "type": "object",
+          "description": "Graphic identifying organization"
+        }
+      }
+    },
+    "ci_contact": {
+      "type": "object",
+      "description": "ISO 19115 CI_Contact - Information required to enable contact with the responsible person and/or organization",
+      "properties": {
+        "phone": {
+          "type": "object",
+          "properties": {
+            "number": {"type": "array", "items": {"type": "string"}},
+            "numberType": {"type": "string", "enum": ["voice", "facsimile", "sms"]}
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "deliveryPoint": {"type": "array", "items": {"type": "string"}},
+            "city": {"type": "string"},
+            "administrativeArea": {"type": "string"},
+            "postalCode": {"type": "string"},
+            "country": {"type": "string"},
+            "electronicMailAddress": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "onlineResource": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "linkage": {"type": "string", "format": "uri"},
+              "name": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          }
+        },
+        "hoursOfService": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "contactInstructions": {
+          "type": "string"
+        },
+        "contactType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
