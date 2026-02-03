@@ -82,7 +82,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+            "const": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
           }
         }
       }
@@ -230,7 +230,7 @@
         ,
         "liability:quality": {
           "oneOf": [
-            {"$ref": "https://eovoc.github.io/eof-eos-stac-extension/v0.0.1/dqc.json#/definitions/DataQuality"},
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/dqc.json#/definitions/DataQuality"},
             {"$ref": "#/definitions/iso19115_quality_report"}
           ],
           "description": "Data quality report using ISO 19157-1:2023 from canonical eovoc schema (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
@@ -333,7 +333,7 @@
         },
         "liability:quality": {
           "oneOf": [
-            {"$ref": "https://eovoc.github.io/eof-eos-stac-extension/v0.0.1/dqc.json#/definitions/DataQuality"},
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/dqc.json#/definitions/DataQuality"},
             {"$ref": "#/definitions/iso19115_quality_report"}
           ],
           "description": "Data quality report using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility)"
