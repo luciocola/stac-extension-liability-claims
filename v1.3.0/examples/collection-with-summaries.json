@@ -20,24 +20,36 @@
   "providers": [
     {
       "name": "Environmental Protection Agency",
-      "roles": ["producer"],
+      "roles": [
+        "producer"
+      ],
       "url": "https://www.epa.gov"
     },
     {
       "name": "Legal Services Division",
-      "roles": ["processor"],
+      "roles": [
+        "processor"
+      ],
       "url": "https://example.org/legal"
     }
   ],
   "extent": {
     "spatial": {
       "bbox": [
-        [-125.0, 24.0, -66.0, 49.0]
+        [
+          -125.0,
+          24.0,
+          -66.0,
+          49.0
+        ]
       ]
     },
     "temporal": {
       "interval": [
-        ["2025-01-01T00:00:00Z", "2025-12-31T23:59:59Z"]
+        [
+          "2025-01-01T00:00:00Z",
+          "2025-12-31T23:59:59Z"
+        ]
       ]
     }
   },
@@ -83,32 +95,53 @@
   "item_assets": {
     "evidence-photos": {
       "type": "image/jpeg",
-      "roles": ["data"],
+      "roles": [
+        "data"
+      ],
       "title": "Photographic Evidence",
       "liability:security_classification": "confidential",
-      "liability:access_restrictions": ["legal_hold", "court_order"],
-      "liability:required_roles": ["legal_team", "court_appointed_expert"]
+      "liability:access_restrictions": [
+        "legal_hold",
+        "court_order"
+      ],
+      "liability:required_roles": [
+        "legal_team",
+        "court_appointed_expert"
+      ]
     },
     "site-assessment": {
       "type": "application/pdf",
-      "roles": ["metadata"],
+      "roles": [
+        "metadata"
+      ],
       "title": "Environmental Site Assessment Report",
       "liability:security_classification": "internal",
-      "liability:access_restrictions": ["internal_use_only"]
+      "liability:access_restrictions": [
+        "internal_use_only"
+      ]
     },
     "water-samples": {
       "type": "application/vnd.geo+json",
-      "roles": ["data"],
+      "roles": [
+        "data"
+      ],
       "title": "Water Sample Collection Points",
       "liability:security_classification": "confidential",
-      "liability:access_restrictions": ["legal_hold"]
+      "liability:access_restrictions": [
+        "legal_hold"
+      ]
     },
     "contamination-extent": {
       "type": "image/tiff; application=geotiff",
-      "roles": ["data"],
+      "roles": [
+        "data"
+      ],
       "title": "Contamination Extent Mapping",
       "liability:security_classification": "restricted",
-      "liability:access_restrictions": ["classified", "need_to_know"]
+      "liability:access_restrictions": [
+        "classified",
+        "need_to_know"
+      ]
     }
   },
   "links": [
@@ -176,65 +209,86 @@
       }
     }
   },
-  "dq:quality": [{
-    "scope": {
-      "level": "collection"
-    },
-    "report": [
-      {
-        "type": "ConceptualConsistency",
-        "measure": {
-          "measureIdentification": {
-            "code": "101",
-            "authority": {
-              "alternateTitle": ["ISO"],
-              "title": "International Organization for Standardization"
-            },
-            "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
-          },
-          "nameOfMeasure": ["MD101 - Conformance quality of data product"],
-          "measureDescription": "All items in collection conform to EPA Environmental Claims Data Standard v2.0"
-        },
-        "evaluationMethod": [{
-          "type": "FullInspection",
-          "evaluationMethodDescription": "Automated validation against EPA schema on collection creation and update",
-          "dateTime": "2025-01-15T00:00:00Z"
-        }],
-        "result": [{
-          "type": "QuantitativeResult",
-          "value": ["true"]
-        }]
+  "dq:quality": [
+    {
+      "scope": {
+        "level": "collection"
       },
-      {
-        "type": "TemporalQuality",
-        "measure": {
-          "measureIdentification": {
-            "code": "302",
-            "authority": {
-              "alternateTitle": ["ISO"],
-              "title": "International Organization for Standardization"
+      "report": [
+        {
+          "type": "ConceptualConsistency",
+          "measure": {
+            "measureIdentification": {
+              "code": "101",
+              "authority": {
+                "alternateTitle": [
+                  "ISO"
+                ],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
             },
-            "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            "nameOfMeasure": [
+              "MD101 - Conformance quality of data product"
+            ],
+            "measureDescription": "All items in collection conform to EPA Environmental Claims Data Standard v2.0"
           },
-          "nameOfMeasure": ["MD302 - Temporal validity"],
-          "measureDescription": "All claims have valid temporal coverage within collection extent"
+          "evaluationMethod": [
+            {
+              "type": "FullInspection",
+              "evaluationMethodDescription": "Automated validation against EPA schema on collection creation and update",
+              "dateTime": "2025-01-15T00:00:00Z"
+            }
+          ],
+          "result": [
+            {
+              "type": "QuantitativeResult",
+              "value": [
+                "true"
+              ]
+            }
+          ]
         },
-        "evaluationMethod": [{
-          "type": "DirectInternal",
-          "evaluationMethodDescription": "Automated check of claim incident dates against collection temporal extent",
-          "dateTime": "2025-01-15T00:00:00Z"
-        }],
-        "result": [{
-          "type": "ConformanceResult",
-          "specification": {
-            "title": "EPA Temporal Validity Requirements",
-            "date": "2025-01-01T00:00:00Z",
-            "dateType": "publication"
+        {
+          "type": "TemporalQuality",
+          "measure": {
+            "measureIdentification": {
+              "code": "302",
+              "authority": {
+                "alternateTitle": [
+                  "ISO"
+                ],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "MD302 - Temporal validity"
+            ],
+            "measureDescription": "All claims have valid temporal coverage within collection extent"
           },
-          "pass": true,
-          "explanation": "All 147 claims have incident dates within 2025 fiscal year extent"
-        }]
-      }
-    ]
-  }]
+          "evaluationMethod": [
+            {
+              "type": "DirectInternal",
+              "evaluationMethodDescription": "Automated check of claim incident dates against collection temporal extent",
+              "dateTime": "2025-01-15T00:00:00Z"
+            }
+          ],
+          "result": [
+            {
+              "type": "ConformanceResult",
+              "specification": {
+                "title": "EPA Temporal Validity Requirements",
+                "date": {
+                  "publication": "2025-01-01T00:00:00Z"
+                }
+              },
+              "pass": true,
+              "explanation": "All 147 claims have incident dates within 2025 fiscal year extent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

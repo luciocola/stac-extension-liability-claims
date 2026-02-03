@@ -139,8 +139,9 @@
               "resultType": "conformance",
               "specification": {
                 "title": "Sentinel-2 L2A Product Specification",
-                "date": "2024-03-01T00:00:00Z",
-                "dateType": "publication",
+                "date": {
+                  "publication": "2024-03-01T00:00:00Z"
+                },
                 "identifier": "S2-L2A-SPEC-v3.0"
               },
               "explanation": "All pixel values fall within valid reflectance ranges (0-10000)",
