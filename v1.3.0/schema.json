@@ -293,10 +293,7 @@
         "dq:quality": {
           "type": "array",
           "items": {
-            "oneOf": [
-              {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/dqc.json#/definitions/DataQuality"},
-              {"$ref": "#/definitions/iso19115_quality_report"}
-            ]
+            "$ref": "#/definitions/iso19115_quality_report"
           },
           "uniqueItems": true,
           "description": "EOVOC-compatible alias for data quality reporting. Array of ISO 19157-1:2023 DataQuality or ISO 19115 quality reports. Use this field for interoperability with eovoc eof-eos-stac-extension and other dq:* consumers. Equivalent to liability:quality but array-based per eovoc convention."
@@ -304,10 +301,7 @@
         "dq:lineage": {
           "type": "array",
           "items": {
-            "oneOf": [
-              {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/mdj.json#/definitions/LI_Lineage"},
-              {"$ref": "#/definitions/iso19115_lineage"}
-            ]
+            "$ref": "#/definitions/iso19115_lineage"
           },
           "uniqueItems": true,
           "description": "EOVOC-compatible alias for lineage information. Array of ISO 19115 LI_Lineage objects describing data provenance, processing history, and sources. Use this field for interoperability with eovoc eof-eos-stac-extension and OGC metadata standards. Equivalent to liability:quality lineage elements but as separate top-level field per eovoc convention."
