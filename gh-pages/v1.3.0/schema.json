@@ -306,8 +306,7 @@
           "uniqueItems": true,
           "description": "EOVOC-compatible alias for lineage information. Array of ISO 19115 LI_Lineage objects describing data provenance, processing history, and sources. Use this field for interoperability with eovoc eof-eos-stac-extension and OGC metadata standards. Equivalent to liability:quality lineage elements but as separate top-level field per eovoc convention."
         }
-      },
-      "additionalProperties": false
+      }
     },
     "asset_fields": {
       "$comment": "Asset-level fields for security classification and access restrictions",
