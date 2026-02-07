@@ -1,0 +1,80 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "type": "Feature",
+  "id": "environmental-incident-2024-001",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2024-01-15T10:30:00Z",
+    "liability:claim_id": "ENV-2024-001",
+    "liability:claim_type": "environmental",
+    "liability:claim_status": "under_investigation",
+    "liability:claim_date": "2024-01-20T09:00:00Z",
+    "liability:incident_date": "2024-01-15T10:30:00Z",
+    "liability:responsible_party": "Industrial Corp XYZ",
+    "liability:affected_parties": [
+      {
+        "name": "Local Municipality",
+        "role": "claimant",
+        "contact": "claims@municipality.gov"
+      },
+      {
+        "name": "Environmental Protection Agency",
+        "role": "third_party",
+        "contact": "epa@agency.gov"
+      }
+    ],
+    "liability:damages_estimated": 500000,
+    "liability:damages_currency": "USD",
+    "liability:legal_jurisdiction": "State of California",
+    "liability:insurance_provider": "Global Insurance Inc.",
+    "liability:policy_number": "ENV-POL-123456",
+    "liability:coverage_area": {
+      "type": "Polygon",
+      "coordinates": [[
+        [-122.5, 37.7],
+        [-122.3, 37.7],
+        [-122.3, 37.9],
+        [-122.5, 37.9],
+        [-122.5, 37.7]
+      ]]
+    },
+    "liability:evidence_refs": [
+      "satellite-imagery-2024-01-15",
+      "https://evidence.example.com/photos/site-001.jpg",
+      "https://evidence.example.com/reports/water-quality.pdf"
+    ],
+    "liability:notes": "Spill incident affecting local water source. Satellite imagery shows contamination spread."
+  },
+  "assets": {
+    "satellite-imagery-2024-01-15": {
+      "href": "https://example.com/imagery/2024-01-15.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Incident Day Satellite Imagery",
+      "roles": ["data", "evidence"],
+      "liability:security_classification": "internal"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.com/stac/items/environmental-incident-2024-001.json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.com/stac/collections/liability-claims.json"
+    }
+  ]
+}

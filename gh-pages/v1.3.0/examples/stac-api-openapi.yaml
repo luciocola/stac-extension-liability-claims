@@ -1,0 +1,478 @@
+openapi: 3.0.3
+info:
+  title: STAC API with Liability Claims Extension - Security Example
+  version: 1.1.0
+  description: |
+    Example STAC API implementing authentication for liability claims data.
+    
+    This demonstrates the **recommended v1.1.0 approach** where:
+    - Authentication is defined at the API level (this file)
+    - STAC Items contain only security metadata (classification, restrictions, required roles)
+    - API enforces access control based on user roles and security schemes
+    
+    See the Liability Claims Extension documentation for details:
+    https://stac-extensions.github.io/liability-claims/v1.1.0/
+  contact:
+    name: Claims API Support
+    email: api-support@claims.example.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://stac.claims.example.com
+    description: Production STAC API server
+  - url: https://stac-staging.claims.example.com
+    description: Staging environment
+
+# Security Schemes - Authentication Methods
+components:
+  securitySchemes:
+    # API Key authentication for authorized investigators
+    ClaimsApiKey:
+      type: apiKey
+      in: header
+      name: X-Claims-API-Key
+      description: |
+        API Key for authorized investigators and claim adjusters.
+        Obtain your API key from https://portal.claims.example.com/api-keys
+        
+        Required roles: investigator, claim_adjuster, risk_analyst
+        
+    # OAuth2 for legal team with fine-grained scopes
+    ClaimsOAuth2:
+      type: oauth2
+      description: |
+        OAuth2 authentication for legal team and authorized personnel.
+        Provides role-based access with specific scopes.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.claims.example.com/oauth/authorize
+          tokenUrl: https://auth.claims.example.com/oauth/token
+          refreshUrl: https://auth.claims.example.com/oauth/refresh
+          scopes:
+            read:items: Read STAC items and collections
+            read:evidence: Access evidence assets (confidential classification)
+            read:reports: Access investigation reports (restricted classification)
+            read:internal: Access internal analysis documents
+            write:items: Create and update STAC items
+            write:evidence: Upload evidence assets
+    
+    # Bearer token for service-to-service authentication
+    ServiceToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT bearer token for service-to-service API access.
+        Used by automated systems and integrations.
+
+  # Response schemas
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+    
+    STACItem:
+      type: object
+      description: STAC Item with Liability Claims Extension
+      required:
+        - stac_version
+        - type
+        - id
+        - geometry
+        - properties
+        - assets
+      properties:
+        stac_version:
+          type: string
+          example: "1.0.0"
+        stac_extensions:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+          enum: [Feature]
+        id:
+          type: string
+        geometry:
+          type: object
+        properties:
+          type: object
+        assets:
+          type: object
+
+# Global security - applies to all endpoints unless overridden
+# Users must authenticate with at least one of these methods
+security:
+  - ClaimsApiKey: []
+  - ClaimsOAuth2: 
+      - read:items
+  - ServiceToken: []
+
+paths:
+  # STAC API - Landing Page (Public)
+  /:
+    get:
+      summary: Landing page
+      description: STAC API landing page (public access)
+      security: []  # Override global security - this endpoint is public
+      responses:
+        '200':
+          description: Landing page
+          content:
+            application/json:
+              schema:
+                type: object
+
+  # STAC API - Search
+  /search:
+    get:
+      summary: Search STAC items
+      description: |
+        Search for STAC items. Returns items filtered based on user's roles:
+        - Public items: All authenticated users
+        - Internal items: Requires claim_adjuster or risk_analyst role
+        - Confidential items: Requires investigator or legal_counsel role
+        - Restricted items: Requires legal_counsel role
+      parameters:
+        - name: bbox
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/geo+json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized - authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "UNAUTHORIZED"
+                message: "Authentication required. Provide valid API key, OAuth2 token, or service token."
+        '403':
+          description: Forbidden - insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "FORBIDDEN"
+                message: "Your role does not have access to confidential items. Required roles: investigator, legal_counsel"
+    
+    post:
+      summary: Search STAC items (POST)
+      description: Search with POST body for complex queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Successful search
+        '401':
+          $ref: '#/paths/~1search/get/responses/401'
+        '403':
+          $ref: '#/paths/~1search/get/responses/403'
+
+  # Collections endpoint
+  /collections:
+    get:
+      summary: List collections
+      description: List all STAC collections accessible to the authenticated user
+      security:
+        - ClaimsApiKey: []
+        - ClaimsOAuth2: [read:items]
+        - ServiceToken: []
+      responses:
+        '200':
+          description: List of collections
+          content:
+            application/json:
+              schema:
+                type: object
+
+  # Individual collection
+  /collections/{collectionId}:
+    get:
+      summary: Get collection by ID
+      parameters:
+        - name: collectionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Collection details
+        '404':
+          description: Collection not found
+
+  # Items in collection
+  /collections/{collectionId}/items:
+    get:
+      summary: Get items in collection
+      parameters:
+        - name: collectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Feature collection of items
+
+  # Individual item
+  /collections/{collectionId}/items/{itemId}:
+    get:
+      summary: Get item by ID
+      description: |
+        Get a specific STAC item. Access depends on security classification:
+        - public: All authenticated users
+        - internal: Requires claim_adjuster, risk_analyst, investigator, or legal_counsel role
+        - confidential: Requires investigator or legal_counsel role  
+        - restricted: Requires legal_counsel role
+        - classified: Requires special clearance (contact administrator)
+      parameters:
+        - name: collectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: STAC Item
+          content:
+            application/geo+json:
+              schema:
+                $ref: '#/components/schemas/STACItem'
+        '401':
+          $ref: '#/paths/~1search/get/responses/401'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "INSUFFICIENT_ROLE"
+                message: "This item requires 'legal_counsel' role. Your roles: ['investigator']"
+        '404':
+          description: Item not found
+    
+    # Create/update items - requires write permissions
+    put:
+      summary: Create or update item
+      description: Create or update a STAC item. Requires write:items scope.
+      security:
+        - ClaimsOAuth2: [write:items]
+        - ServiceToken: []
+      parameters:
+        - name: collectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/geo+json:
+            schema:
+              $ref: '#/components/schemas/STACItem'
+      responses:
+        '200':
+          description: Item updated
+        '201':
+          description: Item created
+        '401':
+          $ref: '#/paths/~1search/get/responses/401'
+        '403':
+          description: Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: "INSUFFICIENT_SCOPE"
+                message: "This operation requires 'write:items' scope"
+
+  # Asset access - proxied through API with auth
+  /assets/{assetPath}:
+    get:
+      summary: Access asset with authentication
+      description: |
+        Proxy endpoint for accessing assets with authentication.
+        
+        Asset access is controlled based on security classification and required roles
+        specified in the STAC item's asset metadata:
+        
+        - liability:security_classification determines access level
+        - liability:required_roles specifies which roles can access
+        - liability:access_restrictions provides additional constraints
+        
+        Examples:
+        - /assets/evidence/sat-2024-11-15.tif (requires investigator or legal_counsel)
+        - /assets/reports/inv-2024-001.pdf (requires legal_counsel)
+        - /assets/public/overview-2024-001.jpg (all authenticated users)
+      parameters:
+        - name: assetPath
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Path to the asset file
+      security:
+        - ClaimsApiKey: []
+        - ClaimsOAuth2: [read:evidence, read:reports]
+        - ServiceToken: []
+      responses:
+        '200':
+          description: Asset file
+          content:
+            image/tiff:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/paths/~1search/get/responses/401'
+        '403':
+          description: Insufficient permissions for this asset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                role_required:
+                  value:
+                    code: "ROLE_REQUIRED"
+                    message: "This asset requires one of these roles: ['investigator', 'legal_counsel']. Your roles: ['claim_adjuster']"
+                    details:
+                      asset_classification: "confidential"
+                      required_roles: ["investigator", "legal_counsel"]
+                      user_roles: ["claim_adjuster"]
+                scope_required:
+                  value:
+                    code: "SCOPE_REQUIRED"
+                    message: "This asset requires OAuth2 scope 'read:evidence'"
+                    details:
+                      required_scopes: ["read:evidence"]
+                      current_scopes: ["read:items"]
+        '404':
+          description: Asset not found
+
+  # Upload evidence (requires write permissions)
+  /assets/upload:
+    post:
+      summary: Upload evidence asset
+      description: |
+        Upload a new evidence file. Requires write:evidence scope.
+        File will be associated with a STAC item.
+      security:
+        - ClaimsOAuth2: [write:evidence]
+        - ServiceToken: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - itemId
+              properties:
+                file:
+                  type: string
+                  format: binary
+                itemId:
+                  type: string
+                  description: STAC item ID to associate with
+                classification:
+                  type: string
+                  enum: [public, internal, confidential, restricted, classified]
+                  default: confidential
+      responses:
+        '201':
+          description: Evidence uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assetKey:
+                    type: string
+                  href:
+                    type: string
+                  checksum:
+                    type: string
+        '401':
+          $ref: '#/paths/~1search/get/responses/401'
+        '403':
+          description: Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+# Additional documentation
+externalDocs:
+  description: STAC Liability Claims Extension Specification
+  url: https://stac-extensions.github.io/liability-claims/v1.1.0/
+
+tags:
+  - name: STAC
+    description: Core STAC API endpoints
+  - name: Assets
+    description: Asset access and upload endpoints
+  - name: Authentication
+    description: Authentication and authorization

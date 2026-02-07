@@ -1,0 +1,333 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://xxx.github.io/dq/v0.1.0/schema.json",
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "SAR-DUAL-EXTENSION-EXAMPLE",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-123.5, 45.5],
+      [-123.5, 46.5],
+      [-122.5, 46.5],
+      [-122.5, 45.5],
+      [-123.5, 45.5]
+    ]]
+  },
+  "bbox": [-123.5, 45.5, -122.5, 46.5],
+  "properties": {
+    "datetime": "2025-01-15T06:30:00Z",
+    "platform": "Sentinel-1A",
+    "instruments": ["C-SAR"],
+    "constellation": "Sentinel-1",
+    "proj:epsg": 4326,
+    "sar:instrument_mode": "IW",
+    "sar:polarizations": ["VV", "VH"],
+    "sar:product_type": "GRD",
+    "sar:resolution_range": 20,
+    "sar:resolution_azimuth": 22,
+    "sar:pixel_spacing_range": 10,
+    "sar:pixel_spacing_azimuth": 10,
+    "sar:looks_range": 5,
+    "sar:looks_azimuth": 1,
+    "sar:looks_equivalent_number": 4.4,
+    "sar:observation_direction": "right",
+    
+    "dq:quality": [{
+      "scope": {
+        "level": "dataset"
+      },
+      "report": [
+        {
+          "type": "AbsoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "authority": {
+                "alternateTitle": ["ISO"],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties (1D, 2D and 3D)"],
+            "measureDescription": "Mean of positional uncertainties where positional uncertainties are defined as the distance between measured and true position"
+          },
+          "evaluationMethod": [{
+            "type": "DirectExternal",
+            "evaluationMethodDescription": "RMSE calculation using 50 ground control points distributed across the scene",
+            "dateTime": "2025-01-15T10:00:00Z"
+          }],
+          "result": [{
+            "type": "QuantitativeResult",
+            "value": [3.2],
+            "valueUnit": "meter",
+            "valueRecordType": "Real",
+            "errorStatistic": "RMSE"
+          }]
+        },
+        {
+          "type": "ConceptualConsistency",
+          "measure": {
+            "measureIdentification": {
+              "code": "101",
+              "authority": {
+                "alternateTitle": ["ISO"],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["MD101"],
+            "measureDescription": "The measure will take the value true if all the requirements in the referred data product specification are fulfilled."
+          },
+          "result": [{
+            "type": "QuantitativeResult",
+            "value": ["true"]
+          }]
+        },
+        {
+          "type": "FormatConsistency",
+          "measure": {
+            "measureIdentification": {
+              "code": "211",
+              "authority": {
+                "alternateTitle": ["ISO"],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "measureDescription": "Quality degradation - rate of imperfect coverage.",
+            "nameOfMeasure": ["MD211"]
+          },
+          "evaluationMethod": [{
+            "type": "FullInspection",
+            "evaluationMethodDescription": "Automatic quality degradation check during product generation."
+          }],
+          "result": [{
+            "valueUnit": "%",
+            "type": "QuantitativeResult",
+            "value": [0]
+          }]
+        }
+      ]
+    }],
+    
+    "liability:responsible_party": "European Space Agency",
+    "liability:origin": "Copernicus Sentinel-1 Mission",
+    "liability:prov": {
+      "prefix": {
+        "ex": "http://example.org/sar-processing#",
+        "esa": "http://esa.int/processing#"
+      },
+      "entity": {
+        "ex:sar-scene-raw": {
+          "prov:id": "ex:sar-scene-raw",
+          "prov:type": "esa:RawSARData",
+          "prov:label": "Raw SAR Level-0 acquisition",
+          "prov:wasGeneratedBy": "ex:acquisition-2025-01-15",
+          "prov:generatedAtTime": "2025-01-15T06:30:00Z",
+          "ex:orbitNumber": 51234,
+          "ex:passDirection": "DESCENDING"
+        },
+        "ex:sar-scene-processed": {
+          "prov:id": "ex:sar-scene-processed",
+          "prov:type": "esa:ProcessedSARData",
+          "prov:label": "Geocoded SAR GRD product",
+          "prov:wasGeneratedBy": "ex:sar-processing",
+          "prov:wasDerivedFrom": "ex:sar-scene-raw",
+          "prov:generatedAtTime": "2025-01-15T08:15:00Z",
+          "ex:processingLevel": "L1-GRD",
+          "ex:processingBaseline": "003.52"
+        },
+        "ex:dem-copernicus": {
+          "prov:id": "ex:dem-copernicus",
+          "prov:type": "esa:DigitalElevationModel",
+          "prov:label": "Copernicus DEM GLO-30",
+          "ex:resolution": "30m"
+        }
+      },
+      "activity": {
+        "ex:acquisition-2025-01-15": {
+          "prov:id": "ex:acquisition-2025-01-15",
+          "prov:type": "esa:SatelliteAcquisition",
+          "prov:label": "Sentinel-1A SAR acquisition over Pacific Northwest",
+          "prov:startTime": "2025-01-15T06:30:00Z",
+          "prov:endTime": "2025-01-15T06:32:15Z",
+          "prov:wasAssociatedWith": "ex:sentinel-1a-satellite",
+          "ex:acquisitionMode": "Interferometric Wide Swath"
+        },
+        "ex:sar-processing": {
+          "prov:id": "ex:sar-processing",
+          "prov:type": "esa:SARProcessing",
+          "prov:label": "SAR Ground Range Detected processing",
+          "prov:used": ["ex:sar-scene-raw", "ex:dem-copernicus"],
+          "prov:startTime": "2025-01-15T07:45:00Z",
+          "prov:endTime": "2025-01-15T08:15:00Z",
+          "prov:wasAssociatedWith": "ex:esa-processing-center",
+          "ex:processingChain": ["radiometric-calibration", "thermal-noise-removal", "terrain-correction", "geocoding"],
+          "ex:software": "Sentinel-1 IPF v3.52"
+        },
+        "ex:quality-assessment": {
+          "prov:id": "ex:quality-assessment",
+          "prov:type": "esa:QualityAssessment",
+          "prov:label": "Automated quality check with GCP validation",
+          "prov:used": "ex:sar-scene-processed",
+          "prov:startTime": "2025-01-15T09:00:00Z",
+          "prov:endTime": "2025-01-15T10:00:00Z",
+          "prov:wasAssociatedWith": "ex:qa-team"
+        }
+      },
+      "agent": {
+        "ex:sentinel-1a-satellite": {
+          "prov:id": "ex:sentinel-1a-satellite",
+          "prov:type": "esa:Satellite",
+          "prov:label": "Sentinel-1A Satellite",
+          "ex:satcat": 39634,
+          "ex:launchDate": "2014-04-03"
+        },
+        "ex:esa-processing-center": {
+          "prov:id": "ex:esa-processing-center",
+          "prov:type": "prov:Organization",
+          "prov:label": "ESA Copernicus Ground Segment Processing Center",
+          "ex:location": "Frascati, Italy",
+          "ex:facility": "PDGS-C"
+        },
+        "ex:qa-team": {
+          "prov:id": "ex:qa-team",
+          "prov:type": "prov:Organization",
+          "prov:label": "ESA Quality Assurance Team",
+          "prov:actedOnBehalfOf": "ex:esa-processing-center"
+        }
+      },
+      "wasGeneratedBy": {
+        "_:wGB1": {
+          "prov:entity": "ex:sar-scene-raw",
+          "prov:activity": "ex:acquisition-2025-01-15",
+          "prov:time": "2025-01-15T06:30:00Z"
+        },
+        "_:wGB2": {
+          "prov:entity": "ex:sar-scene-processed",
+          "prov:activity": "ex:sar-processing",
+          "prov:time": "2025-01-15T08:15:00Z"
+        }
+      },
+      "wasDerivedFrom": {
+        "_:wDF1": {
+          "prov:generatedEntity": "ex:sar-scene-processed",
+          "prov:usedEntity": "ex:sar-scene-raw",
+          "prov:activity": "ex:sar-processing"
+        }
+      },
+      "used": {
+        "_:u1": {
+          "prov:activity": "ex:sar-processing",
+          "prov:entity": "ex:sar-scene-raw"
+        },
+        "_:u2": {
+          "prov:activity": "ex:sar-processing",
+          "prov:entity": "ex:dem-copernicus"
+        },
+        "_:u3": {
+          "prov:activity": "ex:quality-assessment",
+          "prov:entity": "ex:sar-scene-processed"
+        }
+      },
+      "wasAssociatedWith": {
+        "_:wAW1": {
+          "prov:activity": "ex:acquisition-2025-01-15",
+          "prov:agent": "ex:sentinel-1a-satellite"
+        },
+        "_:wAW2": {
+          "prov:activity": "ex:sar-processing",
+          "prov:agent": "ex:esa-processing-center"
+        },
+        "_:wAW3": {
+          "prov:activity": "ex:quality-assessment",
+          "prov:agent": "ex:qa-team"
+        }
+      },
+      "actedOnBehalfOf": {
+        "_:aOBO1": {
+          "prov:delegate": "ex:qa-team",
+          "prov:responsible": "ex:esa-processing-center"
+        }
+      }
+    }
+  },
+  "assets": {
+    "data-vv": {
+      "href": "s1a_iw_grd_vh_20250115t063000_vv.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VV Polarization GRD",
+      "roles": ["data"],
+      "sar:polarizations": ["VV"],
+      "liability:origin": "ESA Copernicus",
+      "liability:security_classification": "public"
+    },
+    "data-vh": {
+      "href": "s1a_iw_grd_vh_20250115t063000_vh.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "VH Polarization GRD",
+      "roles": ["data"],
+      "sar:polarizations": ["VH"],
+      "liability:origin": "ESA Copernicus",
+      "liability:security_classification": "public"
+    },
+    "thumbnail": {
+      "href": "s1a_iw_grd_vh_20250115t063000_thumb.png",
+      "type": "image/png",
+      "title": "Thumbnail",
+      "roles": ["thumbnail"],
+      "liability:security_classification": "public"
+    },
+    "metadata_iso19115": {
+      "href": "metadata.xml",
+      "type": "application/vnd.iso.19115-3+xml",
+      "title": "ISO 19115-3 Metadata",
+      "roles": ["metadata"],
+      "liability:security_classification": "public"
+    },
+    "quality-report": {
+      "href": "quality-assessment-report.pdf",
+      "type": "application/pdf",
+      "title": "Quality Assessment Report",
+      "roles": ["metadata"],
+      "description": "Detailed quality assessment including GCP validation, radiometric calibration verification, and geometric accuracy analysis",
+      "liability:origin": "ESA Quality Assurance Team",
+      "liability:security_classification": "internal",
+      "liability:access_restrictions": ["internal_use_only"],
+      "liability:required_roles": ["quality_analyst", "data_scientist"]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.org/stac/collections/sentinel-1-grd/items/SAR-DUAL-EXTENSION-EXAMPLE",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.org/stac/collections/sentinel-1-grd",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "https://example.org/stac/collections/sentinel-1-grd",
+      "type": "application/json"
+    },
+    {
+      "rel": "license",
+      "href": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+      "title": "Copernicus Sentinel Data Terms and Conditions"
+    },
+    {
+      "rel": "derived_from",
+      "href": "https://example.org/stac/collections/sentinel-1-slc/items/SAR-SLC-RAW-20250115",
+      "type": "application/geo+json",
+      "title": "Source Level-0 SLC product"
+    }
+  ]
+}

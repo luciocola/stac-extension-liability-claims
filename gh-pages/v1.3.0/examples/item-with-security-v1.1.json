@@ -1,0 +1,113 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json",
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "environmental-incident-2024-secure-v1.1",
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-122.5, 37.7],
+      [-122.3, 37.7],
+      [-122.3, 37.9],
+      [-122.5, 37.9],
+      [-122.5, 37.7]
+    ]]
+  },
+  "properties": {
+    "datetime": "2024-11-15T10:30:00Z",
+    "start_datetime": "2024-11-15T08:00:00Z",
+    "end_datetime": "2024-11-15T18:00:00Z",
+    "liability:claim_id": "ENV-2024-SECURE-001",
+    "liability:claim_type": "environmental",
+    "liability:claim_status": "under_investigation",
+    "liability:claim_date": "2024-11-20T09:00:00Z",
+    "liability:incident_date": "2024-11-15T10:30:00Z",
+    "liability:responsible_party": "Industrial Corp XYZ",
+    "liability:affected_parties": [
+      {
+        "name": "Local Municipality",
+        "role": "claimant",
+        "contact": "claims@municipality.gov"
+      }
+    ],
+    "liability:damages_estimated": 500000,
+    "liability:damages_currency": "USD",
+    "liability:legal_jurisdiction": "State of California",
+    "liability:insurance_provider": "Global Insurance Inc.",
+    "liability:policy_number": "ENV-POL-123456",
+    "liability:evidence_refs": [
+      "satellite-imagery-secure",
+      "investigation-report"
+    ],
+    "liability:notes": "Confidential investigation - access restricted to authorized personnel only",
+    "liability:origin": "Environmental Protection Agency"
+  },
+  "assets": {
+    "satellite-imagery-secure": {
+      "href": "https://assets.claims.example.com/api/v1/evidence/sat-2024-11-15.tif",
+      "title": "Satellite Imagery - Confidential Evidence",
+      "type": "image/tiff; application=geotiff",
+      "roles": ["data", "evidence"],
+      "file:checksum": "1220e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "liability:security_classification": "confidential",
+      "liability:access_restrictions": [
+        "legal_hold",
+        "authorized_investigators_only",
+        "privacy_act_protected"
+      ],
+      "liability:required_roles": ["investigator", "legal_counsel"]
+    },
+    "investigation-report": {
+      "href": "https://assets.claims.example.com/api/v1/reports/inv-2024-001.pdf",
+      "title": "Investigation Report - Restricted",
+      "type": "application/pdf",
+      "roles": ["metadata", "evidence"],
+      "file:checksum": "1220a3c5e1234567890abcdef1234567890abcdef1234567890abcdef123456789",
+      "liability:security_classification": "restricted",
+      "liability:access_restrictions": [
+        "attorney_client_privilege",
+        "work_product_doctrine",
+        "court_sealed"
+      ],
+      "liability:required_roles": ["legal_counsel", "claim_adjuster"]
+    },
+    "public-overview": {
+      "href": "https://public.claims.example.com/overview-2024-001.jpg",
+      "title": "Public Overview Image (Low Resolution)",
+      "type": "image/jpeg",
+      "roles": ["overview", "thumbnail"],
+      "liability:security_classification": "public"
+    },
+    "internal-analysis": {
+      "href": "https://internal.claims.example.com/analysis/2024-001.pdf",
+      "title": "Internal Analysis - Company Use Only",
+      "type": "application/pdf",
+      "roles": ["metadata"],
+      "liability:security_classification": "internal",
+      "liability:access_restrictions": ["internal_use_only"],
+      "liability:required_roles": ["claim_adjuster", "risk_analyst"]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://stac.claims.example.com/collections/environmental-claims/items/environmental-incident-2024-secure-v1.1",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://stac.claims.example.com/collections/environmental-claims",
+      "type": "application/json"
+    },
+    {
+      "rel": "alternate",
+      "href": "https://portal.claims.example.com/items/ENV-2024-SECURE-001",
+      "title": "View in authenticated web portal",
+      "type": "text/html"
+    }
+  ]
+}

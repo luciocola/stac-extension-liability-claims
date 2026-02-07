@@ -1,0 +1,169 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "satellite-imagery-quality-eovoc-example",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-122.5, 37.7],
+        [-122.5, 37.9],
+        [-122.3, 37.9],
+        [-122.3, 37.7],
+        [-122.5, 37.7]
+      ]
+    ]
+  },
+  "bbox": [-122.5, 37.7, -122.3, 37.9],
+  "properties": {
+    "datetime": "2024-06-15T10:30:00Z",
+    "title": "EOVOC-Compatible Quality Report Example",
+    "description": "Demonstrates dual namespace support with dq:quality and dq:lineage for eovoc eof-eos-stac-extension interoperability",
+    "dq:quality": [
+      {
+        "scope": {
+          "level": "dataset"
+        },
+        "report": [
+          {
+            "type": "AbsoluteExternalPositionalAccuracy",
+            "measure": {
+              "nameOfMeasure": ["Horizontal Positional Accuracy"],
+              "measureIdentification": {
+                "code": "28",
+                "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+                "authority": {
+                  "title": "International Organization for Standardization",
+                  "alternateTitle": ["ISO"]
+                }
+              },
+              "measureDescription": "Closeness of reported coordinate values to values accepted as or being true"
+            },
+            "evaluationMethod": [
+              {
+                "type": "DirectInternal",
+                "evaluationMethodDescription": "Comparison with independent higher accuracy dataset"
+              }
+            ],
+            "result": [
+              {
+                "type": "QuantitativeResult",
+                "value": [12.5],
+                "valueUnit": "meter",
+                "dateTime": "2024-06-15T14:00:00Z"
+              }
+            ]
+          },
+          {
+            "type": "ThematicClassificationCorrectness",
+            "measure": {
+              "nameOfMeasure": ["Classification Accuracy"],
+              "measureIdentification": {
+                "code": "120",
+                "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+                "authority": {
+                  "title": "International Organization for Standardization",
+                  "alternateTitle": ["ISO"]
+                }
+              },
+              "measureDescription": "Correctness of the classification of features and their attributes"
+            },
+            "result": [
+              {
+                "type": "QuantitativeResult",
+                "value": [89.2],
+                "valueUnit": "%",
+                "dateTime": "2024-06-15T14:00:00Z"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "dq:lineage": [
+      {
+        "statement": "Satellite imagery processed through atmospheric correction, geometric correction, and classification workflow",
+        "scope": {
+          "level": "dataset"
+        },
+        "processStep": [
+          {
+            "description": "Atmospheric correction using FLAASH algorithm",
+            "rationale": "Remove atmospheric effects from optical imagery",
+            "processor": [
+              {
+                "individualName": "Automated Processing System",
+                "organisationName": "Earth Observation Center"
+              }
+            ],
+            "stepDateTime": "2024-06-15T08:00:00Z"
+          },
+          {
+            "description": "Geometric correction and orthorectification",
+            "rationale": "Correct geometric distortions and align to map projection",
+            "processor": [
+              {
+                "individualName": "Geospatial Processing Unit",
+                "organisationName": "Earth Observation Center"
+              }
+            ],
+            "stepDateTime": "2024-06-15T09:30:00Z"
+          }
+        ],
+        "source": [
+          {
+            "description": "Sentinel-2 Level-1C imagery",
+            "sourceCitation": {
+              "title": "Sentinel-2A MSI L1C 2024-06-15",
+              "date": [
+                {
+                  "date": "2024-06-15T06:09:57Z",
+                  "dateType": "creation"
+                }
+              ],
+              "identifier": [
+                {
+                  "code": "S2A_MSIL1C_20240615T060957_N0510_R034_T10SEG_20240615T081203"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-eovoc-dq.json",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "visual": {
+      "href": "https://example.com/data/visual.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Visual Composite",
+      "roles": ["visual"]
+    },
+    "quality_report": {
+      "href": "./reports/quality-assessment-20240615.pdf",
+      "type": "application/pdf",
+      "title": "ISO 19157 Quality Assessment Report",
+      "roles": ["metadata"]
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "type": "Collection",
+  "id": "liability-claims-2024",
+  "title": "Liability Claims 2024",
+  "description": "Collection of liability and insurance claims with associated geospatial data for 2024",
+  "keywords": [
+    "liability",
+    "claims",
+    "insurance",
+    "legal",
+    "environmental"
+  ],
+  "license": "proprietary",
+  "providers": [
+    {
+      "name": "National Claims Registry",
+      "roles": ["producer", "licensor"],
+      "url": "https://example.com"
+    }
+  ],
+  "liability:origin": "NationalClaimsRegistry",
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2024-01-01T00:00:00Z", null]]
+    }
+  },
+  "summaries": {
+    "liability:claim_status": [
+      "pending",
+      "under_investigation",
+      "accepted",
+      "settled",
+      "closed"
+    ],
+    "liability:claim_type": [
+      "environmental",
+      "property_damage",
+      "financial",
+      "operational"
+    ],
+    "liability:security_classification": ["internal", "confidential"],
+    "liability:responsible_party": ["ABC Corporation", "XYZ Industries"],
+    "liability:damages_estimated": {
+      "minimum": 10000,
+      "maximum": 5000000
+    },
+    "liability:legal_jurisdiction": ["California, USA", "New York, USA"]
+  },
+  "item_assets": {
+    "evidence": {
+      "type": "image/jpeg",
+      "title": "Evidence Photograph",
+      "roles": ["data"],
+      "liability:security_classification": "internal"
+    },
+    "report": {
+      "type": "application/pdf",
+      "title": "Incident Report",
+      "roles": ["metadata"],
+      "liability:security_classification": "confidential"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/liability-claims-2024.json"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://example.com/stac/catalog.json"
+    },
+    {
+      "rel": "items",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/collections/liability-claims-2024/items"
+    },
+    {
+      "rel": "item",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/liability-claim-001.json"
+    }
+  ]
+}

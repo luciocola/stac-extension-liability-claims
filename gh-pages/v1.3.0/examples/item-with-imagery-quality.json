@@ -1,0 +1,166 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "id": "item-imagery-quality-001",
+  "bbox": [12.0, 45.0, 12.5, 45.5],
+  "properties": {
+    "datetime": "2025-11-27T10:30:00Z",
+    "liability:claim_id": "CLM-SAT-0001",
+    "liability:claim_type": "environmental",
+    "liability:origin": "SatelliteMonitoringAgency",
+    "liability:quality": {
+      "reportId": "QR-2025-SAT-0001",
+      "scope": "feature",
+      "date": "2025-11-27T12:00:00Z",
+      "version": "1.0",
+      "summary": "Quality assessment for satellite imagery used in environmental claim",
+      "elements": [
+        {
+          "elementType": "processingLevel",
+          "summary": "Satellite data processing level",
+          "detail": {
+            "type": "processingLevel",
+            "level": "L2A",
+            "description": "Surface reflectance with atmospheric correction",
+            "processingDate": "2025-11-27T08:00:00Z",
+            "processor": "Sen2Cor v2.10",
+            "measure": {
+              "description": "Processing level identifier",
+              "value": "L2A",
+              "valueType": "string"
+            }
+          }
+        },
+        {
+          "elementType": "cloudCoverage",
+          "summary": "Cloud coverage assessment",
+          "detail": {
+            "type": "cloudCoverage",
+            "coveragePercentage": 12.5,
+            "assessmentMethod": "Automated scene classification",
+            "measure": {
+              "description": "Percentage of scene covered by clouds",
+              "value": 12.5,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "snowCoverage",
+          "summary": "Snow and ice coverage assessment",
+          "detail": {
+            "type": "snowCoverage",
+            "coveragePercentage": 8.3,
+            "assessmentMethod": "NDSI-based snow detection algorithm",
+            "measure": {
+              "description": "Percentage of scene covered by snow and ice",
+              "value": 8.3,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "radiometricAccuracy",
+          "summary": "Radiometric calibration quality",
+          "detail": {
+            "type": "radiometricAccuracy",
+            "description": "Radiometric accuracy after calibration",
+            "calibrationAccuracy": 5.0,
+            "units": "%",
+            "method": "On-board calibration with vicarious validation",
+            "measure": {
+              "description": "Radiometric uncertainty",
+              "value": 5.0,
+              "valueType": "percentage",
+              "units": "%",
+              "method": "Statistical analysis of calibration targets"
+            }
+          },
+          "conformance": {
+            "specification": "ISO 19115-4:2015",
+            "pass": true,
+            "explanation": "Meets radiometric quality standards for Level-2 products"
+          }
+        },
+        {
+          "elementType": "sensorQuality",
+          "summary": "Sensor status and calibration",
+          "detail": {
+            "type": "sensorQuality",
+            "sensorType": "Multispectral Imager (MSI)",
+            "calibrationStatus": "calibrated",
+            "calibrationDate": "2025-11-15T00:00:00Z",
+            "measure": {
+              "description": "Sensor calibration status",
+              "value": "calibrated",
+              "valueType": "string"
+            }
+          }
+        },
+        {
+          "elementType": "positionalAccuracy",
+          "summary": "Geometric accuracy",
+          "detail": {
+            "type": "positionalAccuracy",
+            "accuracyValue": 10.0,
+            "units": "m",
+            "method": "Ground control points",
+            "measure": {
+              "description": "RMSE horizontal accuracy",
+              "value": 10.0,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          }
+        },
+        {
+          "elementType": "usabilityAssessment",
+          "summary": "Overall usability for environmental monitoring",
+          "detail": {
+            "type": "usabilityAssessment",
+            "usabilityScore": 0.88,
+            "limitations": [
+              "Partial cloud coverage in northern region",
+              "Limited spectral bands for detailed species identification"
+            ],
+            "intendedUse": "Environmental damage assessment and monitoring",
+            "measure": {
+              "description": "Composite usability score",
+              "value": 0.88,
+              "valueType": "fraction"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [12.0, 45.0],
+        [12.5, 45.0],
+        [12.5, 45.5],
+        [12.0, 45.5],
+        [12.0, 45.0]
+      ]
+    ]
+  },
+  "assets": {
+    "visual": {
+      "href": "data/imagery-001-visual.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "True color composite"
+    },
+    "nir": {
+      "href": "data/imagery-001-nir.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Near-infrared band"
+    }
+  }
+}

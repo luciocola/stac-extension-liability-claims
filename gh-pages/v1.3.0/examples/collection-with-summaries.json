@@ -1,0 +1,294 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://xxx.github.io/dq/v0.1.0/schema.json",
+    "https://luciocola.github.io/stac-extension-liability-claims/json-schema/schema.json"
+  ],
+  "type": "Collection",
+  "id": "environmental-claims-2025",
+  "title": "Environmental Liability Claims 2025",
+  "description": "Collection of environmental liability claims with associated geospatial data, quality assessments, and legal documentation for regulatory compliance and litigation support.",
+  "keywords": [
+    "environmental",
+    "liability",
+    "claims",
+    "legal",
+    "compliance",
+    "quality assessment"
+  ],
+  "license": "proprietary",
+  "providers": [
+    {
+      "name": "Environmental Protection Agency",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://www.epa.gov"
+    },
+    {
+      "name": "Legal Services Division",
+      "roles": [
+        "processor"
+      ],
+      "url": "https://example.org/legal"
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -125.0,
+          24.0,
+          -66.0,
+          49.0
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2025-01-01T00:00:00Z",
+          "2025-12-31T23:59:59Z"
+        ]
+      ]
+    }
+  },
+  "summaries": {
+    "datetime": {
+      "minimum": "2025-01-01T00:00:00Z",
+      "maximum": "2025-12-31T23:59:59Z"
+    },
+    "liability:claim_status": [
+      "pending",
+      "under_investigation",
+      "accepted",
+      "settled"
+    ],
+    "liability:claim_type": [
+      "environmental",
+      "property_damage"
+    ],
+    "liability:security_classification": [
+      "internal",
+      "confidential",
+      "restricted"
+    ],
+    "liability:responsible_party": [
+      "Industrial Facility XYZ",
+      "Chemical Plant ABC",
+      "Mining Operation DEF"
+    ],
+    "liability:damages_estimated": {
+      "minimum": 50000,
+      "maximum": 5000000
+    },
+    "liability:legal_jurisdiction": [
+      "US Federal Court, District of Oregon",
+      "US Federal Court, District of California",
+      "State Environmental Court, Nevada"
+    ],
+    "liability:origin": [
+      "EPA Field Office - Region 9",
+      "EPA Field Office - Region 10"
+    ]
+  },
+  "item_assets": {
+    "evidence-photos": {
+      "type": "image/jpeg",
+      "roles": [
+        "data"
+      ],
+      "title": "Photographic Evidence",
+      "liability:security_classification": "confidential",
+      "liability:access_restrictions": [
+        "legal_hold",
+        "court_order"
+      ],
+      "liability:required_roles": [
+        "legal_team",
+        "court_appointed_expert"
+      ]
+    },
+    "site-assessment": {
+      "type": "application/pdf",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Environmental Site Assessment Report",
+      "liability:security_classification": "internal",
+      "liability:access_restrictions": [
+        "internal_use_only"
+      ]
+    },
+    "water-samples": {
+      "type": "application/vnd.geo+json",
+      "roles": [
+        "data"
+      ],
+      "title": "Water Sample Collection Points",
+      "liability:security_classification": "confidential",
+      "liability:access_restrictions": [
+        "legal_hold"
+      ]
+    },
+    "contamination-extent": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Contamination Extent Mapping",
+      "liability:security_classification": "restricted",
+      "liability:access_restrictions": [
+        "classified",
+        "need_to_know"
+      ]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.org/stac/collections/environmental-claims-2025",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "https://example.org/stac",
+      "type": "application/json"
+    },
+    {
+      "rel": "items",
+      "href": "https://example.org/stac/collections/environmental-claims-2025/items",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "license",
+      "href": "https://example.org/legal/data-access-agreement",
+      "title": "Data Access Agreement (Legal Hold Required)"
+    },
+    {
+      "rel": "related",
+      "href": "https://example.org/legal/environmental-claims-policy",
+      "title": "Environmental Claims Management Policy"
+    }
+  ],
+  "liability:responsible_party": "Environmental Protection Agency",
+  "liability:origin": "EPA Environmental Crimes Division",
+  "liability:notes": "This collection contains sensitive legal information related to ongoing and settled environmental liability claims. All assets require appropriate security clearance and legal authorization for access. Data is subject to discovery holds and court orders.",
+  "liability:prov": {
+    "prefix": {
+      "ex": "http://example.org/epa#",
+      "epa": "http://epa.gov/provenance#"
+    },
+    "entity": {
+      "ex:collection-2025": {
+        "prov:id": "ex:collection-2025",
+        "prov:type": "epa:ClaimCollection",
+        "prov:label": "Environmental Claims Collection 2025",
+        "prov:wasGeneratedBy": "ex:collection-creation",
+        "prov:generatedAtTime": "2025-01-15T00:00:00Z",
+        "epa:collectionScope": "US Federal Environmental Claims",
+        "epa:regulatoryFramework": "Clean Water Act, CERCLA"
+      }
+    },
+    "activity": {
+      "ex:collection-creation": {
+        "prov:id": "ex:collection-creation",
+        "prov:type": "epa:DataCollectionCreation",
+        "prov:label": "Creation of claims collection for 2025 fiscal year",
+        "prov:startTime": "2025-01-01T00:00:00Z",
+        "prov:endTime": "2025-01-15T00:00:00Z",
+        "prov:wasAssociatedWith": "ex:legal-services-division"
+      }
+    },
+    "agent": {
+      "ex:legal-services-division": {
+        "prov:id": "ex:legal-services-division",
+        "prov:type": "prov:Organization",
+        "prov:label": "EPA Legal Services Division",
+        "epa:organizationCode": "EPA-LSD-001"
+      }
+    }
+  },
+  "dq:quality": [
+    {
+      "scope": {
+        "level": "collection"
+      },
+      "report": [
+        {
+          "type": "ConceptualConsistency",
+          "measure": {
+            "measureIdentification": {
+              "code": "101",
+              "authority": {
+                "alternateTitle": [
+                  "ISO"
+                ],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "MD101 - Conformance quality of data product"
+            ],
+            "measureDescription": "All items in collection conform to EPA Environmental Claims Data Standard v2.0"
+          },
+          "evaluationMethod": [
+            {
+              "type": "FullInspection",
+              "evaluationMethodDescription": "Automated validation against EPA schema on collection creation and update",
+              "dateTime": "2025-01-15T00:00:00Z"
+            }
+          ],
+          "result": [
+            {
+              "type": "QuantitativeResult",
+              "value": [
+                "true"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "TemporalQuality",
+          "measure": {
+            "measureIdentification": {
+              "code": "302",
+              "authority": {
+                "alternateTitle": [
+                  "ISO"
+                ],
+                "title": "International Organization for Standardization"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "MD302 - Temporal validity"
+            ],
+            "measureDescription": "All claims have valid temporal coverage within collection extent"
+          },
+          "evaluationMethod": [
+            {
+              "type": "DirectInternal",
+              "evaluationMethodDescription": "Automated check of claim incident dates against collection temporal extent",
+              "dateTime": "2025-01-15T00:00:00Z"
+            }
+          ],
+          "result": [
+            {
+              "type": "ConformanceResult",
+              "specification": {
+                "title": "EPA Temporal Validity Requirements",
+                "date": {
+                  "publication": "2025-01-01T00:00:00Z"
+                }
+              },
+              "pass": true,
+              "explanation": "All 147 claims have incident dates within 2025 fiscal year extent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
