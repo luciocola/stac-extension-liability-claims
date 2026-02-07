@@ -379,8 +379,7 @@
           },
           "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
         }
-      },
-      "additionalProperties": false
+      }
     },
     "iso19115_conformance_result": {
       "$comment": "Conformance result for ISO 19115 DQ assessments",
