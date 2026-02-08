@@ -175,7 +175,7 @@
         <strong>Support:</strong> <a href="https://github.com/stac-extensions/liability-claims/issues">GitHub Issues</a>
     </p>
 
-    <h2>🔗 STAC extension for common operating picture</h2>
+    <h2>🔗 STAC Extension for Common Operating Picture</h2>
     <div class="links">
         <a href="https://aidggs-pilot.hartis.org/">🌐 AIDGGS Pilot - Common Operating Picture Platform</a>
     </div>
@@ -237,10 +237,11 @@
                     if (!isValidGitHubUrl(repo.html_url)) {
                         return; // Skip invalid URLs
                     }
-                    const stars = repo.stargazers_count > 0 ? ` (${repo.stargazers_count} stars)` : '';
+                    const starText = repo.stargazers_count === 1 ? 'star' : 'stars';
+                    const stars = repo.stargazers_count > 0 ? ` (${repo.stargazers_count} ${starText})` : '';
                     const description = repo.description ? ` - ${escapeHtml(repo.description)}` : '';
                     // URL is already validated, use directly without escaping
-                    html += `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(repo.name)} repository in new tab">
+                    html += `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
                         <strong>${escapeHtml(repo.name)}</strong>${stars}${description}
                     </a>`;
                 });
