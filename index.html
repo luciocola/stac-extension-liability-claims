@@ -175,6 +175,57 @@
         <strong>Support:</strong> <a href="https://github.com/stac-extensions/liability-claims/issues">GitHub Issues</a>
     </p>
 
+    <h2>🔗 STAC extension for common operating picture</h2>
+    <div class="links">
+        <a href="https://aidggs-pilot.hartis.org/">🌐 AIDGGS Pilot - Common Operating Picture Platform</a>
+    </div>
+
+    <h2>📦 Related Repositories</h2>
+    <div class="links" id="repositories-list">
+        <p>Loading repositories...</p>
+    </div>
+
+    <script>
+        // Fetch and display public repositories from luciocola GitHub account
+        async function loadRepositories() {
+            try {
+                const response = await fetch('https://api.github.com/users/luciocola/repos?sort=updated&per_page=100');
+                const repos = await response.json();
+                
+                // Filter public repositories and sort by stars
+                const publicRepos = repos
+                    .filter(repo => !repo.private)
+                    .sort((a, b) => b.stargazers_count - a.stargazers_count);
+                
+                const reposList = document.getElementById('repositories-list');
+                
+                if (publicRepos.length === 0) {
+                    reposList.innerHTML = '<p>No public repositories found.</p>';
+                    return;
+                }
+                
+                // Create repository list
+                let html = '';
+                publicRepos.forEach(repo => {
+                    const stars = repo.stargazers_count > 0 ? ` ⭐ ${repo.stargazers_count}` : '';
+                    const description = repo.description ? ` - ${repo.description}` : '';
+                    html += `<a href="${repo.html_url}" target="_blank">
+                        <strong>${repo.name}</strong>${stars}${description}
+                    </a>`;
+                });
+                
+                reposList.innerHTML = html;
+            } catch (error) {
+                console.error('Error loading repositories:', error);
+                document.getElementById('repositories-list').innerHTML = 
+                    '<p>Unable to load repositories. Please visit <a href="https://github.com/luciocola">@luciocola on GitHub</a>.</p>';
+            }
+        }
+        
+        // Load repositories when page loads
+        loadRepositories();
+    </script>
+
     <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #eaecef; color: #57606a; font-size: 14px;">
         <p>Part of the <a href="https://stacspec.org/">STAC Extensions</a> ecosystem</p>
     </footer>
