@@ -69,6 +69,17 @@
             margin-top: 0;
             color: #0969da;
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
@@ -242,7 +253,7 @@
                     const description = repo.description ? ` - ${escapeHtml(repo.description)}` : '';
                     // URL is already validated, use directly without escaping
                     html += `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
-                        <strong>${escapeHtml(repo.name)}</strong>${stars}${description}
+                        <strong>${escapeHtml(repo.name)}</strong>${stars}${description} <span class="sr-only">(opens in new tab)</span>
                     </a>`;
                 });
                 
@@ -253,7 +264,7 @@
                     ? 'GitHub API rate limit exceeded. Please try again later.' 
                     : 'Unable to load repositories.';
                 document.getElementById('repositories-list').innerHTML = 
-                    `<p>${errorMessage} Please visit <a href="https://github.com/luciocola">@luciocola on GitHub</a>.</p>`;
+                    `<p>${errorMessage} Please visit <a href="https://github.com/luciocola" target="_blank" rel="noopener noreferrer">@luciocola on GitHub <span class="sr-only">(opens in new tab)</span></a>.</p>`;
             }
         }
         
