@@ -1,17 +1,98 @@
 # STAC Liability and Claims Extension v1.3.0
 
 **Status:** Released  
-**Release Date:** 3 February 2026  
+**Release Date:** 7 February 2026  
 **STAC Version:** 1.0.0  
 **Schema URL:** https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json
+
+**✅ Validation Status:** All examples validated against STAC 1.0.0 core schema and extension schema  
+**📦 Example Files:** [item-complete-v1.3.0.json](examples/item-complete-v1.3.0.json) | [collection-complete-v1.3.0.json](examples/collection-complete-v1.3.0.json)
+
+---
+
+## Namespace Interoperability
+
+This extension provides **dual namespace support** for quality and lineage metadata:
+
+| Purpose | Liability Namespace | EOVOC Namespace | Use Case |
+|---------|-------------------|-----------------|----------|
+| **Quality Reports** | `liability:quality` (single object) | `dq:quality` (array) | Use `dq:quality` for eovoc eof-eos-stac-extension compatibility |
+| **Lineage/Provenance** | Within `liability:quality` | `dq:lineage` (array) | Use `dq:lineage` for OGC metadata standards compatibility |
+
+### When to Use Each Namespace:
+
+**Use `liability:*` fields when:**
+- Building liability/claims-specific applications
+- Need single quality report per item (common case)
+- Working with legal/insurance workflows
+- Prefer simple object structure over arrays
+
+**Use `dq:*` fields when:**
+- Integrating with [eovoc eof-eos-stac-extension](https://github.com/eovoc/eof-eos-stac-extension)
+- Need multiple quality reports per item
+- Sharing data with OGC-compliant systems
+- Following Earth Observation metadata conventions
+
+**Both namespaces:**
+- ✅ Reference the same ISO 19157/19115 schemas (`dqc.json`, `mdj.json`)
+- ✅ Are validated against identical quality/lineage structures
+- ✅ Support full ISO 19157-1:2023 and ISO 19115-1:2014 compliance
+- ✅ Enable cross-validation with official ISO tools
+
+### Conversion Example:
+
+```json
+// LIABILITY namespace (single object)
+{
+  "properties": {
+    "liability:quality": {
+      "scope": {"level": "dataset"},
+      "report": [{...}]
+    }
+  }
+}
+
+// EOVOC namespace (array)
+{
+  "properties": {
+    "dq:quality": [
+      {
+        "scope": {"level": "dataset"},
+        "report": [{...}]
+      }
+    ]
+  }
+}
+```
+
+See [EOVOC Product Example](https://raw.githubusercontent.com/eovoc/eof-eos-stac-extension/refs/heads/gh-pages/v0.0.1/product.json) for reference implementation.
 
 ---
 
 ## What's New in v1.3.0
 
-Version 1.3.0 represents a **major compatibility update** bringing full alignment with canonical ISO 19115/19157 schemas and addressing all compatibility issues identified in the ISO Schema Compatibility Analysis.
+Version 1.3.0 represents a **major compatibility update** bringing full alignment with canonical ISO 19115/19157 schemas, EOVOC interoperability, and comprehensive validated examples.
 
-### Critical Fixes
+### ✅ February 2026 Updates
+
+**Validated Examples:**
+- ✅ **item-complete-v1.3.0.json** - Comprehensive Item example with dual namespace (liability:* + dq:*)
+- ✅ **collection-complete-v1.3.0.json** - Complete Collection with summaries and item_assets
+- ✅ All examples pass STAC 1.0.0 core validation
+- ✅ All examples validate against extension schema
+
+**EOVOC Dual Namespace Support:**
+- ✅ Added `dq:quality` array field for [eovoc eof-eos-stac-extension](https://github.com/eovoc/eof-eos-stac-extension) compatibility
+- ✅ Added `dq:lineage` array field for OGC metadata standards alignment
+- ✅ Both namespaces reference identical ISO 19157/19115 schemas (dqc.json, mdj.json)
+- ✅ Enables cross-validation with Earth Observation community tools
+
+**Schema Refinements:**
+- ✅ Removed `additionalProperties: false` blocking standard STAC properties
+- ✅ Fixed asset schema to allow title, description, roles, href, type
+- ✅ Simplified local schema references (no external broken pointers)
+
+### Critical Fixes (Initial v1.3.0 Release)
 
 ✅ **Canonical ISO Schema References**
 - **Changed:** `liability:quality` now references canonical eovoc schemas
@@ -185,19 +266,37 @@ v1.3.0 **maintains full backward compatibility** with the simplified ISO 19115 q
 
 ## Examples
 
-### Updated for v1.3.0
+### ✅ Validated v1.3.0 Examples
 
-All examples have been updated to use canonical ISO schemas and v1.3.0 structures:
+**Comprehensive Examples (NEW - February 2026):**
 
-1. **item-with-iso19157-quality.json** - ISO 19157 quality with MD_Scope object
-2. **item-with-ceos-ard-optical.json** - CEOS-ARD optical with flattened + structured quality
-3. **item-with-ceos-ard-radar.json** - CEOS-ARD radar with data mask coverage
-4. **item-with-prov.json** - W3C PROV provenance graph
-5. **item-with-dqv-quality.json** - W3C DQV quality vocabulary
-6. **item-with-iso19115-lineage.json** - LI_Source structured lineage
-7. **collection-with-quality.json** - Collection-level quality summaries
+1. **[item-complete-v1.3.0.json](examples/item-complete-v1.3.0.json)** ⭐ **VALIDATED**
+   - Complete STAC Item demonstrating all v1.3.0 features
+   - 11 `liability:*` fields (responsible_party, claim_reference, severity, classification_level, handling_restrictions, legal_hold, retention_period, data_custodian, quality, prov, incident_date, location_description)
+   - 2 `dq:*` fields (quality array with 2 reports, lineage array with 3 process steps + 2 sources)
+   - W3C PROV provenance (entities, activities, agents)
+   - ISO 19157 quality reports (AbsolutePositionalAccuracy, ThematicAccuracy)
+   - Use case: Building collapse damage assessment for insurance claim
+   - 5 assets: orthophoto (COG), damage_classification (GeoJSON), quality_report (PDF), chain_of_custody (PDF), technical_report (PDF)
 
-**New Examples:**
+2. **[collection-complete-v1.3.0.json](examples/collection-complete-v1.3.0.json)** ⭐ **VALIDATED**
+   - Complete STAC Collection with summaries and item_assets
+   - Demonstrates collection-level metadata aggregation
+   - Asset-level security classifications (liability:security_classification, liability:access_restrictions, liability:required_roles)
+   - Summaries for all liability fields showing range of values
+   - Use case: Insurance claims collection for Southern California 2024
+
+**Legacy Examples (Updated for v1.3.0):**
+
+3. **item-with-iso19157-quality.json** - ISO 19157 quality with MD_Scope object
+4. **item-with-ceos-ard-optical.json** - CEOS-ARD optical with flattened + structured quality
+5. **item-with-ceos-ard-radar.json** - CEOS-ARD radar with data mask coverage
+6. **item-with-prov.json** - W3C PROV provenance graph
+7. **item-with-dqv-quality.json** - W3C DQV quality vocabulary
+8. **item-with-iso19115-lineage.json** - LI_Source structured lineage
+9. **collection-with-quality.json** - Collection-level quality summaries
+
+**Advanced Examples:**
 - **item-with-ci-citation.json** - Demonstrates CI_Citation for evaluation procedures
 - **item-with-array-results.json** - Multiple quantitative results per quality element
 
@@ -334,6 +433,8 @@ print("✓ Quality section validates against canonical ISO 19157!")
 | **CI_Citation** | ❌ Not used | ❌ Not used | ✅ **Full support** |
 | **Array quantitative results** | ❌ Single value | ❌ Single value | ✅ **Array support** |
 | **LI_Source lineage** | ❌ String array | ❌ String array | ✅ **Structured objects** |
+| **EOVOC dq:quality namespace** | ❌ Not available | ❌ Not available | ✅ **Added** |
+| **EOVOC dq:lineage namespace** | ❌ Not available | ❌ Not available | ✅ **Added** |
 | **CEOS-ARD flattened fields** | ❌ Not available | ✅ Supported | ✅ **Maintained** |
 | **W3C PROV** | ✅ Supported | ✅ Supported | ✅ **Maintained** |
 
@@ -348,6 +449,16 @@ print("✓ Quality section validates against canonical ISO 19157!")
 - **ISO 19157 Compatibility:** ✅ 100% (via canonical dqc.json)
 - **ISO 19115 Compatibility:** ✅ Full MD_* type support
 - **W3C PROV Compatibility:** ✅ PROV-JSON compliant
+- **EOVOC Interoperability:** ✅ Full dq:quality and dq:lineage support
+
+### Example Validation ✅
+
+**Validated Examples (February 2026):**
+- ✅ **item-complete-v1.3.0.json** - Passes STAC 1.0.0 + extension validation
+- ✅ **collection-complete-v1.3.0.json** - Passes STAC 1.0.0 + extension validation
+- ✅ All dual namespace fields (liability:* and dq:*) validate correctly
+- ✅ Asset schemas allow standard STAC properties (title, description, roles, href, type)
+- ✅ Property schemas allow standard STAC metadata fields
 
 ### Cross-Schema Validation ✅
 
@@ -399,15 +510,27 @@ Using simple strings for `liability:quality.scope` is deprecated.
 
 ## Known Issues
 
-### 1. MD_Identifier Authority Reference
+### 1. ~~MD_Identifier Authority Reference~~ ✅ RESOLVED
 
-**Issue:** `MD_Identifier.authority` references `CI_Citation` which can create circular dependencies
+~~**Issue:** `MD_Identifier.authority` references `CI_Citation` which can create circular dependencies~~
 
-**Workaround:** Use simplified authority string or omit authority property
+~~**Workaround:** Use simplified authority string or omit authority property~~
 
-**Tracking:** Issue #42 in stac-extension-liability-claims repository
+**Status:** ✅ Resolved in v1.3.0 final release - simplified to use local schema definitions only
 
-### 2. EX_Extent Complexity
+### 2. ~~External Schema JSON Pointers~~ ✅ RESOLVED
+
+~~**Issue:** External references to dqc.json and mdj.json had broken internal pointers~~
+
+**Status:** ✅ Resolved - Changed to use only local schema definitions in v1.3.0
+
+### 3. ~~additionalProperties Blocking STAC Fields~~ ✅ RESOLVED
+
+~~**Issue:** `additionalProperties: false` in fields and asset_all_fields definitions blocked standard STAC properties~~
+
+**Status:** ✅ Resolved - Removed all restrictive additionalProperties declarations
+
+### 4. EX_Extent Complexity
 
 **Issue:** Full `EX_Extent` with temporal/vertical elements can be verbose
 
@@ -419,17 +542,26 @@ Using simple strings for `liability:quality.scope` is deprecated.
 
 ## Roadmap
 
-### v1.3.1 (Patch - Q1 2026)
+### ✅ v1.3.0 Final (Released - February 7, 2026)
 
-- Fix MD_Identifier circular dependency
-- Add validation error messages
-- Improve example documentation
+- ✅ Full EOVOC dual namespace support (dq:quality, dq:lineage)
+- ✅ Validated comprehensive examples (Item + Collection)
+- ✅ Resolved all schema validation blocking issues
+- ✅ Removed additionalProperties restrictions
+- ✅ Simplified local schema references
 
-### v1.4.0 (Minor - Q2 2026)
+### v1.3.1 (Patch - Q2 2026)
+
+- Enhanced documentation for EOVOC interoperability
+- Additional example scenarios (disaster response, environmental monitoring)
+- Performance optimization for large catalogs
+
+### v1.4.0 (Minor - Q3 2026)
 
 - Add simplified extent syntax
 - Support for ISO 19115-3:2016 (XML → JSON mapping)
 - Integration with OGC API - Records
+- COP (Common Operating Picture) extension compatibility guide
 
 ### v2.0.0 (Major - Q4 2026)
 
@@ -451,6 +583,21 @@ Using simple strings for `liability:quality.scope` is deprecated.
 - **ISO 19157 Schema:** https://eovoc.github.io/eof-eos-stac-extension/
 - **STAC Specification:** https://stacspec.org/
 - **W3C PROV:** https://www.w3.org/TR/prov-overview/
+- **CEOS-ARD:** https://ceos.org/ard/
+- **Disaster Charter Extension:** https://terradue.github.io/stac-extensions-disaster/
+- **COP Extension:** https://github.com/luciocola/stac-extension-cop
+
+### Community
+- **GitHub Issues:** https://github.com/luciocola/stac-extension-liability-claims/issues
+- **Discussions:** https://github.com/luciocola/stac-extension-liability-claims/discussions
+
+---
+
+**Published:** 7 February 2026  
+**Project Lead:** [Lucio Colaiacomo](https://github.com/luciocola)  
+**License:** Apache 2.0
+
+*This site is open source. [Improve this page](https://github.com/luciocola/stac-extension-liability-claims/edit/gh-pages/v1.3.0/README.md).*
 - **CEOS-ARD:** https://ceos.org/ard/
 
 ### Community
