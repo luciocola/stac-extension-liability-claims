@@ -251,8 +251,8 @@
                     const starText = repo.stargazers_count === 1 ? 'star' : 'stars';
                     const stars = repo.stargazers_count > 0 ? ` (${repo.stargazers_count} ${starText})` : '';
                     const description = repo.description ? ` - ${escapeHtml(repo.description)}` : '';
-                    // URL is already validated, use directly without escaping
-                    html += `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
+                    // Defense in depth: escape URL even after validation
+                    html += `<a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer">
                         <strong>${escapeHtml(repo.name)}</strong>${stars}${description} <span class="sr-only">(opens in new tab)</span>
                     </a>`;
                 });
@@ -260,7 +260,8 @@
                 reposList.innerHTML = html;
             } catch (error) {
                 console.error('Error loading repositories:', error);
-                const errorMessage = error.message.includes('rate limit') 
+                // Use safe, hardcoded error messages only
+                const errorMessage = error.message && error.message.includes('rate limit') 
                     ? 'GitHub API rate limit exceeded. Please try again later.' 
                     : 'Unable to load repositories.';
                 document.getElementById('repositories-list').innerHTML = 
