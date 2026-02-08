@@ -220,9 +220,23 @@
                     return div.innerHTML;
                 }
                 
+                // Helper function to validate URL
+                function isValidGitHubUrl(url) {
+                    try {
+                        const parsedUrl = new URL(url);
+                        return parsedUrl.protocol === 'https:' && parsedUrl.hostname === 'github.com';
+                    } catch {
+                        return false;
+                    }
+                }
+                
                 // Create repository list
                 let html = '';
                 publicRepos.forEach(repo => {
+                    // Validate the URL before using it
+                    if (!isValidGitHubUrl(repo.html_url)) {
+                        return; // Skip invalid URLs
+                    }
                     const stars = repo.stargazers_count > 0 ? ` ⭐ ${repo.stargazers_count}` : '';
                     const description = repo.description ? ` - ${escapeHtml(repo.description)}` : '';
                     html += `<a href="${escapeHtml(repo.html_url)}" target="_blank">
@@ -234,7 +248,7 @@
             } catch (error) {
                 console.error('Error loading repositories:', error);
                 const errorMessage = error.message.includes('rate limit') 
-                    ? error.message 
+                    ? 'GitHub API rate limit exceeded. Please try again later.' 
                     : 'Unable to load repositories.';
                 document.getElementById('repositories-list').innerHTML = 
                     `<p>${errorMessage} Please visit <a href="https://github.com/luciocola">@luciocola on GitHub</a>.</p>`;
