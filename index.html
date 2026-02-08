@@ -237,9 +237,10 @@
                     if (!isValidGitHubUrl(repo.html_url)) {
                         return; // Skip invalid URLs
                     }
-                    const stars = repo.stargazers_count > 0 ? ` ⭐ ${repo.stargazers_count}` : '';
+                    const stars = repo.stargazers_count > 0 ? ` (${repo.stargazers_count} stars)` : '';
                     const description = repo.description ? ` - ${escapeHtml(repo.description)}` : '';
-                    html += `<a href="${escapeHtml(repo.html_url)}" target="_blank">
+                    // URL is already validated, use directly without escaping
+                    html += `<a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(repo.name)} repository in new tab">
                         <strong>${escapeHtml(repo.name)}</strong>${stars}${description}
                     </a>`;
                 });
