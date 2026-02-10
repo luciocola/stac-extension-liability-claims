@@ -1,15 +1,15 @@
 # Liability and Claims Extension Specification
 
 - **Title:** Liability and Claims
-- **Identifier:** <https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json>
+- **Identifier:** <https://luciocola.github.io/stac-extension-liability-claims/v1.1.0/schema.json>
 - **Field Name Prefix:** liability
 - **Scope:** Item, Collection, Assets, Item Assets, Summaries
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @luciocola Https://secure-dimensions.de
 - **Version**: 1.1.0
 - **JSON-LD Context:** [context.jsonld](./context.jsonld)
-- **OGC Compliance:** Aligned with OGC Building Blocks standards (see [OGC-COMPLIANCE-ACTIONS.md](./OGC-COMPLIANCE-ACTIONS.md))
-- **T21-DQ4IPT Compatibility:** Fully compatible with OGC Testbed-21 Data Quality Extension (see [T21-DQ4IPT-COMPATIBILITY-REPORT.md](./T21-DQ4IPT-COMPATIBILITY-REPORT.md))
+- **OGC Compliance:** Aligned with OGC Building Blocks standards (see [OGC-COMPLIANCE-ACTIONS.md](../OGC-COMPLIANCE-ACTIONS.md))
+- **T21-DQ4IPT Compatibility:** Fully compatible with OGC Testbed-21 Data Quality Extension (see [T21-DQ4IPT-COMPATIBILITY-REPORT.md](../T21-DQ4IPT-COMPATIBILITY-REPORT.md))
 
 This extension provides fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, and insurance information related to spatial data assets.
 
@@ -48,6 +48,33 @@ This extension includes comprehensive support for data quality reporting based o
 Quality information can be attached to Items and Collections using the `liability:quality` field, which accepts both ISO 19157-1:2023 and ISO 19115-compliant quality reports. Standalone JSON Schemas are provided:
 - `json-schema/iso19157-quality.json` (ISO 19157-1:2023 - RECOMMENDED)
 - `json-schema/iso19115-quality.json` (ISO 19115/19115-4 - backward compatibility)
+
+### Naming Conventions
+
+The extension uses **mixed naming conventions** intentionally to maintain compatibility with international standards:
+
+- **STAC extension fields** use **snake_case**: `liability:responsible_party`, `liability:claim_status`, `liability:security_classification`
+- **ISO 19157/19115 quality report fields** use **CamelCase**: `nameOfMeasures`, `measureIdentification`, `measureDescription`, `errorStatistic`
+
+This mixed approach is **correct and intentional**:
+- The `liability:*` prefix and immediate extension fields follow STAC conventions (snake_case)
+- The quality report structure preserves ISO standards' original naming (CamelCase) for maximum compatibility with existing ISO 19157/19115 tools and workflows
+
+**Example showing both conventions:**
+```json
+{
+  "liability:responsible_party": "ACME Corp",
+  "liability:quality": {
+    "reports": [{
+      "type": "DQ_CompletenessOmission",
+      "nameOfMeasures": ["MissingItems"],
+      "measureDescription": "Count of missing items",
+      "results": [...]
+    }]
+  }
+}
+```
+
 
 ### Enhanced Lineage Support (ISO 19115-4 Aligned)
 
