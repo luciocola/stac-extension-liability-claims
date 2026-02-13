@@ -30,7 +30,9 @@
         "processStep": [
           {
             "description": "UAV flight mission",
-            "stepDateTime": "2024-08-15T10:15:00Z",
+            "stepDateTime": {
+              "acquisition": "2024-08-15T10:15:00Z"
+            },
             "processor": [
               {
                 "role": "operator",
@@ -44,7 +46,9 @@
           },
           {
             "description": "Photogrammetric processing",
-            "stepDateTime": "2024-08-15T11:00:00Z",
+            "stepDateTime": {
+              "processing": "2024-08-15T11:00:00Z"
+            },
             "processingInformation": {
               "softwareReference": [
                 {
@@ -61,7 +65,9 @@
           },
           {
             "description": "Quality validation",
-            "stepDateTime": "2024-08-15T12:00:00Z",
+            "stepDateTime": {
+              "validation": "2024-08-15"
+            },
             "processingInformation": {
               "softwareReference": [
                 {
