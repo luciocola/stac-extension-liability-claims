@@ -50,10 +50,12 @@
               "processing": "2024-08-15T11:00:00Z"
             },
             "processingInformation": {
-              "softwareReference": {
-                "title": "Pix4Dmapper Professional",
-                "edition": "v4.8.4"
-              },
+              "softwareReference": [
+                {
+                  "title": "Pix4Dmapper Professional",
+                  "edition": "v4.8.4"
+                }
+              ],
               "algorithm": [
                 {
                   "description": "Structure from Motion with bundle adjustment"
@@ -67,10 +69,12 @@
               "validation": "2024-08-15"
             },
             "processingInformation": {
-              "softwareReference": {
-                "title": "QA Validator",
-                "edition": "v2.0"
-              }
+              "softwareReference": [
+                {
+                  "title": "QA Validator",
+                  "edition": "v2.0"
+                }
+              ]
             }
           }
         ]
