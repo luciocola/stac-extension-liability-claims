@@ -1,0 +1,544 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json",
+    "https://stac-extensions.github.io/ceos-ard/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/eo/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.2.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "sentinel2-l2a-ard-20250615",
+  "bbox": [
+    -122.5,
+    37.5,
+    -122.0,
+    38.0
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -122.5,
+          37.5
+        ],
+        [
+          -122.0,
+          37.5
+        ],
+        [
+          -122.0,
+          38.0
+        ],
+        [
+          -122.5,
+          38.0
+        ],
+        [
+          -122.5,
+          37.5
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2025-06-15T10:30:00Z",
+    "start_datetime": "2025-06-15T10:25:00Z",
+    "end_datetime": "2025-06-15T10:35:00Z",
+    "platform": "sentinel-2a",
+    "constellation": "sentinel-2",
+    "instruments": [
+      "msi"
+    ],
+    "ceosard:type": "optical",
+    "ceosard:specification": "SR",
+    "ceosard:specification_version": "5.0.1",
+    "ard:geometric_accuracy": 12.5,
+    "ard:geometric_accuracy_unit": "meter",
+    "ard:geometric_accuracy_type": "rRMSE",
+    "ard:radiometric_accuracy": 5.0,
+    "ard:radiometric_accuracy_unit": "percentage",
+    "ard:cloud_coverage": 15.2,
+    "ard:specification_compliance": true,
+    "ard:pfs_threshold_compliance": "all",
+    "ard:pfs_target_compliance": 95.0,
+    "liability:responsible_party": "ESA Copernicus Program",
+    "liability:origin": "Copernicus Sentinel-2 Mission",
+    "liability:notes": "CEOS-ARD Surface Reflectance v5.0.1 compliant product. Geometric accuracy meets Target requirements (<15m rRMSE).",
+    "eo:cloud_cover": 15.2,
+    "proj:code": "EPSG:32610",
+    "proj:bbox": [
+      500000,
+      4150000,
+      610000,
+      4260000
+    ],
+    "processing:facility": "ESA Ground Segment",
+    "processing:level": "L2A",
+    "processing:software": {
+      "Sen2Cor": "2.10.01"
+    },
+    "liability:quality": {
+      "scope": {
+        "level": "dataset"
+      },
+      "report": [
+        {
+          "category": "positionalAccuracy",
+          "subcategory": "absoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+              "authority": {
+                "title": "International Organization for Standardization",
+                "alternateTitle": [
+                  "ISO"
+                ],
+                "url": "https://www.iso.org"
+              }
+            },
+            "nameOfMeasure": [
+              "Mean value of positional uncertainties (1D)"
+            ],
+            "measureDescription": "CEOS-ARD SR 5.0.1 Requirement 1.8: Geometric Accuracy Assessment. Radial root mean square error (rRMSE) for sub-sample accuracy."
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Validation against ground control points",
+            "referenceDoc": [
+              {
+                "title": "Sentinel-2 Geometric Validation Report",
+                "date": "2025-06-01T00:00:00Z",
+                "uri": "https://sentinel.esa.int/documents/247904/4774371/Sentinel-2-Geometric-Validation"
+              }
+            ],
+            "dateTime": "2025-06-15T12:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [
+                12.5
+              ],
+              "valueUnit": "meter",
+              "valueRecordType": "Real",
+              "errorStatistic": "rRMSE (Radial Root Mean Square Error)"
+            }
+          ],
+          "metaquality": {
+            "confidence": 0.95,
+            "representativity": 0.9,
+            "homogeneity": 0.88
+          }
+        },
+        {
+          "category": "thematicQuality",
+          "subcategory": "thematicClassificationCorrectness",
+          "measure": {
+            "measureIdentification": {
+              "code": "117",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "Rate of correct classification"
+            ],
+            "measureDescription": "CEOS-ARD SR 5.0.1 Requirement 1.12: Radiometric Uncertainty. Absolute radiometric accuracy assessment."
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "Radiometric uncertainty validation using test sites",
+            "referenceDoc": [
+              {
+                "title": "Sentinel-2 Radiometric Uncertainty Assessment",
+                "date": "2025-05-15T00:00:00Z",
+                "uri": "https://sentinel.esa.int/documents/247904/4774371/Sentinel-2-Radiometric-Uncertainty"
+              }
+            ],
+            "dateTime": "2025-06-15T12:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [
+                5.0
+              ],
+              "valueUnit": "percentage",
+              "valueRecordType": "Real",
+              "errorStatistic": "Absolute radiometric uncertainty"
+            }
+          ]
+        },
+        {
+          "category": "completeness",
+          "measure": {
+            "measureIdentification": {
+              "code": "7",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "Rate of missing items"
+            ],
+            "measureDescription": "CEOS-ARD SR 5.0.1 Requirement 2.5/2.6: Cloud and cloud shadow coverage assessment"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Automated cloud detection and coverage calculation",
+            "dateTime": "2025-06-15T11:45:00Z"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [
+                15.2
+              ],
+              "valueUnit": "percentage",
+              "valueRecordType": "Real"
+            }
+          ]
+        },
+        {
+          "category": "usability",
+          "measure": {
+            "measureIdentification": {
+              "code": "136",
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": [
+              "Fitness for purpose"
+            ],
+            "measureDescription": "CEOS-ARD compliance assessment for Surface Reflectance v5.0.1"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "CEOS-ARD Product Family Specification compliance assessment",
+            "dateTime": "2025-06-15T13:00:00Z"
+          },
+          "result": [
+            {
+              "resultType": "conformance",
+              "pass": true,
+              "specification": {
+                "title": "CEOS-ARD Surface Reflectance Specification v5.0.1",
+                "date": "2021-10-01T00:00:00Z",
+                "identifier": "CARD4L-PFS-SR-v5.0.1",
+                "uri": "https://ceos.org/ard/files/PFS/SR/v5.0.1/CARD4L-PFS_Surface_Reflectance-v5.0.1.pdf"
+              },
+              "explanation": "Product meets all Threshold requirements and 95% of Target requirements for CEOS-ARD SR v5.0.1"
+            }
+          ]
+        }
+      ],
+      "lineage": {
+        "statement": "Sentinel-2 Level-2A product derived from Level-1C through atmospheric correction using Sen2Cor processor",
+        "scope": {
+          "level": "dataset"
+        },
+        "processStep": [
+          {
+            "description": "Atmospheric correction from Top-of-Atmosphere (L1C) to Bottom-of-Atmosphere (L2A) reflectance using Sen2Cor 2.10.01",
+            "rationale": "CEOS-ARD SR requirement 3.1: Atmospheric correction to surface reflectance",
+            "stepDateTime": "2025-06-15T11:00:00Z",
+            "processor": [
+              {
+                "name": "ESA Sen2Cor Team",
+                "organizationName": "European Space Agency",
+                "role": "processor"
+              }
+            ],
+            "reference": [
+              {
+                "title": "Sen2Cor Software Release Note v2.10",
+                "url": "https://step.esa.int/main/snap-supported-plugins/sen2cor/",
+                "date": "2024-09-01T00:00:00Z"
+              }
+            ],
+            "processingInformation": {
+              "identifier": "SEN2COR-2.10.01",
+              "softwareReference": [
+                {
+                  "title": "Sen2Cor",
+                  "version": "2.10.01",
+                  "identifier": "SEN2COR"
+                }
+              ],
+              "procedureDescription": "Scene classification and atmospheric correction",
+              "runTimeParameters": "--resolution=10 --aerosol=RURAL --wv_correction=1"
+            }
+          },
+          {
+            "description": "Geometric correction and orthorectification using Copernicus DEM",
+            "rationale": "CEOS-ARD SR requirement 1.7: Geometric correction",
+            "stepDateTime": "2025-06-15T10:50:00Z",
+            "processor": [
+              {
+                "name": "Copernicus Ground Segment",
+                "organizationName": "European Space Agency",
+                "role": "processor"
+              }
+            ],
+            "reference": [
+              {
+                "title": "Copernicus DEM GLO-30",
+                "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+              }
+            ]
+          }
+        ],
+        "source": [
+          {
+            "description": "Sentinel-2A Level-1C Top-of-Atmosphere reflectance product",
+            "sourceCitation": "S2A_MSIL1C_20250615T103031_N0509_R108_T10TGK_20250615T123456",
+            "sourceReferenceSystem": "EPSG:32610",
+            "sourceMetadata": "https://scihub.copernicus.eu/dhus/odata/v1/Products('12345678-1234-1234-1234-123456789abc')/Nodes('MTD_MSIL1C.xml')/$value"
+          }
+        ]
+      }
+    },
+    "liability:prov": {
+      "prefix": {
+        "ex": "http://example.org/",
+        "ceosard": "https://ceos.org/ard/",
+        "s2": "https://sentinel.esa.int/s2/"
+      },
+      "entity": {
+        "ex:source-l1c": {
+          "prov:type": "s2:Level1C",
+          "prov:label": "Sentinel-2A MSI L1C T10TGK 20250615",
+          "prov:value": "S2A_MSIL1C_20250615T103031_N0509_R108_T10TGK_20250615T123456"
+        },
+        "ex:ard-product": {
+          "prov:type": "ceosard:SurfaceReflectance",
+          "prov:label": "CEOS-ARD Surface Reflectance L2A",
+          "ceosard:specification": "SR",
+          "ceosard:specification_version": "5.0.1",
+          "prov:wasDerivedFrom": "ex:source-l1c",
+          "prov:wasGeneratedBy": "ex:atmospheric-correction"
+        },
+        "ex:quality-report": {
+          "prov:type": "ISO19157QualityReport",
+          "prov:wasGeneratedBy": "ex:quality-assessment",
+          "prov:wasAttributedTo": "ex:validation-team"
+        }
+      },
+      "activity": {
+        "ex:atmospheric-correction": {
+          "prov:type": "ceosard:AtmosphericCorrection",
+          "prov:label": "Sen2Cor atmospheric correction",
+          "prov:startTime": "2025-06-15T11:00:00Z",
+          "prov:endTime": "2025-06-15T11:45:00Z",
+          "prov:used": "ex:source-l1c"
+        },
+        "ex:quality-assessment": {
+          "prov:type": "ceosard:ARDQualityValidation",
+          "prov:label": "CEOS-ARD compliance validation",
+          "prov:startTime": "2025-06-15T12:00:00Z",
+          "prov:endTime": "2025-06-15T13:00:00Z",
+          "prov:used": "ex:ard-product"
+        }
+      },
+      "agent": {
+        "ex:sen2cor": {
+          "prov:type": "prov:SoftwareAgent",
+          "prov:label": "Sen2Cor 2.10.01"
+        },
+        "ex:validation-team": {
+          "prov:type": "prov:Organization",
+          "prov:label": "ESA Quality Validation Team"
+        }
+      },
+      "wasGeneratedBy": {
+        "_:wGB1": {
+          "prov:entity": "ex:ard-product",
+          "prov:activity": "ex:atmospheric-correction",
+          "prov:time": "2025-06-15T11:45:00Z"
+        },
+        "_:wGB2": {
+          "prov:entity": "ex:quality-report",
+          "prov:activity": "ex:quality-assessment",
+          "prov:time": "2025-06-15T13:00:00Z"
+        }
+      },
+      "wasAssociatedWith": {
+        "_:wAW1": {
+          "prov:activity": "ex:atmospheric-correction",
+          "prov:agent": "ex:sen2cor"
+        },
+        "_ wAW2": {
+          "prov:activity": "ex:quality-assessment",
+          "prov:agent": "ex:validation-team"
+        }
+      }
+    }
+  },
+  "assets": {
+    "visual": {
+      "href": "./data/T10TGK_20250615_B04_B03_B02.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "True color composite (RGB)",
+      "roles": [
+        "visual",
+        "data"
+      ],
+      "eo:bands": [
+        {
+          "name": "B04",
+          "common_name": "red",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.038
+        },
+        {
+          "name": "B03",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.045
+        },
+        {
+          "name": "B02",
+          "common_name": "blue",
+          "center_wavelength": 0.49,
+          "full_width_half_max": 0.098
+        }
+      ],
+      "liability:security_classification": "public"
+    },
+    "B04": {
+      "href": "./data/T10TGK_20250615_B04_10m.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Band 4 - Red",
+      "roles": [
+        "data"
+      ],
+      "eo:bands": [
+        {
+          "name": "B04",
+          "common_name": "red",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.038
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0,
+          "data_type": "uint16",
+          "unit": "reflectance",
+          "scale": 0.0001,
+          "offset": 0
+        }
+      ]
+    },
+    "cloud": {
+      "href": "./data/T10TGK_20250615_cloud_mask.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Cloud mask (CEOS-ARD Req 2.5)",
+      "roles": [
+        "cloud",
+        "metadata"
+      ],
+      "liability:security_classification": "public",
+      "classification:classes": [
+        {
+          "value": 0,
+          "name": "clear",
+          "description": "No cloud detected"
+        },
+        {
+          "value": 1,
+          "name": "cloud",
+          "description": "Cloud detected"
+        }
+      ]
+    },
+    "cloud-shadow": {
+      "href": "./data/T10TGK_20250615_cloud_shadow.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Cloud shadow mask (CEOS-ARD Req 2.6)",
+      "roles": [
+        "cloud-shadow",
+        "metadata"
+      ],
+      "classification:classes": [
+        {
+          "value": 0,
+          "name": "no-shadow",
+          "description": "No cloud shadow"
+        },
+        {
+          "value": 1,
+          "name": "shadow",
+          "description": "Cloud shadow detected"
+        }
+      ]
+    },
+    "saturation": {
+      "href": "./data/T10TGK_20250615_saturation.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Saturation mask (CEOS-ARD Req 2.4)",
+      "roles": [
+        "saturation",
+        "metadata"
+      ],
+      "classification:classes": [
+        {
+          "value": 0,
+          "name": "not-saturated",
+          "description": "No saturation"
+        },
+        {
+          "value": 1,
+          "name": "saturated",
+          "description": "At least one band saturated"
+        }
+      ]
+    },
+    "metadata": {
+      "href": "./data/T10TGK_20250615_MTD.xml",
+      "type": "application/xml",
+      "title": "Sentinel-2 L2A Metadata",
+      "roles": [
+        "metadata"
+      ]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-ceos-ard-optical.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "ceos-ard-specification",
+      "href": "https://ceos.org/ard/files/PFS/SR/v5.0.1/CARD4L-PFS_Surface_Reflectance-v5.0.1.pdf",
+      "type": "application/pdf",
+      "title": "CEOS Analysis Ready Data - Surface Reflectance Product Family Specification v5.0.1"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://sentinel.esa.int/documents/247904/685211/Sentinel-2-Data-Quality-Report",
+      "type": "application/pdf",
+      "title": "Sentinel-2 Data Quality Report"
+    },
+    {
+      "rel": "license",
+      "href": "https://scihub.copernicus.eu/twiki/pub/SciHubWebPortal/TermsConditions/TC_Sentinel_Data_31072014.pdf",
+      "type": "application/pdf",
+      "title": "Copernicus Sentinel Data Terms and Conditions"
+    }
+  ]
+}

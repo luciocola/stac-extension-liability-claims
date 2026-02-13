@@ -1,0 +1,1132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json#",
+  "title": "Liability and Claims Extension",
+  "description": "STAC Liability and Claims Extension for Items and Collections. v1.4.0 aligns with EOVOC v0.0.2 ISO schemas, fixing stepDateTime as CI_Date object per ISO 19115-2:2019 standard.",
+  "stac_version": "1.0.0",
+  "version": "1.4.0",
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
+          "properties": {
+            "type": {
+              "const": "Feature"
+            },
+            "properties": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/require_any_field"
+                },
+                {
+                  "$ref": "#/definitions/fields"
+                }
+              ]
+            },
+            "assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/asset_all_fields"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "Collection"
+            },
+            "summaries": {
+              "$ref": "#/definitions/summaries"
+            },
+            "item_assets": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/asset_all_fields"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/stac_extensions"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "stac_extensions": {
+      "type": "object",
+      "required": [
+        "stac_extensions"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "contains": {
+            "const": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
+          }
+        }
+      }
+    },
+    "require_any_field": {
+      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
+      "anyOf": [
+        {"required": ["liability:responsible_party"]},
+        {"required": ["liability:claim_status"]},
+        {"required": ["liability:claim_id"]},
+        {"required": ["liability:claim_date"]},
+        {"required": ["liability:claim_type"]},
+        {"required": ["liability:coverage_area"]},
+        {"required": ["liability:affected_parties"]},
+        {"required": ["liability:damages_estimated"]},
+        {"required": ["liability:damages_currency"]},
+        {"required": ["liability:legal_jurisdiction"]},
+        {"required": ["liability:incident_date"]},
+        {"required": ["liability:resolution_date"]},
+        {"required": ["liability:resolution_status"]},
+        {"required": ["liability:insurance_provider"]},
+        {"required": ["liability:policy_number"]},
+        {"required": ["liability:evidence_refs"]},
+        {"required": ["liability:notes"]},
+        {"required": ["liability:origin"]},
+        {"required": ["liability:quality"]},
+        {"required": ["liability:prov"]},
+        {"required": ["dq:quality"]},
+        {"required": ["dq:lineage"]}
+      ]
+    },
+    "fields": {
+      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
+      "type": "object",
+      "properties": {
+        "liability:responsible_party": {
+          "type": "string",
+          "description": "Name or identifier of the party responsible for the liability or claim"
+        },
+        "liability:claim_status": {
+          "type": "string",
+          "enum": ["pending", "under_investigation", "accepted", "rejected", "settled", "closed"],
+          "description": "Current status of the liability claim"
+        },
+        "liability:claim_id": {
+          "type": "string",
+          "description": "Unique identifier for the liability claim"
+        },
+        "liability:claim_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the claim was filed (RFC 3339 format)"
+        },
+        "liability:claim_type": {
+          "type": "string",
+          "enum": ["environmental", "property_damage", "personal_injury", "financial", "operational", "other"],
+          "description": "Type or category of the liability claim"
+        },
+        "liability:coverage_area": {
+          "type": "object",
+          "description": "GeoJSON geometry representing the geographic area affected by the claim",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["Point", "LineString", "Polygon", "MultiPoint", "MultiLineString", "MultiPolygon"]
+            },
+            "coordinates": {
+              "type": "array"
+            }
+          }
+        },
+        "liability:affected_parties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the affected party"
+              },
+              "role": {
+                "type": "string",
+                "description": "Role or relationship to the claim (e.g., claimant, witness, third_party)"
+              },
+              "contact": {
+                "type": "string",
+                "description": "Contact information for the affected party"
+              }
+            }
+          },
+          "description": "List of parties affected by or involved in the claim"
+        },
+        "liability:damages_estimated": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Estimated monetary value of damages"
+        },
+        "liability:damages_currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "Currency code for damages (ISO 4217, e.g., USD, EUR, GBP)"
+        },
+        "liability:legal_jurisdiction": {
+          "type": "string",
+          "description": "Legal jurisdiction under which the claim falls"
+        },
+        "liability:incident_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the incident occurred that led to the claim (RFC 3339 format)"
+        },
+        "liability:resolution_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date when the claim was resolved (RFC 3339 format)"
+        },
+        "liability:resolution_status": {
+          "type": "string",
+          "enum": ["in_favor", "against", "partial_settlement", "dismissed", "withdrawn"],
+          "description": "Final resolution outcome of the claim"
+        },
+        "liability:insurance_provider": {
+          "type": "string",
+          "description": "Name of the insurance provider covering the claim"
+        },
+        "liability:policy_number": {
+          "type": "string",
+          "description": "Insurance policy number associated with the claim"
+        },
+        "liability:evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": "References to evidence documents, images, or other supporting materials (URIs or STAC Asset keys)"
+        },
+        "liability:notes": {
+          "type": "string",
+          "description": "Additional notes or comments about the claim"
+        },
+        "liability:origin": {
+          "type": "string",
+          "description": "Origin or source organization of the claim data"
+        }
+        ,
+        "liability:quality": {
+          "oneOf": [
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/dqc.json#/definitions/DataQuality"},
+            {"$ref": "#/definitions/iso19115_quality_report"}
+          ],
+          "description": "Data quality report using ISO 19157-1:2023 from canonical eovoc schema (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility). ISO 19157 provides comprehensive quality framework with metaquality, usability, and standardized evaluation methods."
+        },
+        "liability:prov": {
+          "$ref": "#/definitions/prov_document",
+          "description": "W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. For OGC Building Blocks compatibility, prefer referencing ogc.ogc-utils.prov. Maintains identity and provenance compatibility across all quality frameworks."
+        },
+        "ard:geometric_accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Flattened geometric accuracy metric from ISO 19157 DQ_AbsoluteExternalPositionalAccuracy, enabling simple API queries. Value is mirrored from liability:quality.report[] for queryability. Unit specified in ard:geometric_accuracy_unit."
+        },
+        "ard:geometric_accuracy_unit": {
+          "type": "string",
+          "description": "Unit of measurement for geometric accuracy (e.g., 'meter', 'degree'). Corresponds to ISO 19157 valueUnit."
+        },
+        "ard:geometric_accuracy_type": {
+          "type": "string",
+          "description": "Error statistic type for geometric accuracy (e.g., 'rRMSE', 'CE90', 'LE90'). Corresponds to ISO 19157 measureDescription."
+        },
+        "ard:radiometric_accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Flattened radiometric accuracy metric from ISO 19157 DQ_ThematicClassificationCorrectness, enabling simple API queries. Value is mirrored from liability:quality.report[] for queryability. Unit specified in ard:radiometric_accuracy_unit."
+        },
+        "ard:radiometric_accuracy_unit": {
+          "type": "string",
+          "description": "Unit of measurement for radiometric accuracy (e.g., 'percentage', 'dB', 'W/m²/sr/μm'). Corresponds to ISO 19157 valueUnit."
+        },
+        "ard:cloud_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Cloud coverage percentage for optical sensor products (0-100). Enables simple API filtering for cloud-free imagery."
+        },
+        "ard:data_mask_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Data mask coverage percentage for radar sensor products (0-100). Indicates invalid/masked pixels due to radar shadowing, layover, or other artifacts."
+        },
+        "ard:specification_compliance": {
+          "type": "boolean",
+          "description": "Boolean indicating overall compliance with CEOS-ARD Product Family Specification (PFS). True if all Threshold requirements met."
+        },
+        "ard:pfs_threshold_compliance": {
+          "type": "string",
+          "enum": ["all", "partial", "none"],
+          "description": "Categorical status of CEOS-ARD PFS Threshold requirements compliance. 'all' = all requirements met, 'partial' = some requirements met, 'none' = no compliance."
+        },
+        "ard:pfs_target_compliance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage (0-100) of CEOS-ARD PFS Target requirements achieved. Target requirements represent aspirational quality goals beyond mandatory Threshold requirements."
+        },
+        "dq:quality": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iso19115_quality_report"
+          },
+          "uniqueItems": true,
+          "description": "EOVOC-compatible alias for data quality reporting. Array of ISO 19157-1:2023 DataQuality or ISO 19115 quality reports. Use this field for interoperability with eovoc eof-eos-stac-extension and other dq:* consumers. Equivalent to liability:quality but array-based per eovoc convention."
+        },
+        "dq:lineage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/iso19115_lineage"
+          },
+          "uniqueItems": true,
+          "description": "EOVOC-compatible alias for lineage information. Array of ISO 19115 LI_Lineage objects describing data provenance, processing history, and sources. Use this field for interoperability with eovoc eof-eos-stac-extension and OGC metadata standards. Equivalent to liability:quality lineage elements but as separate top-level field per eovoc convention."
+        }
+      }
+    },
+    "asset_fields": {
+      "$comment": "Asset-level fields for security classification and access restrictions",
+      "type": "object",
+      "properties": {
+        "liability:security_classification": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted", "classified"],
+          "description": "Security classification level of the asset"
+        },
+        "liability:access_restrictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
+        },
+        "liability:required_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "asset_all_fields": {
+      "$comment": "Combined fields for asset objects - includes both item-level and asset-specific fields",
+      "type": "object",
+      "properties": {
+        "liability:origin": {
+          "type": "string",
+          "description": "Origin or source organization of the claim data"
+        },
+        "liability:quality": {
+          "oneOf": [
+            {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/dqc.json#/definitions/DataQuality"},
+            {"$ref": "#/definitions/iso19115_quality_report"}
+          ],
+          "description": "Data quality report using ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4 (backward compatibility)"
+        },
+        "liability:access_control": {
+          "type": "object",
+          "description": "DEPRECATED in v1.1.0: Use API-level security schemes (OpenAPI securitySchemes) instead. This field will be removed in v2.0.0.",
+          "deprecated": true
+        },
+        "liability:alternate": {
+          "type": "object",
+          "description": "DEPRECATED in v1.1.0: Use standard STAC assets with different hrefs or links with rel='alternate' instead. This field will be removed in v2.0.0.",
+          "deprecated": true
+        },
+        "liability:security_classification": {
+          "type": "string",
+          "enum": ["public", "internal", "confidential", "restricted", "classified"],
+          "description": "Security classification level of the asset"
+        },
+        "liability:access_restrictions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of access restrictions or requirements (e.g., legal hold, court order, privacy constraints)"
+        },
+        "liability:required_roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
+        }
+      }
+    },
+    "iso19115_conformance_result": {
+      "$comment": "Conformance result for ISO 19115 DQ assessments",
+      "type": "object",
+      "properties": {
+        "specification": {
+          "type": "string",
+          "description": "Referenced specification or standard (e.g., ISO/TS 19115)"
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Explanation of conformance result"
+        },
+        "pass": {
+          "type": "boolean",
+          "description": "Whether the data conforms to the referenced specification"
+        }
+      },
+      "required": ["specification", "pass"],
+      "additionalProperties": true
+    },
+    "iso19115_measure": {
+      "type": "object",
+      "not": {
+        "required": ["type"]
+      },
+      "properties": {
+        "description": { "type": "string" },
+        "value": { "type": ["number", "string", "boolean", "object", "null"] },
+        "valueType": { "type": "string", "description": "Type of value (e.g., percentage, absolute, count)" },
+        "units": { "type": "string", "description": "Units for numeric values, if applicable" },
+        "method": { "type": "string", "description": "Method used to compute the measure" },
+        "reference": { "type": "string", "format": "uri", "description": "Reference to dataset, standard or procedure used" }
+      },
+      "additionalProperties": true
+    },
+    "iso19115_completeness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "completeness" },
+        "scope": { "type": "string", "description": "Scope of completeness (dataset, feature, attribute)" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" },
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_logical_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "logicalConsistency" },
+        "description": { "type": "string" },
+        "testsPerformed": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Descriptions of checks or tests performed"
+        },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "positionalAccuracy" },
+        "accuracyValue": { "type": "number", "description": "Numeric accuracy value (e.g., metres)" },
+        "units": { "type": "string" },
+        "method": { "type": "string", "description": "Method used to estimate accuracy" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_thematic_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "thematicAccuracy" },
+        "description": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_temporal_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalAccuracy" },
+        "description": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "attributeAccuracy" },
+        "attribute": { "type": "string", "description": "Name of the attribute evaluated" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "attribute", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_topological_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "topologicalConsistency" },
+        "description": { "type": "string" },
+        "tests": { "type": "array", "items": { "type": "string" } },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_lineage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "lineage" },
+        "statement": { "type": "string", "description": "General explanation of the data producer's knowledge about the lineage of a dataset" },
+        "scope": { 
+          "type": "object",
+          "description": "Type of resource and/or extent to which the lineage information applies",
+          "properties": {
+            "level": { "type": "string", "enum": ["dataset", "series", "feature", "attribute", "featureType", "propertyType", "fieldSession", "software", "service", "model", "tile", "metadata", "initiative", "sample", "document", "repository", "aggregate", "product", "collection", "coverage", "application"] },
+            "extent": { "type": "object", "description": "GeoJSON geometry defining the extent" },
+            "levelDescription": { "type": "string" }
+          }
+        },
+        "processStep": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Information about an event or transformation in the life of the dataset",
+            "properties": {
+              "description": { "type": "string", "description": "Description of the event, including related parameters or tolerances" },
+              "rationale": { "type": "string", "description": "Requirement or purpose for the process step" },
+              "stepDateTime": { "type": "string", "format": "date-time", "description": "Date, time, and/or range of the process step" },
+              "processor": {
+                "type": "array",
+                "description": "Identification of, and means of communication with, person(s) and organization(s) associated with the process step",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "organizationName": { "type": "string" },
+                    "role": { "type": "string" },
+                    "contactInfo": {
+                      "type": "object",
+                      "properties": {
+                        "email": { "type": "string", "format": "email" },
+                        "phone": { "type": "string" },
+                        "address": { "type": "string" },
+                        "onlineResource": { "type": "string", "format": "uri" }
+                      }
+                    }
+                  }
+                }
+              },
+              "reference": {
+                "type": "array",
+                "description": "Process step documentation",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "date": { "type": "string", "format": "date-time" },
+                    "identifier": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" }
+                  },
+                  "required": ["title"]
+                }
+              },
+              "scope": {
+                "type": "object",
+                "description": "Type of resource and/or extent to which the process step applies",
+                "properties": {
+                  "level": { "type": "string" },
+                  "extent": { "type": "object" }
+                }
+              },
+              "processingInformation": {
+                "type": "object",
+                "description": "Additional details about the process step (ISO 19115-4 extension)",
+                "properties": {
+                  "identifier": { "type": "string" },
+                  "softwareReference": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "version": { "type": "string" },
+                        "identifier": { "type": "string" }
+                      }
+                    }
+                  },
+                  "procedureDescription": { "type": "string" },
+                  "documentation": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "url": { "type": "string", "format": "uri" }
+                      }
+                    }
+                  },
+                  "runTimeParameters": { "type": "string" },
+                  "algorithm": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "citation": { "type": "object" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": ["description"]
+          }
+        },
+        "source": {
+          "type": "array",
+          "description": "Information about the source data used in creating the data specified by the scope",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": { "type": "string", "description": "Detailed description of the level of the source data" },
+              "sourceCitation": {
+                "type": "object",
+                "description": "Recommended reference to be used for the source data",
+                "properties": {
+                  "title": { "type": "string" },
+                  "date": { "type": "string", "format": "date-time" },
+                  "identifier": { "type": "string" },
+                  "url": { "type": "string", "format": "uri" }
+                },
+                "required": ["title"]
+              },
+              "sourceReferenceSystem": {
+                "type": "object",
+                "description": "Spatial reference system used by the source data",
+                "properties": {
+                  "code": { "type": "string", "description": "EPSG or other CRS code" },
+                  "codeSpace": { "type": "string", "default": "EPSG" },
+                  "version": { "type": "string" }
+                }
+              },
+              "sourceMetadata": {
+                "type": "array",
+                "description": "References to metadata for the source",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" }
+                  }
+                }
+              },
+              "scope": {
+                "type": "object",
+                "description": "Type of resource and/or extent of the source",
+                "properties": {
+                  "level": { "type": "string" },
+                  "extent": { "type": "object" }
+                }
+              },
+              "sourceExtent": {
+                "type": "object",
+                "description": "Spatial and temporal extent of the source data",
+                "properties": {
+                  "geographicElement": { "type": "object", "description": "GeoJSON geometry" },
+                  "temporalElement": {
+                    "type": "object",
+                    "properties": {
+                      "extent": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "items": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additionalDocumentation": {
+          "type": "array",
+          "description": "Additional documentation (ISO 19115-1:2014)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "date": { "type": "string", "format": "date-time" },
+              "url": { "type": "string", "format": "uri" },
+              "description": { "type": "string" }
+            },
+            "required": ["title"]
+          }
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_radiometric_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "radiometricAccuracy" },
+        "description": { "type": "string" },
+        "calibrationAccuracy": { "type": "number", "description": "Radiometric calibration accuracy" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_sensor_quality": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "sensorQuality" },
+        "sensorType": { "type": "string" },
+        "calibrationStatus": { "type": "string", "enum": ["calibrated", "uncalibrated", "partial", "unknown"] },
+        "calibrationDate": { "type": "string", "format": "date-time" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_cloud_coverage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "cloudCoverage" },
+        "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "assessmentMethod": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_processing_level": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "processingLevel" },
+        "level": { "type": "string", "description": "Processing level code (e.g., L1A, L1B, L2A)" },
+        "description": { "type": "string" },
+        "processingDate": { "type": "string", "format": "date-time" },
+        "processor": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "level"],
+      "additionalProperties": true
+    },
+    "iso19115_4_usability_assessment": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "usabilityAssessment" },
+        "usabilityScore": { "type": "number", "minimum": 0, "maximum": 1 },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "intendedUse": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_absolute_external_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "absoluteExternalPositionalAccuracy" },
+        "horizontalAccuracy": { "type": "number", "description": "Horizontal absolute accuracy value" },
+        "verticalAccuracy": { "type": "number", "description": "Vertical absolute accuracy value" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_relative_internal_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "relativeInternalPositionalAccuracy" },
+        "accuracyValue": { "type": "number", "description": "Relative positional accuracy between features" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_gridded_data_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "griddedDataPositionalAccuracy" },
+        "accuracyValue": { "type": "number", "description": "Positional accuracy for gridded/raster data" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_non_quantitative_attribute_correctness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "nonQuantitativeAttributeCorrectness" },
+        "attribute": { "type": "string", "description": "Name of the non-quantitative attribute" },
+        "correctnessRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of correct attribute values" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_quantitative_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "quantitativeAttributeAccuracy" },
+        "attribute": { "type": "string", "description": "Name of the quantitative attribute" },
+        "accuracyValue": { "type": "number", "description": "Accuracy of quantitative attribute values" },
+        "units": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_format_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "formatConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of format conformance" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_domain_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "domainConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Rate of domain value conformance" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_temporal_validity": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalValidity" },
+        "validFrom": { "type": "string", "format": "date-time", "description": "Start of temporal validity period" },
+        "validTo": { "type": "string", "format": "date-time", "description": "End of temporal validity period" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_element": {
+      "type": "object",
+      "properties": {
+        "elementType": {
+          "type": "string",
+          "description": "ISO 19115/19115-4/DGIWG data quality class",
+          "enum": [
+            "completeness",
+            "logicalConsistency",
+            "positionalAccuracy",
+            "thematicAccuracy",
+            "temporalAccuracy",
+            "attributeAccuracy",
+            "topologicalConsistency",
+            "lineage",
+            "radiometricAccuracy",
+            "sensorQuality",
+            "cloudCoverage",
+            "processingLevel",
+            "usabilityAssessment",
+            "absoluteExternalPositionalAccuracy",
+            "relativeInternalPositionalAccuracy",
+            "griddedDataPositionalAccuracy",
+            "nonQuantitativeAttributeCorrectness",
+            "quantitativeAttributeAccuracy",
+            "formatConsistency",
+            "domainConsistency",
+            "temporalValidity",
+            "other"
+          ]
+        },
+        "summary": { "type": "string", "description": "Human-readable summary of the element" },
+        "detail": {
+          "oneOf": [
+            { "$ref": "#/definitions/iso19115_completeness" },
+            { "$ref": "#/definitions/iso19115_logical_consistency" },
+            { "$ref": "#/definitions/iso19115_positional_accuracy" },
+            { "$ref": "#/definitions/iso19115_thematic_accuracy" },
+            { "$ref": "#/definitions/iso19115_temporal_accuracy" },
+            { "$ref": "#/definitions/iso19115_attribute_accuracy" },
+            { "$ref": "#/definitions/iso19115_topological_consistency" },
+            { "$ref": "#/definitions/iso19115_lineage" },
+            { "$ref": "#/definitions/iso19115_4_radiometric_accuracy" },
+            { "$ref": "#/definitions/iso19115_4_sensor_quality" },
+            { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
+            { "$ref": "#/definitions/iso19115_4_processing_level" },
+            { "$ref": "#/definitions/iso19115_4_usability_assessment" },
+            { "$ref": "#/definitions/dgiwg_absolute_external_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_relative_internal_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_gridded_data_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_non_quantitative_attribute_correctness" },
+            { "$ref": "#/definitions/dgiwg_quantitative_attribute_accuracy" },
+            { "$ref": "#/definitions/dgiwg_format_consistency" },
+            { "$ref": "#/definitions/dgiwg_domain_consistency" },
+            { "$ref": "#/definitions/dgiwg_temporal_validity" },
+            { "$ref": "#/definitions/iso19115_measure" }
+          ]
+        },
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
+      },
+      "required": ["elementType"],
+      "additionalProperties": true
+    },
+    "iso19115_quality_report": {
+      "$comment": "Top-level ISO 19115-like quality report structure (expanded)",
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string", "description": "Identifier for the quality report" },
+        "scope": { "type": "string", "description": "Scope of the report (e.g., dataset, series, feature)" },
+        "date": { "type": "string", "format": "date-time", "description": "Date when the quality report was generated" },
+        "version": { "type": "string", "description": "Version of the quality report" },
+        "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_element" }, "description": "List of data quality elements and their measures" },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "prov_entity": {
+      "$comment": "W3C PROV Entity - A physical, digital, conceptual, or other kind of thing with some fixed aspects",
+      "type": "object",
+      "properties": {
+        "prov:type": { "type": "string", "description": "Type of the entity" },
+        "prov:label": { "type": "string", "description": "Human-readable label" },
+        "prov:location": { "type": "string", "description": "Location of the entity" },
+        "prov:value": { "description": "Value of the entity" }
+      },
+      "additionalProperties": true
+    },
+    "prov_activity": {
+      "$comment": "W3C PROV Activity - Something that occurs over a period of time and acts upon or with entities",
+      "type": "object",
+      "properties": {
+        "prov:startTime": { "type": "string", "format": "date-time", "description": "Start time of the activity" },
+        "prov:endTime": { "type": "string", "format": "date-time", "description": "End time of the activity" },
+        "prov:type": { "type": "string", "description": "Type of the activity" },
+        "prov:label": { "type": "string", "description": "Human-readable label" },
+        "prov:location": { "type": "string", "description": "Location where the activity occurred" }
+      },
+      "additionalProperties": true
+    },
+    "prov_agent": {
+      "$comment": "W3C PROV Agent - Something that bears some form of responsibility for an activity",
+      "type": "object",
+      "properties": {
+        "prov:type": { "type": "string", "description": "Type of the agent (Person, Organization, SoftwareAgent)" },
+        "prov:label": { "type": "string", "description": "Human-readable label" },
+        "prov:location": { "type": "string", "description": "Location of the agent" }
+      },
+      "additionalProperties": true
+    },
+    "prov_relation": {
+      "$comment": "W3C PROV Relation - Generic relation structure",
+      "type": "object",
+      "properties": {
+        "prov:entity": { "type": "string", "description": "Reference to an entity ID" },
+        "prov:activity": { "type": "string", "description": "Reference to an activity ID" },
+        "prov:agent": { "type": "string", "description": "Reference to an agent ID" },
+        "prov:time": { "type": "string", "format": "date-time", "description": "Time of the relation" },
+        "prov:type": { "type": "string", "description": "Type of the relation" }
+      },
+      "additionalProperties": true
+    },
+    "prov_document": {
+      "$comment": "W3C PROV-JSON Document - Complete provenance document following PROV-JSON serialization",
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "object",
+          "description": "Namespace prefixes for qualified names",
+          "additionalProperties": { "type": "string" }
+        },
+        "entity": {
+          "type": "object",
+          "description": "Map of entity identifiers to entity objects",
+          "additionalProperties": { "$ref": "#/definitions/prov_entity" }
+        },
+        "activity": {
+          "type": "object",
+          "description": "Map of activity identifiers to activity objects",
+          "additionalProperties": { "$ref": "#/definitions/prov_activity" }
+        },
+        "agent": {
+          "type": "object",
+          "description": "Map of agent identifiers to agent objects",
+          "additionalProperties": { "$ref": "#/definitions/prov_agent" }
+        },
+        "wasGeneratedBy": {
+          "type": "object",
+          "description": "Entity was generated by Activity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "used": {
+          "type": "object",
+          "description": "Activity used Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasInformedBy": {
+          "type": "object",
+          "description": "Activity was informed by another Activity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasStartedBy": {
+          "type": "object",
+          "description": "Activity was started by Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasEndedBy": {
+          "type": "object",
+          "description": "Activity was ended by Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasInvalidatedBy": {
+          "type": "object",
+          "description": "Entity was invalidated by Activity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasDerivedFrom": {
+          "type": "object",
+          "description": "Entity was derived from another Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasAttributedTo": {
+          "type": "object",
+          "description": "Entity was attributed to Agent",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasAssociatedWith": {
+          "type": "object",
+          "description": "Activity was associated with Agent",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "actedOnBehalfOf": {
+          "type": "object",
+          "description": "Agent acted on behalf of another Agent",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "wasInfluencedBy": {
+          "type": "object",
+          "description": "Generic influence relation",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "specializationOf": {
+          "type": "object",
+          "description": "Entity is a specialization of another Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "alternateOf": {
+          "type": "object",
+          "description": "Entity is an alternate of another Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        },
+        "hadMember": {
+          "type": "object",
+          "description": "Collection had member Entity",
+          "additionalProperties": { "$ref": "#/definitions/prov_relation" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "summaries": {
+      "$comment": "Collection-level summaries of liability-claims fields (aligned with T21-DQ4IPT pattern)",
+      "type": "object",
+      "description": "Summarized information about the range of values in the Collection for liability-claims fields",
+      "properties": {
+        "liability:claim_status": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["pending", "under_investigation", "accepted", "rejected", "settled", "closed"]
+          },
+          "description": "Array of unique claim status values in the collection"
+        },
+        "liability:claim_type": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["environmental", "property_damage", "personal_injury", "financial", "operational", "other"]
+          },
+          "description": "Array of unique claim type values in the collection"
+        },
+        "liability:security_classification": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["public", "internal", "confidential", "restricted", "classified"]
+          },
+          "description": "Array of unique security classification levels in the collection"
+        },
+        "liability:responsible_party": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique responsible parties in the collection"
+        },
+        "liability:damages_estimated": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "minimum": {"type": "number", "description": "Minimum estimated damages"},
+                "maximum": {"type": "number", "description": "Maximum estimated damages"}
+              },
+              "required": ["minimum", "maximum"]
+            },
+            {
+              "type": "array",
+              "items": {"type": "number"},
+              "description": "Array of unique damage estimate values"
+            }
+          ],
+          "description": "Range or array of damage estimates in the collection"
+        },
+        "liability:legal_jurisdiction": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique legal jurisdictions in the collection"
+        },
+        "liability:origin": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Array of unique data origins in the collection"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
+

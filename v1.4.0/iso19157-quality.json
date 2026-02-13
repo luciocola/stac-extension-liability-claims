@@ -1,0 +1,537 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/iso19157-quality.json#",
+  "title": "ISO 19157-1:2023 Data Quality",
+  "description": "JSON Schema for ISO 19157-1:2023 Geographic information - Data quality reports (aligned with 2023 revision)",
+  "oneOf": [
+    {"$ref": "#/definitions/iso19157_data_quality"},
+    {
+      "type": "array",
+      "items": {"$ref": "#/definitions/iso19157_data_quality"}
+    }
+  ],
+  "definitions": {
+    "scope": {
+      "type": "object",
+      "description": "ISO 19157 DQ_Scope - Extent or characteristics of the data specified by the scope",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "dataset",
+            "series",
+            "feature",
+            "featureType",
+            "attribute",
+            "attributeType",
+            "tile",
+            "model",
+            "collection",
+            "coverage",
+            "nonGeographicDataset"
+          ],
+          "description": "Hierarchical level of the data specified by the scope"
+        },
+        "extent": {
+          "type": "object",
+          "description": "Geographic, vertical, and temporal extent for the data",
+          "properties": {
+            "description": {"type": "string"},
+            "geographicExtent": {"type": "object"},
+            "temporalExtent": {"type": "object"},
+            "verticalExtent": {"type": "object"}
+          }
+        },
+        "levelDescription": {
+          "type": "string",
+          "description": "Detailed description about the level of the data"
+        }
+      },
+      "required": ["level"]
+    },
+    "result": {
+      "type": "object",
+      "description": "ISO 19157 DQ_Result - Generalization of more specific result classes",
+      "oneOf": [
+        {"$ref": "#/definitions/quantitative_result"},
+        {"$ref": "#/definitions/conformance_result"},
+        {"$ref": "#/definitions/descriptive_result"},
+        {"$ref": "#/definitions/coverage_result"}
+      ]
+    },
+    "quantitative_result": {
+      "type": "object",
+      "description": "ISO 19157 DQ_QuantitativeResult - Numerical result from applying a data quality measure",
+      "properties": {
+        "resultType": {"const": "quantitative"},
+        "value": {
+          "type": "array",
+          "items": {"type": ["number", "string"]},
+          "description": "Quantitative value(s) determined by applying a data quality measure"
+        },
+        "valueUnit": {
+          "type": "string",
+          "description": "Unit of measurement for the value(s)"
+        },
+        "valueRecordType": {
+          "type": "string",
+          "description": "Value type for reporting a data quality result (from ISO/TS 19103)"
+        },
+        "errorStatistic": {
+          "type": "string",
+          "description": "Statistical method used to determine the value(s)"
+        }
+      },
+      "required": ["resultType", "value"]
+    },
+    "conformance_result": {
+      "type": "object",
+      "description": "ISO 19157 DQ_ConformanceResult - Result of a conformance test",
+      "properties": {
+        "resultType": {"const": "conformance"},
+        "specification": {
+          "type": "object",
+          "description": "Citation of product specification or user requirement against which data is evaluated",
+          "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string", "format": "date-time"},
+            "dateType": {"type": "string", "enum": ["creation", "publication", "revision"]},
+            "edition": {"type": "string"},
+            "identifier": {"type": "string"}
+          },
+          "required": ["title"]
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Explanation of the meaning of conformance for this result"
+        },
+        "pass": {
+          "type": "boolean",
+          "description": "Indication of the conformance result"
+        }
+      },
+      "required": ["resultType", "specification", "pass"]
+    },
+    "descriptive_result": {
+      "type": "object",
+      "description": "ISO 19157 DQ_DescriptiveResult - Textual expression of a data quality result",
+      "properties": {
+        "resultType": {"const": "descriptive"},
+        "statement": {
+          "type": "string",
+          "description": "Textual expression of the descriptive result"
+        }
+      },
+      "required": ["resultType", "statement"]
+    },
+    "coverage_result": {
+      "type": "object",
+      "description": "ISO 19157 DQ_CoverageResult - Result of a data quality measure in the form of coverage",
+      "properties": {
+        "resultType": {"const": "coverage"},
+        "spatialRepresentationType": {
+          "type": "string",
+          "enum": ["vector", "grid", "tin", "stereoModel", "video"],
+          "description": "Method used to spatially represent the coverage result"
+        },
+        "resultFile": {
+          "type": "string",
+          "format": "uri",
+          "description": "Reference to the coverage result file"
+        },
+        "resultFormat": {
+          "type": "string",
+          "description": "Format of the coverage result"
+        }
+      },
+      "required": ["resultType", "spatialRepresentationType"]
+    },
+    "measure_reference": {
+      "type": "object",
+      "description": "ISO 19157 DQ_MeasureReference - Reference to a data quality measure",
+      "properties": {
+        "measureIdentification": {
+          "type": "object",
+          "description": "Identifier of the measure, often from a standard like ISO 19157",
+          "properties": {
+            "code": {"type": "string"},
+            "codeSpace": {"type": "string", "description": "e.g., ISO 19157"},
+            "version": {"type": "string"}
+          },
+          "required": ["code"]
+        },
+        "nameOfMeasure": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Name(s) of the data quality measure applied"
+        },
+        "measureDescription": {
+          "type": "string",
+          "description": "Description of the data quality measure"
+        }
+      }
+    },
+    "evaluation_method": {
+      "type": "object",
+      "description": "ISO 19157 DQ_EvaluationMethod - Description of the evaluation method and procedure",
+      "properties": {
+        "evaluationMethodType": {
+          "type": "string",
+          "enum": ["directInternal", "directExternal", "indirect"],
+          "description": "Type of method used to evaluate quality of the data"
+        },
+        "evaluationMethodDescription": {
+          "type": "string",
+          "description": "Description of the evaluation method"
+        },
+        "evaluationProcedure": {
+          "type": "object",
+          "description": "Reference to the procedure information",
+          "properties": {
+            "title": {"type": "string"},
+            "date": {"type": "string", "format": "date-time"},
+            "identifier": {"type": "string"}
+          }
+        },
+        "referenceDoc": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "date": {"type": "string", "format": "date-time"},
+              "identifier": {"type": "string"},
+              "uri": {"type": "string", "format": "uri"}
+            }
+          },
+          "description": "Reference to documents related to the evaluation method"
+        },
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time when the evaluation was performed"
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "description": "ISO 19157 DQ_Element - Abstract superclass for data quality elements",
+      "properties": {
+        "standaloneQualityReportDetails": {
+          "type": "string",
+          "description": "Clause in the standalone quality report where this data quality element is described"
+        },
+        "measure": {
+          "$ref": "#/definitions/measure_reference",
+          "description": "Reference to the measure used"
+        },
+        "evaluationMethod": {
+          "$ref": "#/definitions/evaluation_method",
+          "description": "Evaluation information"
+        },
+        "result": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/result"},
+          "minItems": 1,
+          "description": "Result(s) of applying the data quality measure"
+        },
+        "derivedElement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Reference to derived data quality element(s)"
+          },
+          "description": "Data quality element(s) derived from this element"
+        }
+      },
+      "required": ["result"]
+    },
+    "completeness": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "completeness"},
+            "subcategory": {
+              "type": "string",
+              "enum": ["commission", "omission"],
+              "description": "Commission (excess data) or Omission (absent data)"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_Completeness - Presence and absence of features, their attributes and relationships"
+    },
+    "logical_consistency": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "logicalConsistency"},
+            "subcategory": {
+              "type": "string",
+              "enum": [
+                "conceptualConsistency",
+                "domainConsistency",
+                "formatConsistency",
+                "topologicalConsistency"
+              ],
+              "description": "Type of logical consistency"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_LogicalConsistency - Degree of adherence to logical rules of data structure, attribution and relationships"
+    },
+    "positional_accuracy": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "positionalAccuracy"},
+            "subcategory": {
+              "type": "string",
+              "enum": [
+                "absoluteExternalPositionalAccuracy",
+                "relativeInternalPositionalAccuracy",
+                "griddedDataPositionalAccuracy",
+                "gridDataPositionalAccuracy"
+              ],
+              "description": "Type of positional accuracy"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_PositionalAccuracy - Accuracy of position of features"
+    },
+    "temporal_quality": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "temporalQuality"},
+            "subcategory": {
+              "type": "string",
+              "enum": [
+                "accuracyOfTimeMeasurement",
+                "temporalConsistency",
+                "temporalValidity"
+              ],
+              "description": "Type of temporal quality"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_TemporalQuality - Quality of temporal attributes and relationships of features"
+    },
+    "thematic_quality": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "thematicQuality"},
+            "subcategory": {
+              "type": "string",
+              "enum": [
+                "thematicClassificationCorrectness",
+                "nonQuantitativeAttributeCorrectness",
+                "quantitativeAttributeAccuracy"
+              ],
+              "description": "Type of thematic quality"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_ThematicQuality - Accuracy of quantitative attributes and correctness of non-quantitative attributes and classifications"
+    },
+    "metaquality": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "metaquality"},
+            "subcategory": {
+              "type": "string",
+              "enum": [
+                "confidence",
+                "representativity",
+                "homogeneity"
+              ],
+              "description": "Type of metaquality (quality of quality)"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_Metaquality - Quality of quality information (confidence, representativity, homogeneity)"
+    },
+    "usability": {
+      "allOf": [
+        {"$ref": "#/definitions/element"},
+        {
+          "type": "object",
+          "properties": {
+            "category": {"const": "usability"},
+            "usabilityDescription": {
+              "type": "string",
+              "description": "Description of the dataset's fitness for use"
+            }
+          },
+          "required": ["category"]
+        }
+      ],
+      "description": "ISO 19157 DQ_Usability - Degree to which a dataset meets specific requirements (fitness for purpose)"
+    },
+    "li_lineage": {
+      "type": "object",
+      "description": "ISO 19115 LI_Lineage - Information about events or source data used in dataset construction",
+      "properties": {
+        "statement": {
+          "type": "string",
+          "description": "General explanation of data producer's knowledge about the lineage of a dataset"
+        },
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Scope to which the lineage information applies"
+        },
+        "processSteps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {"type": "string", "description": "Description of the event"},
+              "rationale": {"type": "string", "description": "Reason for the process step"},
+              "dateTime": {"type": "string", "format": "date-time", "description": "Date and time when the event occurred"},
+              "processor": {
+                "type": "object",
+                "properties": {
+                  "name": {"type": "string"},
+                  "contactInfo": {"type": "string"}
+                },
+                "description": "Identification of, and means of communication with, person(s) and organization(s) associated with the process step"
+              },
+              "processingInformation": {
+                "type": "object",
+                "properties": {
+                  "software": {"type": "string"},
+                  "algorithm": {"type": "string"},
+                  "runTimeParameters": {"type": "string"},
+                  "documentation": {"type": "array", "items": {"type": "string", "format": "uri"}}
+                },
+                "description": "Information about the processing"
+              },
+              "reference": {
+                "type": "array",
+                "items": {"type": "string", "format": "uri"},
+                "description": "References to documentation or other resources"
+              },
+              "source": {
+                "type": "array",
+                "items": {"type": "object"},
+                "description": "Source data used in the process step"
+              },
+              "output": {
+                "type": "array",
+                "items": {"type": "object"},
+                "description": "Output produced by the process step"
+              }
+            },
+            "required": ["description"]
+          },
+          "description": "Information about an event in the creation process for the data specified by the scope"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {"type": "string"},
+              "sourceCitation": {"type": "string"},
+              "sourceIdentifier": {"type": "string"},
+              "sourceReferenceSystem": {"type": "string", "description": "e.g., EPSG:4326"},
+              "sourceExtent": {
+                "type": "object",
+                "properties": {
+                  "westBoundLongitude": {"type": "number"},
+                  "eastBoundLongitude": {"type": "number"},
+                  "southBoundLatitude": {"type": "number"},
+                  "northBoundLatitude": {"type": "number"},
+                  "startDate": {"type": "string", "format": "date-time"},
+                  "endDate": {"type": "string", "format": "date-time"}
+                }
+              },
+              "sourceMetadata": {"type": "string", "format": "uri"}
+            }
+          },
+          "description": "Information about the source data used in creating the data specified by the scope"
+        },
+        "additionalDocumentation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "date": {"type": "string", "format": "date-time"},
+              "identifier": {"type": "string"},
+              "uri": {"type": "string", "format": "uri"}
+            }
+          },
+          "description": "References to additional documentation about the lineage"
+        }
+      }
+    },
+    "iso19157_data_quality": {
+      "type": "object",
+      "description": "ISO 19157-1:2023 DQ_DataQuality - Quality information for geographic data",
+      "properties": {
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Scope of the quality information"
+        },
+        "report": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"$ref": "#/definitions/completeness"},
+              {"$ref": "#/definitions/logical_consistency"},
+              {"$ref": "#/definitions/positional_accuracy"},
+              {"$ref": "#/definitions/temporal_quality"},
+              {"$ref": "#/definitions/thematic_quality"},
+              {"$ref": "#/definitions/metaquality"},
+              {"$ref": "#/definitions/usability"}
+            ]
+          },
+          "description": "Quantitative quality information for the data"
+        },
+        "lineage": {
+          "$ref": "#/definitions/li_lineage",
+          "description": "Non-quantitative quality information about the lineage of the data"
+        },
+        "standaloneQualityReport": {
+          "type": "object",
+          "properties": {
+            "reportReference": {"type": "string", "format": "uri"},
+            "abstract": {"type": "string"}
+          },
+          "description": "Reference to an external standalone quality report"
+        }
+      },
+      "anyOf": [
+        {"required": ["report"]},
+        {"required": ["lineage"]},
+        {"required": ["standaloneQualityReport"]}
+      ]
+    }
+  }
+}
