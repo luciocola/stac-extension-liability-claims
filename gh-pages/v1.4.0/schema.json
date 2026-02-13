@@ -82,7 +82,7 @@
         "stac_extensions": {
           "type": "array",
           "contains": {
-            "const": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
+            "const": "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
           }
         }
       }
@@ -516,7 +516,7 @@
             "properties": {
               "description": { "type": "string", "description": "Description of the event, including related parameters or tolerances" },
               "rationale": { "type": "string", "description": "Requirement or purpose for the process step" },
-              "stepDateTime": { "type": "string", "format": "date-time", "description": "Date, time, and/or range of the process step" },
+              "stepDateTime": { "$ref": "iso19157-lineage.json#/definitions/ci_date", "description": "Date, time, and/or range of the process step (ISO 19115 CI_Date - supports datetime, date, year-month, or year formats)" },
               "processor": {
                 "type": "array",
                 "description": "Identification of, and means of communication with, person(s) and organization(s) associated with the process step",
