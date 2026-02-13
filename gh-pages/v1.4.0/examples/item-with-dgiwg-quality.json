@@ -1,0 +1,211 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "id": "item-dgiwg-quality-001",
+  "bbox": [
+    10.0,
+    50.0,
+    11.0,
+    51.0
+  ],
+  "properties": {
+    "datetime": "2025-11-27T14:00:00Z",
+    "liability:claim_id": "CLM-DGIWG-0001",
+    "liability:claim_type": "property_damage",
+    "liability:origin": "DefenceGeospatialAgency",
+    "liability:quality": {
+      "reportId": "DGIWG-QR-2025-0001",
+      "scope": "dataset",
+      "date": "2025-11-27T14:00:00Z",
+      "version": "1.0",
+      "summary": "DGIWG-compliant quality assessment for defence geospatial data",
+      "elements": [
+        {
+          "elementType": "absoluteExternalPositionalAccuracy",
+          "summary": "Absolute horizontal and vertical positional accuracy",
+          "detail": {
+            "type": "absoluteExternalPositionalAccuracy",
+            "horizontalAccuracy": 5.0,
+            "verticalAccuracy": 3.0,
+            "units": "m",
+            "method": "Differential GNSS survey with ground control points",
+            "measure": {
+              "description": "Circular error at 90% confidence (CE90)",
+              "value": 5.0,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          },
+          "conformance": {
+            "specification": "DGIWG-500",
+            "pass": true,
+            "explanation": "Meets DGIWG accuracy requirements for topographic data"
+          }
+        },
+        {
+          "elementType": "relativeInternalPositionalAccuracy",
+          "summary": "Relative positional accuracy between features",
+          "detail": {
+            "type": "relativeInternalPositionalAccuracy",
+            "accuracyValue": 1.5,
+            "units": "m",
+            "method": "Analysis of feature-to-feature displacement",
+            "measure": {
+              "description": "RMSE of relative positions",
+              "value": 1.5,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          }
+        },
+        {
+          "elementType": "griddedDataPositionalAccuracy",
+          "summary": "Positional accuracy for gridded elevation data",
+          "detail": {
+            "type": "griddedDataPositionalAccuracy",
+            "accuracyValue": 2.0,
+            "units": "m",
+            "method": "Comparison with surveyed checkpoints",
+            "measure": {
+              "description": "Vertical accuracy of DEM",
+              "value": 2.0,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          }
+        },
+        {
+          "elementType": "nonQuantitativeAttributeCorrectness",
+          "summary": "Correctness of feature classification",
+          "detail": {
+            "type": "nonQuantitativeAttributeCorrectness",
+            "attribute": "featureType",
+            "correctnessRate": 0.95,
+            "measure": {
+              "description": "Percentage of correctly classified features",
+              "value": 95,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "quantitativeAttributeAccuracy",
+          "summary": "Accuracy of building height attribute",
+          "detail": {
+            "type": "quantitativeAttributeAccuracy",
+            "attribute": "buildingHeight",
+            "accuracyValue": 1.0,
+            "units": "m",
+            "measure": {
+              "description": "RMSE of building height measurements",
+              "value": 1.0,
+              "valueType": "absolute",
+              "units": "m"
+            }
+          }
+        },
+        {
+          "elementType": "formatConsistency",
+          "summary": "Conformance to GML format specification",
+          "detail": {
+            "type": "formatConsistency",
+            "description": "Validation against GML 3.2.1 schema",
+            "conformanceRate": 1.0,
+            "measure": {
+              "description": "Percentage of format-compliant features",
+              "value": 100,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "domainConsistency",
+          "summary": "Conformance to DGIWG feature catalogue",
+          "detail": {
+            "type": "domainConsistency",
+            "description": "Validation against DGIWG Feature Data Dictionary",
+            "conformanceRate": 0.98,
+            "measure": {
+              "description": "Percentage of domain-compliant attributes",
+              "value": 98,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        },
+        {
+          "elementType": "temporalValidity",
+          "summary": "Temporal validity period of the dataset",
+          "detail": {
+            "type": "temporalValidity",
+            "validFrom": "2025-01-01T00:00:00Z",
+            "validTo": "2025-12-31T23:59:59Z",
+            "measure": {
+              "description": "Dataset validity period",
+              "value": "2025",
+              "valueType": "string"
+            }
+          }
+        },
+        {
+          "elementType": "completeness",
+          "summary": "Feature completeness assessment",
+          "detail": {
+            "type": "completeness",
+            "scope": "dataset",
+            "measure": {
+              "description": "Percentage of expected features captured",
+              "value": 97,
+              "valueType": "percentage",
+              "units": "%"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          10.0,
+          50.0
+        ],
+        [
+          11.0,
+          50.0
+        ],
+        [
+          11.0,
+          51.0
+        ],
+        [
+          10.0,
+          51.0
+        ],
+        [
+          10.0,
+          50.0
+        ]
+      ]
+    ]
+  },
+  "assets": {
+    "vector_data": {
+      "href": "data/dgiwg-topographic.gml",
+      "type": "application/gml+xml",
+      "title": "DGIWG topographic vector data"
+    },
+    "elevation": {
+      "href": "data/dgiwg-dem.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Digital elevation model"
+    }
+  }
+}

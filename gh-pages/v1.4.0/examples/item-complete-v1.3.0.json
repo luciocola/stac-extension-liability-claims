@@ -1,0 +1,328 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "liability-claims-example-v1.3.0",
+  "collection": "liability-claims-collection",
+  "bbox": [
+    -117.65,
+    33.65,
+    -117.55,
+    33.75
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -117.65,
+          33.65
+        ],
+        [
+          -117.55,
+          33.65
+        ],
+        [
+          -117.55,
+          33.75
+        ],
+        [
+          -117.65,
+          33.75
+        ],
+        [
+          -117.65,
+          33.65
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2024-08-15T14:30:00Z",
+    "title": "Infrastructure Damage Assessment - Building Collapse Incident",
+    "description": "High-resolution imagery and geospatial analysis of structural failure event for insurance claim processing",
+    "liability:responsible_party": "Metropolitan Engineering Services (Data Provider) - Contact: gis@metro-eng.example.com",
+    "liability:claim_reference": "CLM-2024-08-15-003",
+    "liability:incident_date": "2024-08-15T09:45:00Z",
+    "liability:location_description": "Commercial building at 123 Main Street, showing structural collapse of west facade",
+    "liability:severity": "critical",
+    "liability:classification_level": "confidential",
+    "liability:handling_restrictions": [
+      "attorney_client_privileged",
+      "insurance_investigation_only"
+    ],
+    "liability:legal_hold": true,
+    "liability:retention_period": "P10Y",
+    "liability:data_custodian": {
+      "name": "Sarah Johnson",
+      "organization": "Metro Legal Department",
+      "email": "s.johnson@metro-legal.example.com"
+    },
+    "liability:quality": {
+      "scope": "dataset",
+      "elements": [
+        {
+          "elementType": "positionalAccuracy",
+          "measure": {
+            "description": "Mean Positional Error - Horizontal accuracy of georeferenced imagery",
+            "value": 0.05,
+            "units": "meter",
+            "method": "Ground control point comparison"
+          }
+        }
+      ]
+    },
+    "liability:prov": {
+      "entity": {
+        "imagery:original": {
+          "prov:type": "prov:Entity",
+          "prov:label": "Raw UAV Imagery",
+          "prov:generatedAtTime": "2024-08-15T10:15:00Z"
+        },
+        "imagery:processed": {
+          "prov:type": "prov:Entity",
+          "prov:label": "Orthorectified Composite",
+          "prov:wasGeneratedBy": "processing:ortho",
+          "prov:generatedAtTime": "2024-08-15T12:00:00Z"
+        }
+      },
+      "activity": {
+        "processing:ortho": {
+          "prov:type": "prov:Activity",
+          "prov:label": "Orthorectification Processing",
+          "prov:startedAtTime": "2024-08-15T11:00:00Z",
+          "prov:endedAtTime": "2024-08-15T12:00:00Z",
+          "prov:used": "imagery:original"
+        }
+      },
+      "agent": {
+        "operator:uav": {
+          "prov:type": "prov:Person",
+          "prov:label": "Licensed UAV Pilot - John Smith",
+          "prov:actedOnBehalfOf": "org:metro"
+        },
+        "org:metro": {
+          "prov:type": "prov:Organization",
+          "prov:label": "Metropolitan Engineering Services"
+        }
+      }
+    },
+    "dq:quality": [
+      {
+        "scope": "dataset",
+        "report": [
+          {
+            "type": "AbsolutePositionalAccuracy",
+            "measure": {
+              "nameOfMeasure": [
+                "Horizontal Accuracy (CE90)"
+              ],
+              "measureDescription": "90% circular error for horizontal positioning"
+            },
+            "result": [
+              {
+                "type": "QuantitativeResult",
+                "value": [
+                  0.08
+                ],
+                "valueUnit": "meter",
+                "valueRecordType": "http://www.isotc211.org/2005/gco#Real"
+              }
+            ],
+            "evaluationMethod": {
+              "type": "indirect",
+              "methodDescription": "Ground control point comparison with RTK-GPS surveyed coordinates"
+            }
+          },
+          {
+            "type": "ThematicAccuracy",
+            "measure": {
+              "nameOfMeasure": [
+                "Damage Classification Accuracy"
+              ],
+              "measureDescription": "Accuracy of structural damage severity classification"
+            },
+            "result": [
+              {
+                "type": "QuantitativeResult",
+                "value": [
+                  94.7
+                ],
+                "valueUnit": "percent"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "dq:lineage": [
+      {
+        "type": "lineage",
+        "statement": "UAV imagery captured using DJI Phantom 4 RTK at 50m altitude with 80% overlap. Ground control points surveyed with Trimble R12 RTK-GPS (accuracy <2cm). Processing performed using Pix4Dmapper with custom damage classification workflow.",
+        "processStep": [
+          {
+            "description": "UAV flight mission with automated waypoint navigation",
+            "stepDateTime": "2024-08-15T10:15:00Z",
+            "processor": [
+              {
+                "role": "operator",
+                "party": [
+                  {
+                    "name": "John Smith - FAA Part 107 Certified",
+                    "contactInfo": {
+                      "phone": {
+                        "number": "+1-555-0124"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Photogrammetric processing and orthorectification",
+            "stepDateTime": "2024-08-15T11:00:00Z",
+            "processingInformation": {
+              "softwareReference": [
+                {
+                  "title": "Pix4Dmapper Professional",
+                  "edition": "v4.8.4"
+                }
+              ],
+              "algorithm": [
+                {
+                  "description": "Structure from Motion with bundle adjustment"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Damage assessment classification using ML model",
+            "stepDateTime": "2024-08-15T13:00:00Z",
+            "processingInformation": {
+              "softwareReference": [
+                {
+                  "title": "Custom Damage Assessment Classifier",
+                  "edition": "v2.1.0"
+                }
+              ]
+            }
+          }
+        ],
+        "source": [
+          {
+            "description": "Ground Control Points - RTK-GPS Survey",
+            "sourceReferenceSystem": {
+              "referenceSystemIdentifier": {
+                "code": "EPSG:6423",
+                "codeSpace": "EPSG"
+              }
+            },
+            "sourceCitation": {
+              "title": "GCP Survey - Building Collapse Site",
+              "date": "2024-08-15T08:00:00Z"
+            }
+          },
+          {
+            "description": "UAV Raw Imagery Collection",
+            "sourceCitation": {
+              "title": "DJI Phantom 4 RTK Flight Mission 2024-08-15",
+              "date": "2024-08-15T10:15:00Z"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-complete-v1.3.0.json",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "root",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "orthophoto": {
+      "href": "./data/orthophoto_2024-08-15.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Orthorectified UAV Imagery",
+      "description": "5cm resolution orthomosaic of building collapse site",
+      "roles": [
+        "data",
+        "visual"
+      ],
+      "eo:bands": [
+        {
+          "name": "red",
+          "common_name": "red"
+        },
+        {
+          "name": "green",
+          "common_name": "green"
+        },
+        {
+          "name": "blue",
+          "common_name": "blue"
+        }
+      ]
+    },
+    "damage_classification": {
+      "href": "./data/damage_classification.geojson",
+      "type": "application/geo+json",
+      "title": "Structural Damage Classification",
+      "description": "Vector features showing classified damage zones (minor, moderate, severe, critical)",
+      "roles": [
+        "data",
+        "classification"
+      ]
+    },
+    "quality_report": {
+      "href": "./reports/quality_assessment_CLM-2024-08-15-003.pdf",
+      "type": "application/pdf",
+      "title": "ISO 19157 Quality Assessment Report",
+      "description": "Comprehensive data quality documentation for legal purposes",
+      "roles": [
+        "metadata",
+        "quality"
+      ]
+    },
+    "chain_of_custody": {
+      "href": "./reports/chain_of_custody.pdf",
+      "type": "application/pdf",
+      "title": "Data Chain of Custody Documentation",
+      "description": "Legal chain of custody tracking for evidentiary purposes",
+      "roles": [
+        "metadata",
+        "provenance"
+      ]
+    },
+    "technical_report": {
+      "href": "./reports/engineering_analysis_CLM-2024-08-15-003.pdf",
+      "type": "application/pdf",
+      "title": "Engineering Analysis Report",
+      "description": "Detailed structural failure analysis with geospatial evidence",
+      "roles": [
+        "metadata",
+        "documentation"
+      ]
+    }
+  },
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json"
+  ]
+}

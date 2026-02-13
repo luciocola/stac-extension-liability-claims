@@ -1,0 +1,117 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "liability-claim-001",
+  "bbox": [
+    -122.5,
+    37.5,
+    -122.3,
+    37.7
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -122.5,
+          37.5
+        ],
+        [
+          -122.3,
+          37.5
+        ],
+        [
+          -122.3,
+          37.7
+        ],
+        [
+          -122.5,
+          37.7
+        ],
+        [
+          -122.5,
+          37.5
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2024-01-15T10:30:00Z",
+    "liability:claim_id": "CLAIM-2024-001",
+    "liability:claim_status": "under_investigation",
+    "liability:claim_type": "environmental",
+    "liability:claim_date": "2024-01-15T10:30:00Z",
+    "liability:incident_date": "2024-01-10T14:20:00Z",
+    "liability:responsible_party": "ABC Corporation",
+    "liability:damages_estimated": 150000,
+    "liability:damages_currency": "USD",
+    "liability:legal_jurisdiction": "California, USA",
+    "liability:affected_parties": [
+      {
+        "name": "John Doe",
+        "role": "claimant",
+        "contact": "john.doe@example.com"
+      }
+    ],
+    "liability:coverage_area": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -122.45,
+            37.55
+          ],
+          [
+            -122.35,
+            37.55
+          ],
+          [
+            -122.35,
+            37.65
+          ],
+          [
+            -122.45,
+            37.65
+          ],
+          [
+            -122.45,
+            37.55
+          ]
+        ]
+      ]
+    },
+    "liability:notes": "Initial environmental impact claim pending investigation"
+  },
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/liability-claim-001.json"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://example.com/stac/catalog.json"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/liability-claims.json"
+    }
+  ],
+  "assets": {
+    "evidence-photo": {
+      "href": "https://example.com/evidence/photo1.jpg",
+      "type": "image/jpeg",
+      "title": "Site Photograph",
+      "roles": [
+        "data"
+      ],
+      "liability:security_classification": "internal"
+    }
+  },
+  "collection": "liability-claims"
+}

@@ -7,6 +7,90 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-02-03
+
+### Critical Fixes
+
+#### Changed - Canonical ISO Schema References
+- **BREAKING:** `liability:quality` now references canonical eovoc schemas instead of vendored copies
+  - Changed from: `https://luciocola.github.io/.../iso19157-quality.json#/definitions/iso19157_data_quality`
+  - Changed to: `https://eovoc.github.io/eof-eos-stac-extension/v0.0.1/dqc.json#/definitions/DataQuality`
+  - Impact: Enables cross-validation with official ISO 19157 tools
+  - Migration: Update schema validators to use canonical eovoc schemas
+  - Backward compatibility: Local ISO schemas maintained for offline validation
+
+#### Changed - MD_Scope Object Support
+- **BREAKING:** Quality scope now uses structured `MD_Scope` object instead of simple string
+  - Changed from: `scope: {type: "string"}`
+  - Changed to: `scope: MD_Scope` with `level`, `extent`, and `levelDescription` properties
+  - Impact: Full ISO 19157 compliance for quality scope definition
+  - Migration: Wrap string values in object with `level` property
+  - Example: `"scope": "dataset"` → `"scope": {"level": "dataset"}`
+
+### Medium-Term Enhancements
+
+#### Added - CI_Citation Support
+- Added full `CI_Citation` structure for evaluation procedures and references
+- Includes responsible parties, identifiers, dates, and online resources
+- Enables proper citation of quality standards and methodologies
+- References: `https://eovoc.github.io/eof-eos-stac-extension/v0.0.1/mdj.json#/definitions/CI_Citation`
+
+#### Changed - Array-Based Quantitative Results
+- **BREAKING:** `QuantitativeResult.value` now supports arrays for multiple measurements
+  - Changed from: `value: {type: "number"}`
+  - Changed to: `value: {type: "array", items: {}, minItems: 1}`
+  - Renamed: `unit` → `valueUnit` for ISO 19157 compliance
+  - Impact: Can represent multi-value quality measurements (e.g., per-band accuracy)
+  - Migration: Convert single numbers to one-element arrays
+  - Backward compatible: Single values supported via `[value]`
+
+#### Added - LI_Source Lineage
+- Added structured `LI_Source` for lineage tracking (ISO 19115-2)
+- Replaces simple string arrays with full source metadata
+- Includes source citation, reference system, and scope information
+- References: `https://eovoc.github.io/eof-eos-stac-extension/v0.0.1/mdj.json#/definitions/LI_Source`
+
+### Documentation
+
+#### Added
+- Comprehensive v1.3.0 README with migration guide
+- ISO Schema Compatibility Analysis (ISO_SCHEMA_COMPATIBILITY_ANALYSIS.md)
+- Detailed breaking changes documentation
+- New examples: `item-with-ci-citation.json`, `item-with-array-results.json`
+
+#### Updated
+- All 20 examples updated to use canonical ISO schemas
+- Migration guide for v1.2.0 → v1.3.0
+- Validation examples using canonical eovoc schemas
+
+### Deprecations
+
+#### Soft Deprecated
+- **Vendored ISO Schemas**: Local copies (`iso19157-*.json`, `iso19115-quality.json`) maintained for offline validation only
+  - Recommendation: Use canonical eovoc schemas for production
+  - Timeline: v2.0.0 will remove local copies
+  
+- **Simple String Scope**: Using strings for `liability:quality.scope` deprecated
+  - Use: `{"level": "dataset"}` instead of `"dataset"`
+  - Timeline: v2.0.0 will require MD_Scope objects
+
+### Compatibility
+
+- **ISO 19157 Compatibility**: 100% via canonical dqc.json
+- **ISO 19115 Compatibility**: Full MD_* type support via mdj.json
+- **STAC 1.0.0**: Fully compliant
+- **W3C PROV**: Maintained PROV-JSON compatibility
+- **CEOS-ARD**: Maintained flattened `ard:*` fields
+
+### Testing
+
+- ✅ Validated against canonical dqc.json (ISO 19157)
+- ✅ Validated against canonical mdj.json (ISO 19115)
+- ✅ 20 examples pass validation
+- ✅ Cross-schema type compatibility verified
+
+## [1.2.0] - 2026-02-02
+
 ### Added - ISO TC211 Official Schema Alignment (In Progress)
 
 - **ISO 19157 TC211 Alignment** (Hybrid approach - backward compatible with v1.1.0)

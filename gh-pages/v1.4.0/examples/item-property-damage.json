@@ -1,0 +1,71 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "property-damage-2023-042",
+  "bbox": [
+    -0.15,
+    51.5,
+    -0.1,
+    51.55
+  ],
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -0.125,
+      51.525
+    ]
+  },
+  "properties": {
+    "datetime": "2023-06-10T14:20:00Z",
+    "liability:claim_id": "PROP-2023-042",
+    "liability:claim_type": "property_damage",
+    "liability:claim_status": "settled",
+    "liability:claim_date": "2023-06-15T08:30:00Z",
+    "liability:incident_date": "2023-06-10T14:20:00Z",
+    "liability:resolution_date": "2023-09-20T16:00:00Z",
+    "liability:resolution_status": "partial_settlement",
+    "liability:responsible_party": "Construction Company ABC",
+    "liability:affected_parties": [
+      {
+        "name": "Building Owner Ltd",
+        "role": "claimant",
+        "contact": "legal@buildingowner.com"
+      }
+    ],
+    "liability:damages_estimated": 75000,
+    "liability:damages_currency": "GBP",
+    "liability:legal_jurisdiction": "England and Wales",
+    "liability:insurance_provider": "UK Liability Insurance",
+    "liability:policy_number": "UKL-789012",
+    "liability:evidence_refs": [
+      "drone-survey-damage",
+      "https://evidence.example.com/structural-report.pdf"
+    ],
+    "liability:notes": "Construction work caused structural damage to adjacent building. Settled for \u00a360,000."
+  },
+  "assets": {
+    "drone-survey-damage": {
+      "href": "https://example.com/surveys/damage-assessment.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Drone Survey - Damage Assessment",
+      "roles": [
+        "data",
+        "evidence"
+      ],
+      "liability:security_classification": "confidential"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.com/stac/items/property-damage-2023-042.json"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.com/stac/collections/liability-claims.json"
+    }
+  ]
+}

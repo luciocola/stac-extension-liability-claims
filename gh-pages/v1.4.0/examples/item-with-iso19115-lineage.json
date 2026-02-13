@@ -1,0 +1,398 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "id": "item-with-iso19115-lineage-001",
+  "bbox": [
+    2.5,
+    48.5,
+    3.5,
+    49.5
+  ],
+  "properties": {
+    "datetime": "2025-12-02T12:00:00Z",
+    "liability:claim_id": "CLM-ISO-001",
+    "liability:claim_type": "environmental",
+    "liability:origin": "GeospatialAgency",
+    "liability:quality": {
+      "reportId": "QR-2025-ISO19115-001",
+      "scope": "dataset",
+      "date": "2025-12-02T12:00:00Z",
+      "version": "1.0",
+      "summary": "Comprehensive lineage and quality assessment following ISO 19115-4",
+      "elements": [
+        {
+          "elementType": "lineage",
+          "summary": "Multi-stage processing with documented provenance",
+          "detail": {
+            "type": "lineage",
+            "statement": "Dataset created from satellite imagery processed through multiple stages including atmospheric correction, geometric correction, and feature extraction. All processing steps documented and traceable.",
+            "scope": {
+              "level": "dataset",
+              "levelDescription": "Complete dataset including all derived products"
+            },
+            "processStep": [
+              {
+                "description": "Atmospheric correction applied using MODTRAN radiative transfer model to remove atmospheric effects from raw satellite imagery",
+                "rationale": "Required to obtain surface reflectance values suitable for land cover classification",
+                "stepDateTime": {
+                  "processing": "2025-11-15T08:30:00Z"
+                },
+                "processor": [
+                  {
+                    "name": "Dr. Jane Smith",
+                    "organizationName": "Remote Sensing Institute",
+                    "role": "Principal Investigator",
+                    "contactInfo": {
+                      "email": "jane.smith@rsinstitute.org",
+                      "phone": "+1-555-0123",
+                      "onlineResource": "https://rsinstitute.org/staff/jsmith"
+                    }
+                  }
+                ],
+                "reference": [
+                  {
+                    "title": "MODTRAN 6 User Manual",
+                    "date": "2023-03-15T00:00:00Z",
+                    "identifier": "DOI:10.1234/modtran6",
+                    "url": "https://modtran.spectral.com/docs"
+                  }
+                ],
+                "processingInformation": {
+                  "identifier": "PROC-001-ATMOS",
+                  "softwareReference": [
+                    {
+                      "title": "MODTRAN",
+                      "version": "6.0.2",
+                      "identifier": "MODTRAN-6.0.2"
+                    },
+                    {
+                      "title": "ENVI",
+                      "version": "5.6.3",
+                      "identifier": "ENVI-5.6.3"
+                    }
+                  ],
+                  "procedureDescription": "Applied FLAASH atmospheric correction module with mid-latitude summer atmospheric model, maritime aerosol model, and initial visibility of 40km",
+                  "runTimeParameters": "model=midlat_summer aerosol=maritime visibility=40 water_retrieval=yes",
+                  "algorithm": [
+                    {
+                      "title": "FLAASH (Fast Line-of-sight Atmospheric Analysis of Hypercubes)",
+                      "description": "MODTRAN-based atmospheric correction for multispectral and hyperspectral imagery",
+                      "citation": {
+                        "title": "Atmospheric Correction Now (ACORN) and FLAASH",
+                        "date": "2002-01-01T00:00:00Z"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "Geometric correction using ground control points and DEM to orthorectify imagery",
+                "rationale": "Ensure spatial accuracy for integration with vector datasets and other geospatial layers",
+                "stepDateTime": {
+                  "processing": "2025-11-16T10:15:00Z"
+                },
+                "processor": [
+                  {
+                    "name": "John Doe",
+                    "organizationName": "Geospatial Processing Lab",
+                    "role": "GIS Analyst",
+                    "contactInfo": {
+                      "email": "j.doe@geolab.org",
+                      "phone": "+1-555-0456"
+                    }
+                  }
+                ],
+                "processingInformation": {
+                  "identifier": "PROC-002-GEOM",
+                  "softwareReference": [
+                    {
+                      "title": "ERDAS IMAGINE",
+                      "version": "2022",
+                      "identifier": "ERDAS-2022"
+                    }
+                  ],
+                  "procedureDescription": "Rational Polynomial Coefficient (RPC) orthorectification using SRTM 30m DEM and 25 ground control points with sub-pixel accuracy",
+                  "runTimeParameters": "dem=SRTM30 gcp_count=25 resampling=cubic_convolution rms_error=0.4_pixels"
+                }
+              },
+              {
+                "description": "Random Forest classification for land cover mapping with 12 classes",
+                "rationale": "Generate land cover map for environmental monitoring and change detection",
+                "stepDateTime": {
+                  "processing": "2025-11-20T14:00:00Z"
+                },
+                "processor": [
+                  {
+                    "name": "Dr. Maria Garcia",
+                    "organizationName": "Earth Observation Center",
+                    "role": "Classification Specialist",
+                    "contactInfo": {
+                      "email": "m.garcia@eocenter.org"
+                    }
+                  }
+                ],
+                "processingInformation": {
+                  "identifier": "PROC-003-CLASS",
+                  "softwareReference": [
+                    {
+                      "title": "Python scikit-learn",
+                      "version": "1.3.2",
+                      "identifier": "scikit-learn-1.3.2"
+                    },
+                    {
+                      "title": "GDAL",
+                      "version": "3.7.0",
+                      "identifier": "GDAL-3.7.0"
+                    }
+                  ],
+                  "procedureDescription": "Random Forest classifier with 500 trees, trained on 5000 reference samples collected via stratified random sampling",
+                  "runTimeParameters": "n_estimators=500 max_depth=25 min_samples_split=10 training_samples=5000",
+                  "algorithm": [
+                    {
+                      "title": "Random Forest Classification",
+                      "description": "Ensemble learning method using multiple decision trees for robust classification",
+                      "citation": {
+                        "title": "Random Forests - Breiman, 2001",
+                        "date": "2001-10-01T00:00:00Z"
+                      }
+                    }
+                  ],
+                  "documentation": [
+                    {
+                      "title": "Classification Methodology Report",
+                      "url": "https://eocenter.org/docs/classification-v1.pdf"
+                    }
+                  ]
+                }
+              }
+            ],
+            "source": [
+              {
+                "description": "Sentinel-2 Level-1C multispectral imagery acquired over study area",
+                "sourceCitation": {
+                  "title": "Sentinel-2A MSI Level-1C",
+                  "date": "2025-11-10T10:35:22Z",
+                  "identifier": "S2A_MSIL1C_20251110T103522_N0509_R108_T31UEP",
+                  "url": "https://scihub.copernicus.eu/dhus/odata/v1/Products('abc123')"
+                },
+                "sourceReferenceSystem": {
+                  "code": "32631",
+                  "codeSpace": "EPSG",
+                  "version": "9.9.1"
+                },
+                "sourceMetadata": [
+                  {
+                    "title": "Sentinel-2 Product Metadata",
+                    "url": "https://scihub.copernicus.eu/dhus/odata/v1/Products('abc123')/Nodes('MTD_MSIL1C.xml')/$value"
+                  }
+                ],
+                "scope": {
+                  "level": "dataset"
+                },
+                "sourceExtent": {
+                  "geographicElement": {
+                    "type": "Polygon",
+                    "coordinates": [
+                      [
+                        [
+                          2.5,
+                          48.5
+                        ],
+                        [
+                          3.5,
+                          48.5
+                        ],
+                        [
+                          3.5,
+                          49.5
+                        ],
+                        [
+                          2.5,
+                          49.5
+                        ],
+                        [
+                          2.5,
+                          48.5
+                        ]
+                      ]
+                    ]
+                  },
+                  "temporalElement": {
+                    "extent": [
+                      "2025-11-10T10:35:22Z",
+                      "2025-11-10T10:35:22Z"
+                    ]
+                  }
+                }
+              },
+              {
+                "description": "SRTM 30m Digital Elevation Model used for orthorectification",
+                "sourceCitation": {
+                  "title": "SRTM 1 Arc-Second Global",
+                  "date": "2013-09-23T00:00:00Z",
+                  "identifier": "SRTMGL1",
+                  "url": "https://lpdaac.usgs.gov/products/srtmgl1v003/"
+                },
+                "sourceReferenceSystem": {
+                  "code": "4326",
+                  "codeSpace": "EPSG"
+                },
+                "scope": {
+                  "level": "dataset"
+                }
+              },
+              {
+                "description": "Field-collected ground control points for geometric correction",
+                "sourceCitation": {
+                  "title": "Field Survey GCP Dataset November 2025",
+                  "date": "2025-11-12T00:00:00Z",
+                  "identifier": "GCP-2025-11-FIELD"
+                },
+                "scope": {
+                  "level": "dataset"
+                },
+                "sourceExtent": {
+                  "geographicElement": {
+                    "type": "MultiPoint",
+                    "coordinates": [
+                      [
+                        2.75,
+                        48.75
+                      ],
+                      [
+                        3.25,
+                        49.25
+                      ],
+                      [
+                        2.6,
+                        49.1
+                      ]
+                    ]
+                  }
+                }
+              },
+              {
+                "description": "Land cover training samples from field surveys and interpretation",
+                "sourceCitation": {
+                  "title": "Land Cover Reference Dataset 2025",
+                  "date": "2025-11-18T00:00:00Z",
+                  "identifier": "LCREF-2025-11"
+                },
+                "scope": {
+                  "level": "dataset"
+                }
+              }
+            ],
+            "additionalDocumentation": [
+              {
+                "title": "Processing Chain Technical Specification",
+                "date": "2025-11-01T00:00:00Z",
+                "url": "https://eocenter.org/docs/processing-spec-v2.1.pdf",
+                "description": "Complete technical specification of the processing methodology"
+              },
+              {
+                "title": "Quality Assurance Report",
+                "date": "2025-11-25T00:00:00Z",
+                "url": "https://eocenter.org/docs/qa-report-2025-11.pdf",
+                "description": "Independent quality assessment of the final product"
+              }
+            ]
+          }
+        },
+        {
+          "elementType": "positionalAccuracy",
+          "summary": "Horizontal positional accuracy better than 10m (95% confidence)",
+          "detail": {
+            "type": "positionalAccuracy",
+            "accuracyValue": 8.5,
+            "units": "m",
+            "method": "Comparison with reference GCPs using RMSE calculation",
+            "measure": {
+              "description": "RMSE horizontal error at checkpoints",
+              "value": 8.5,
+              "valueType": "absolute",
+              "units": "m",
+              "evaluationMethod": "independent_checkpoint_validation",
+              "numberOfSamples": 50
+            }
+          },
+          "conformance": {
+            "specification": "ISO 19157:2013 Geographic information \u2014 Data quality",
+            "pass": true,
+            "explanation": "Meets accuracy requirements for 1:25,000 scale mapping"
+          }
+        },
+        {
+          "elementType": "thematicAccuracy",
+          "summary": "Overall classification accuracy of 89.2%",
+          "detail": {
+            "type": "thematicAccuracy",
+            "measure": {
+              "description": "Overall accuracy from error matrix",
+              "value": 89.2,
+              "valueType": "percentage",
+              "units": "%",
+              "evaluationMethod": "error_matrix",
+              "numberOfSamples": 1500
+            }
+          }
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          2.5,
+          48.5
+        ],
+        [
+          3.5,
+          48.5
+        ],
+        [
+          3.5,
+          49.5
+        ],
+        [
+          2.5,
+          49.5
+        ],
+        [
+          2.5,
+          48.5
+        ]
+      ]
+    ]
+  },
+  "assets": {
+    "landcover": {
+      "href": "data/landcover-2025-11.tif",
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Land Cover Classification"
+    },
+    "processing-report": {
+      "href": "docs/processing-report.pdf",
+      "type": "application/pdf",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Complete Processing Report"
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-with-iso19115-lineage-001.json",
+      "type": "application/json"
+    }
+  ]
+}
