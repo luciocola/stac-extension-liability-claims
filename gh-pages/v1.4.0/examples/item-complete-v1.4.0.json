@@ -161,9 +161,7 @@
         "processStep": [
           {
             "description": "UAV flight mission with automated waypoint navigation",
-            "stepDateTime": {
-              "processing": "2024-08-15T10:15:00Z"
-            },
+            "stepDateTime": "2024-08-15T10:15:00Z",
             "processor": [
               {
                 "role": "operator",
@@ -182,14 +180,14 @@
           },
           {
             "description": "Photogrammetric processing and orthorectification",
-            "stepDateTime": {
-              "processing": "2024-08-15T11:00:00Z"
-            },
+            "stepDateTime": "2024-08-15T11:00:00Z",
             "processingInformation": {
-              "softwareReference": {
-                "title": "Pix4Dmapper Professional",
-                "edition": "v4.8.4"
-              },
+              "softwareReference": [
+                {
+                  "title": "Pix4Dmapper Professional",
+                  "edition": "v4.8.4"
+                }
+              ],
               "algorithm": [
                 {
                   "description": "Structure from Motion with bundle adjustment"
@@ -199,14 +197,14 @@
           },
           {
             "description": "Damage assessment classification using ML model",
-            "stepDateTime": {
-              "processing": "2024-08-15T13:00:00Z"
-            },
+            "stepDateTime": "2024-08-15T13:00:00Z",
             "processingInformation": {
-              "softwareReference": {
-                "title": "Custom Damage Assessment Classifier",
-                "edition": "v2.1.0"
-              }
+              "softwareReference": [
+                {
+                  "title": "Custom Damage Assessment Classifier",
+                  "edition": "v2.1.0"
+                }
+              ]
             }
           }
         ],
@@ -324,7 +322,7 @@
     }
   },
   "stac_extensions": [
-    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json",
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json",
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json"
   ]
 }

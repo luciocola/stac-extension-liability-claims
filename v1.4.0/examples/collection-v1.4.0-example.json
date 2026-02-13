@@ -1,0 +1,54 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Collection",
+  "id": "liability-claims-v1.4.0-collection",
+  "title": "Liability Claims Collection - v1.4.0 EOVOC Compliant",
+  "description": "Collection demonstrating v1.4.0 features with EOVOC v0.0.2 alignment for CI_Date temporal metadata",
+  "keywords": ["insurance", "liability", "claims", "legal", "damage assessment", "eovoc"],
+  "license": "proprietary",
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2024-01-01T00:00:00Z", null]]
+    }
+  },
+  "summaries": {
+    "liability:severity": ["minor", "moderate", "significant", "critical"],
+    "liability:classification_level": [
+      "public_release",
+      "internal",
+      "confidential",
+      "restricted",
+      "classified"
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./collection-v1.4.0-example.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "./collection-v1.4.0-example.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./item-v1.4.0-example.json",
+      "type": "application/geo+json",
+      "title": "Example v1.4.0 Item"
+    },
+    {
+      "rel": "license",
+      "href": "https://example.com/license",
+      "type": "text/html",
+      "title": "Data License Terms"
+    }
+  ],
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ]
+}

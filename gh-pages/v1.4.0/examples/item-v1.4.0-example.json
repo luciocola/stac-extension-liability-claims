@@ -1,0 +1,103 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "liability-claims-v1.4.0-example",
+  "collection": "liability-claims-collection",
+  "bbox": [-117.65, 33.65, -117.55, 33.75],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-117.65, 33.65],
+      [-117.55, 33.65],
+      [-117.55, 33.75],
+      [-117.65, 33.75],
+      [-117.65, 33.65]
+    ]]
+  },
+  "properties": {
+    "datetime": "2024-08-15T14:30:00Z",
+    "title": "Infrastructure Damage Assessment - v1.4.0 EOVOC Compliant",
+    "description": "Example demonstrating v1.4.0 EOVOC v0.0.2 alignment with CI_Date stepDateTime",
+    "liability:responsible_party": "Metropolitan Engineering Services",
+    "liability:claim_reference": "CLM-2024-08-15-004",
+    "liability:incident_date": "2024-08-15T09:45:00Z",
+    "liability:severity": "critical",
+    "liability:classification_level": "confidential",
+    "dq:lineage": [
+      {
+        "type": "lineage",
+        "statement": "UAV imagery captured and processed with EOVOC v0.0.2 compliant metadata",
+        "processStep": [
+          {
+            "description": "UAV flight mission",
+            "stepDateTime": {
+              "acquisition": "2024-08-15T10:15:00Z"
+            },
+            "processor": [
+              {
+                "role": "operator",
+                "party": [
+                  {
+                    "name": "John Smith - FAA Part 107 Certified"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Photogrammetric processing",
+            "stepDateTime": {
+              "processing": "2024-08-15T11:00:00Z"
+            },
+            "processingInformation": {
+              "softwareReference": {
+                "title": "Pix4Dmapper Professional",
+                "edition": "v4.8.4"
+              },
+              "algorithm": [
+                {
+                  "description": "Structure from Motion with bundle adjustment"
+                }
+              ]
+            }
+          },
+          {
+            "description": "Quality validation",
+            "stepDateTime": {
+              "validation": "2024-08-15"
+            },
+            "processingInformation": {
+              "softwareReference": {
+                "title": "QA Validator",
+                "edition": "v2.0"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./item-v1.4.0-example.json",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "collection",
+      "href": "../collection.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "orthophoto": {
+      "href": "./data/orthophoto.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Orthorectified Imagery",
+      "roles": ["data", "visual"]
+    }
+  },
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ]
+}
