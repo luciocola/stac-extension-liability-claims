@@ -525,7 +525,7 @@
       "type": "object",
       "description": "ISO 19115 CI_Date - Reference date and event used to describe it",
       "additionalProperties": {
-        "oneOf": [
+        "anyOf": [
           {
             "type": "string",
             "format": "date-time"
