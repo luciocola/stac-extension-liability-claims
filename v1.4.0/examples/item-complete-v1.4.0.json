@@ -186,10 +186,12 @@
               "processing": "2024-08-15T11:00:00Z"
             },
             "processingInformation": {
-              "softwareReference": {
-                "title": "Pix4Dmapper Professional",
-                "edition": "v4.8.4"
-              },
+              "softwareReference": [
+                {
+                  "title": "Pix4Dmapper Professional",
+                  "edition": "v4.8.4"
+                }
+              ],
               "algorithm": [
                 {
                   "description": "Structure from Motion with bundle adjustment"
@@ -203,10 +205,12 @@
               "processing": "2024-08-15T13:00:00Z"
             },
             "processingInformation": {
-              "softwareReference": {
-                "title": "Custom Damage Assessment Classifier",
-                "edition": "v2.1.0"
-              }
+              "softwareReference": [
+                {
+                  "title": "Custom Damage Assessment Classifier",
+                  "edition": "v2.1.0"
+                }
+              ]
             }
           }
         ],
