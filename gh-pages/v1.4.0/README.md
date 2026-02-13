@@ -521,3 +521,4 @@ Using simple strings for `liability:quality.scope` is deprecated.
 **Published:** 3 February 2026  
 **Authors:** Lucio Colaiacomo, GitHub Copilot  
 **License:** Apache 2.0
+
