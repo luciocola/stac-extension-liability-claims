@@ -1,7 +1,7 @@
 {
   "stac_version": "1.0.0",
   "type": "Collection",
-  "id": "liability-claims-collection-v1.3.0",
+  "id": "liability-claims-collection-v1.4.0",
   "title": "Insurance Claims and Legal Liability Geospatial Evidence Collection",
   "description": "Comprehensive collection of geospatial data products supporting insurance claims, legal liability investigations, and damage assessments. Includes high-resolution imagery, damage classifications, quality reports, and chain of custody documentation for evidentiary purposes.",
   "keywords": [
@@ -175,17 +175,17 @@
   "links": [
     {
       "rel": "self",
-      "href": "./collection-complete-v1.3.0.json",
+      "href": "./collection-complete-v1.4.0.json",
       "type": "application/json"
     },
     {
       "rel": "root",
-      "href": "./collection-complete-v1.3.0.json",
+      "href": "./collection-complete-v1.4.0.json",
       "type": "application/json"
     },
     {
       "rel": "item",
-      "href": "./item-complete-v1.3.0.json",
+      "href": "./item-complete-v1.4.0.json",
       "type": "application/geo+json",
       "title": "Example Item - Building Collapse Incident"
     },
