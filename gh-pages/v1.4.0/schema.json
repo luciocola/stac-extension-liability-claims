@@ -566,15 +566,29 @@
                 "properties": {
                   "identifier": { "type": "string" },
                   "softwareReference": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "title": { "type": "string" },
-                        "version": { "type": "string" },
-                        "identifier": { "type": "string" }
+                    "oneOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "title": { "type": "string" },
+                            "version": { "type": "string" },
+                            "edition": { "type": "string" },
+                            "identifier": { "type": "string" }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "title": { "type": "string" },
+                          "version": { "type": "string" },
+                          "edition": { "type": "string" },
+                          "identifier": { "type": "string" }
+                        }
                       }
-                    }
+                    ]
                   },
                   "procedureDescription": { "type": "string" },
                   "documentation": {
