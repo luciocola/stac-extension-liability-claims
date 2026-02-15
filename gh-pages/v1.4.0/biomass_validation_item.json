@@ -1,0 +1,108 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "BIO_FP_FD__L2A_20251006T231917_20251021T231931_C_G___M___C___T____F156_01_DIEV9F",
+  "stac_extensions": [
+    "https://eof-eos.io.esa.int/stac-extension/v0.1.0/schema.json",
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-77.38244, -1.8435793],
+      [-76.81995, -1.9621029],
+      [-76.55338, -0.6989397],
+      [-77.11765, -0.5793365],
+      [-77.38244, -1.8435793]
+    ]]
+  },
+  "bbox": [-77.38244, -1.9621029, -76.55338, -0.5793365],
+  "properties": {
+    "datetime": "2025-10-06T23:19:17.460Z",
+    "dq:quality": [{
+      "scope": {"level": "series"},
+      "report": [{
+        "type": "Commission",
+        "measure": {
+          "nameOfMeasure": ["Data product specification passed"],
+          "measureIdentification": {
+            "code": "101",
+            "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/",
+            "authority": {
+              "title": "International Organization for Standardization",
+              "alternateTitle": ["ISO"]
+            }
+          },
+          "measureDescription": "Indication that all requirements in the referred data product specification are fulfilled."
+        },
+        "evaluationMethod": [{
+          "type": "FullInspection",
+          "evaluationMethodDescription": "This collection is conformant with the CEOS-ARD NRB Specification",
+          "evaluationProcedure": {
+            "title": "CEOS-ARD Product Family Specification: Normalised Radar Backscatter",
+            "edition": "5.5",
+            "editionDate": "2021-10-14",
+            "onlineResource": [
+              {"linkage": "https://ceos.org/ard/files/PFS/NRB/v5.5/CARD4L-PFS_NRB_v5.5.pdf"}
+            ]
+          },
+          "referenceDoc": []
+        }],
+        "result": [{
+          "type": "ConformanceResult",
+          "pass": true,
+          "explanation": "See the referenced specification",
+          "specification": {
+            "title": "CEOS-ARD Product Family Specification: Normalised Radar Backscatter",
+            "edition": "5.5",
+            "date": {"publication": "2021-10-14"},
+            "identifier": [{
+              "code": "https://ceos.org/ard/files/PFS/NRB/v5.5",
+              "codeSpace": "https://ceos.org/ard"
+            }]
+          }
+        }]
+      }]
+    }],
+    "dq:lineage": [{
+      "processStep": [{
+        "description": "L2A",
+        "stepDateTime": {"created": "2025-11-20T20:51:15Z"},
+        "processor": [{
+          "role": "processor",
+          "party": [{"name": "Biomass CPF", "type": "CI_Organisation"}]
+        }],
+        "reference": [
+          {"title": "BIOMASS Forest Disturbance Product Format Specification (BPS_FD_PFD) V3.2.1", "edition": "3.2.1"}
+        ],
+        "source": [{
+          "sourceCitation": {"title": "BIO_S2_STA__1S_20251012T231914_20251012T231935_C_G___M___C___T____F156_01_DHQZTP"},
+          "sourceMetadata": [{
+            "title": "BIO_S2_STA__1S_20251012T231914_20251012T231935_C_G___M___C___T____F156_01_DHQZTP",
+            "onlineResource": [{
+              "linkage": "https://catalog.maap.eo.esa.int/catalogue/BiomassLevel2aIOC/collections/items/BIO_S2_STA__1S_20251012T231914_20251012T231935_C_G___M___C___T____F156_01_DHQZTP"
+            }]
+          }]
+        }],
+        "processingInformation": {
+          "softwareReference": {
+            "title": "Biomass L2a Processor",
+            "edition": "4.1.1"
+          },
+          "runTimeParameters": "{\"slope\": 14, \"cell_size\": 17}"
+        },
+        "output": [{"sourceCitation": {"title": "BIO_FP_FD__L2A_20251006T231917_20251021T231931_C_G___M___C___T____F156_01_DIEV9F"}}]
+      }]
+    }]
+  },
+  "links": [
+    {"rel": "self", "href": "./biomass_validation_item.json", "type": "application/geo+json"}
+  ],
+  "assets": {
+    "product": {
+      "href": "https://catalog.maap.eo.esa.int/data/zipper/biomass-pdgs-01/product.zip",
+      "type": "application/zip",
+      "roles": ["data"]
+    }
+  }
+}
