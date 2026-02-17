@@ -205,6 +205,48 @@
         <div class="version-grid">
             <div class="version-card latest">
                 <span class="badge">LATEST</span>
+                <h2>v1.5.0</h2>
+                <p style="margin-bottom: 1rem;">Released: February 17, 2026</p>
+                
+                <ul class="features">
+                    <li>NIIRS (National Imagery Interpretability Rating Scale)</li>
+                    <li>Sensor-specific ratings (Visible, Radar, IR, MS)</li>
+                    <li>GIQE integration (General Image Quality Equation)</li>
+                    <li>Task verification and evaluation tracking</li>
+                    <li>Imagery quality confidence levels</li>
+                    <li>Full backward compatibility with v1.4.0</li>
+                </ul>
+                
+                <div class="links">
+                    <a href="v1.5.0/schema.json">Schema</a>
+                    <a href="v1.5.0/README.md">Documentation</a>
+                    <a href="v1.5.0/examples/">Examples</a>
+                </div>
+            </div>
+            
+            <div class="version-card">
+                <span class="badge">STABLE</span>
+                <h2>v1.4.0</h2>
+                <p style="margin-bottom: 1rem;">Released: January 2024</p>
+                
+                <ul class="features">
+                    <li>EOVOC v0.0.2 ISO schemas alignment</li>
+                    <li>stepDateTime validation fixes (ISO 19115-2)</li>
+                    <li>W3C PROV-JSON provenance</li>
+                    <li>CEOS-ARD compliance metrics</li>
+                    <li>Enhanced liability claims tracking</li>
+                    <li>Production-ready</li>
+                </ul>
+                
+                <div class="links">
+                    <a href="v1.4.0/schema.json">Schema</a>
+                    <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/v1.4.0_RELEASE_NOTES.md">Release Notes</a>
+                    <a href="v1.4.0/examples/">Examples</a>
+                </div>
+            </div>
+            
+            <div class="version-card">
+                <span class="badge">STABLE</span>
                 <h2>v1.3.0</h2>
                 <p style="margin-bottom: 1rem;">Released: February 7, 2026</p>
                 
@@ -215,7 +257,6 @@
                     <li>Array-based QuantitativeResult</li>
                     <li>LI_Source structured lineage</li>
                     <li>100% ISO TC211 compatibility</li>
-                    <li>EOVOC dq:quality & dq:lineage support</li>
                 </ul>
                 
                 <div class="links">
@@ -236,7 +277,6 @@
                     <li>Schema Formalization (queryable fields)</li>
                     <li>Semantic Lifting (RDF/OWL support)</li>
                     <li>Hybrid backward compatibility</li>
-                    <li>Enhanced examples (18 total)</li>
                 </ul>
                 
                 <div class="links">
@@ -271,10 +311,12 @@
         <h2 style="margin: 3rem 0 1rem; color: #667eea;">Version Compatibility</h2>
         
         <div class="info-box">
-            <p><strong>⚠️ v1.3.0 Breaking Changes:</strong> v1.3.0 introduces breaking changes for full ISO compliance. 
+            <p><strong>✓ v1.5.0 Backward Compatible:</strong> v1.5.0 adds NIIRS support while maintaining 100% backward compatibility with v1.4.0. 
+            All v1.4.0 STAC Items will validate successfully against v1.5.0 schema.</p>
+            <p style="margin-top: 0.5rem;"><strong>✓ v1.4.0 EOVOC Alignment:</strong> v1.4.0 aligns with EOVOC v0.0.2 ISO schemas and fixes stepDateTime validation issues. 
+            Fully backward compatible with v1.3.0.</p>
+            <p style="margin-top: 0.5rem;"><strong>⚠️ v1.3.0 Breaking Changes:</strong> v1.3.0 introduces breaking changes for full ISO compliance. 
             MD_Scope now requires structured objects, and QuantitativeResult values are arrays. See <a href="v1.3.0/README.md" style="color: #667eea;">migration guide</a>.</p>
-            <p style="margin-top: 0.5rem;"><strong>✓ v1.2.0 Full Backward Compatibility:</strong> v1.2.0 is 100% backward compatible with v1.1.0. 
-            All v1.1.0 STAC Items will validate successfully against v1.2.0 schema.</p>
         </div>
         
         <h2 style="margin: 3rem 0 1rem; color: #667eea;">Quick Start</h2>
@@ -283,16 +325,24 @@
             <p style="margin-bottom: 1rem;"><strong>Add to your STAC Item:</strong></p>
             <pre style="background: #2d3748; color: #e2e8f0; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>{
   "stac_extensions": [
-    "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json"
   ],
   "properties": {
     "liability:responsible_party": "European Space Agency (ESA)",
     "liability:origin": "Copernicus Sentinel-2",
+    "liability:niirs": {
+      "overall": 6,
+      "variants": {
+        "visible": 6,
+        "multispectral": 5
+      },
+      "evaluation_method": "giqe_prediction",
+      "confidence": "high"
+    },
     "liability:quality": { 
       "scope": { "level": "dataset" },
       "report": [...]
-    },
-    "liability:prov": { ... }
+    }
   }
 }</code></pre>
         </div>
