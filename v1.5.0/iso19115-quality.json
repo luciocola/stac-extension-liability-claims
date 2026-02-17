@@ -1,0 +1,366 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.3.0/iso19115-quality.json#",
+  "title": "ISO 19115 Data Quality (simplified)",
+  "description": "Standalone simplified JSON Schema for ISO 19115-like data quality reports",
+  "oneOf": [
+    {"$ref": "#/definitions/iso19115_quality_report"},
+    {
+      "type": "array",
+      "items": {"$ref": "#/definitions/iso19115_quality_report"}
+    }
+  ],
+  "definitions": {
+    "iso19115_conformance_result": {
+      "type": "object",
+      "properties": {
+        "specification": { "type": "string" },
+        "explanation": { "type": "string" },
+        "pass": { "type": "boolean" }
+      },
+      "required": ["specification", "pass"],
+      "additionalProperties": true
+    },
+    "iso19115_measure": {
+      "type": "object",
+      "not": {
+        "required": ["type"]
+      },
+      "properties": {
+        "description": { "type": "string" },
+        "value": { "type": ["number", "string", "boolean", "object", "null"] },
+        "valueType": { "type": "string" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "reference": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": true
+    },
+    "iso19115_completeness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "completeness" },
+        "scope": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" },
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_logical_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "logicalConsistency" },
+        "description": { "type": "string" },
+        "testsPerformed": { "type": "array", "items": { "type": "string" } },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "positionalAccuracy" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_thematic_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "thematicAccuracy" },
+        "description": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_temporal_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalAccuracy" },
+        "description": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "attributeAccuracy" },
+        "attribute": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "attribute", "measure"],
+      "additionalProperties": true
+    },
+    "iso19115_topological_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "topologicalConsistency" },
+        "description": { "type": "string" },
+        "tests": { "type": "array", "items": { "type": "string" } },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_lineage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "lineage" },
+        "statement": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_radiometric_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "radiometricAccuracy" },
+        "description": { "type": "string" },
+        "calibrationAccuracy": { "type": "number", "description": "Radiometric calibration accuracy" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_sensor_quality": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "sensorQuality" },
+        "sensorType": { "type": "string" },
+        "calibrationStatus": { "type": "string", "enum": ["calibrated", "uncalibrated", "partial", "unknown"] },
+        "calibrationDate": { "type": "string", "format": "date-time" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_cloud_coverage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "cloudCoverage" },
+        "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "assessmentMethod": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_snow_coverage": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "snowCoverage" },
+        "coveragePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "assessmentMethod": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_4_processing_level": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "processingLevel" },
+        "level": { "type": "string", "description": "Processing level code (e.g., L1A, L1B, L2A)" },
+        "description": { "type": "string" },
+        "processingDate": { "type": "string", "format": "date-time" },
+        "processor": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type", "level"],
+      "additionalProperties": true
+    },
+    "iso19115_4_usability_assessment": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "usabilityAssessment" },
+        "usabilityScore": { "type": "number", "minimum": 0, "maximum": 1 },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "intendedUse": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_absolute_external_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "absoluteExternalPositionalAccuracy" },
+        "horizontalAccuracy": { "type": "number" },
+        "verticalAccuracy": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_relative_internal_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "relativeInternalPositionalAccuracy" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_gridded_data_positional_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "griddedDataPositionalAccuracy" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "method": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_non_quantitative_attribute_correctness": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "nonQuantitativeAttributeCorrectness" },
+        "attribute": { "type": "string" },
+        "correctnessRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_quantitative_attribute_accuracy": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "quantitativeAttributeAccuracy" },
+        "attribute": { "type": "string" },
+        "accuracyValue": { "type": "number" },
+        "units": { "type": "string" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_format_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "formatConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_domain_consistency": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "domainConsistency" },
+        "description": { "type": "string" },
+        "conformanceRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "dgiwg_temporal_validity": {
+      "type": "object",
+      "properties": {
+        "type": { "const": "temporalValidity" },
+        "validFrom": { "type": "string", "format": "date-time" },
+        "validTo": { "type": "string", "format": "date-time" },
+        "measure": { "$ref": "#/definitions/iso19115_measure" }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+    "iso19115_element": {
+      "type": "object",
+      "properties": {
+        "elementType": {
+          "type": "string",
+          "enum": [
+            "completeness",
+            "logicalConsistency",
+            "positionalAccuracy",
+            "thematicAccuracy",
+            "temporalAccuracy",
+            "attributeAccuracy",
+            "topologicalConsistency",
+            "lineage",
+            "radiometricAccuracy",
+            "sensorQuality",
+            "cloudCoverage",
+            "snowCoverage",
+            "processingLevel",
+            "usabilityAssessment",
+            "absoluteExternalPositionalAccuracy",
+            "relativeInternalPositionalAccuracy",
+            "griddedDataPositionalAccuracy",
+            "nonQuantitativeAttributeCorrectness",
+            "quantitativeAttributeAccuracy",
+            "formatConsistency",
+            "domainConsistency",
+            "temporalValidity",
+            "other"
+          ]
+        },
+        "summary": { "type": "string" },
+        "detail": {
+          "oneOf": [
+            { "$ref": "#/definitions/iso19115_completeness" },
+            { "$ref": "#/definitions/iso19115_logical_consistency" },
+            { "$ref": "#/definitions/iso19115_positional_accuracy" },
+            { "$ref": "#/definitions/iso19115_thematic_accuracy" },
+            { "$ref": "#/definitions/iso19115_temporal_accuracy" },
+            { "$ref": "#/definitions/iso19115_attribute_accuracy" },
+            { "$ref": "#/definitions/iso19115_topological_consistency" },
+            { "$ref": "#/definitions/iso19115_lineage" },
+            { "$ref": "#/definitions/iso19115_4_radiometric_accuracy" },
+            { "$ref": "#/definitions/iso19115_4_sensor_quality" },
+            { "$ref": "#/definitions/iso19115_4_cloud_coverage" },
+            { "$ref": "#/definitions/iso19115_4_snow_coverage" },
+            { "$ref": "#/definitions/iso19115_4_processing_level" },
+            { "$ref": "#/definitions/iso19115_4_usability_assessment" },
+            { "$ref": "#/definitions/dgiwg_absolute_external_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_relative_internal_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_gridded_data_positional_accuracy" },
+            { "$ref": "#/definitions/dgiwg_non_quantitative_attribute_correctness" },
+            { "$ref": "#/definitions/dgiwg_quantitative_attribute_accuracy" },
+            { "$ref": "#/definitions/dgiwg_format_consistency" },
+            { "$ref": "#/definitions/dgiwg_domain_consistency" },
+            { "$ref": "#/definitions/dgiwg_temporal_validity" },
+            { "$ref": "#/definitions/iso19115_measure" }
+          ]
+        },
+        "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
+      },
+      "required": ["elementType"],
+      "additionalProperties": true
+    },
+    "iso19115_quality_report": {
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string" },
+        "scope": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "version": { "type": "string" },
+        "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_element" } },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

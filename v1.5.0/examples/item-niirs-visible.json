@@ -1,0 +1,82 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "imagery-niirs6-example",
+  "bbox": [
+    -122.4194,
+    37.7749,
+    -122.4084,
+    37.7849
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-122.4194, 37.7749],
+        [-122.4084, 37.7749],
+        [-122.4084, 37.7849],
+        [-122.4194, 37.7849],
+        [-122.4194, 37.7749]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2024-01-15T18:30:00Z",
+    "title": "High-Resolution Visible Imagery - NIIRS 6",
+    "description": "Panchromatic aerial imagery with NIIRS 6 rating, suitable for identifying vehicle types, antenna configurations, and building construction details",
+    "instruments": ["RGB-CAMERA"],
+    "platform": "aerial-survey-001",
+    "gsd": 0.3,
+    "liability:niirs": {
+      "overall": 6,
+      "variants": {
+        "visible": 6,
+        "radar": null,
+        "infrared": null,
+        "multispectral": null
+      },
+      "evaluation_method": "subjective_analyst_rating",
+      "evaluation_date": "2024-01-16T10:00:00Z",
+      "evaluated_by": "Imagery Analysis Team - DIA",
+      "tasks_verified": [
+        "Identify vehicle spare tires (NIIRS 6)",
+        "Distinguish antenna shapes as parabolic/rectangular (NIIRS 6)",
+        "Identify cable car-type (NIIRS 6)",
+        "Detect individual railroad ties (NIIRS 6)",
+        "Identify individual windows in buildings (NIIRS 5)"
+      ],
+      "giqe_predicted": 5.8,
+      "giqe_parameters": {
+        "gsd": 0.3,
+        "rer": 0.85,
+        "snr": 45.0,
+        "overshoot": 0.12
+      },
+      "confidence": "high",
+      "notes": "Imagery acquired under optimal lighting conditions (solar elevation 45°). GIQE prediction (5.8) slightly lower than analyst rating (6.0) due to excellent atmospheric clarity not fully captured in SNR calculation."
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/imagery-niirs6-example.json"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/high-res-visible.json"
+    }
+  ],
+  "assets": {
+    "visual": {
+      "href": "https://example.com/data/imagery-niirs6-example.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "Panchromatic GeoTIFF",
+      "roles": ["data"]
+    }
+  }
+}

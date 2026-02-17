@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAC Extension: Liability and Claims</title>
+    <meta name="description" content="STAC Extension for Liability Claims, Data Quality (ISO 19157), Provenance (W3C PROV), and NIIRS Imagery Quality Assessment">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .new-badge {
+            display: inline-block;
+            background: #00d4aa;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        main {
+            padding: 40px;
+        }
+        
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .version-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .version-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .version-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        }
+        
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .version-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .version-date {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .version-description {
+            color: #666;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+        
+        .version-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .version-features li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .version-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00d4aa;
+            font-weight: bold;
+        }
+        
+        .version-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+        
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .info-section p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .feature-box p {
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #00d4aa;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>STAC Extension: Liability and Claims</h1>
+            <p>Comprehensive metadata for imagery quality, legal claims, data quality, and provenance</p>
+        </header>
+        
+        <main>
+            <section class="info-section">
+                <h2>📋 About This Extension</h2>
+                <p>
+                    The <strong>Liability and Claims STAC Extension</strong> provides comprehensive metadata support for:
+                </p>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <h3>🎯 Imagery Quality (NIIRS)</h3>
+                        <p>National Imagery Interpretability Rating Scale for standardized quality assessment</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>⚖️ Legal Claims Tracking</h3>
+                        <p>Liability claims, incidents, responsible parties, and resolution status</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>📊 Data Quality (ISO 19157)</h3>
+                        <p>Comprehensive quality reports following ISO 19157-1:2023 standard</p>
+                    </div>
+                    <div class="feature-box">
+                        <h3>🔗 Provenance (W3C PROV)</h3>
+                        <p>Complete lineage tracking using W3C PROV-JSON standard</p>
+                    </div>
+                </div>
+            </section>
+            
+            <h2 style="margin: 40px 0 20px 0; color: #667eea;">📦 Available Versions</h2>
+            
+            <div class="version-grid">
+                <!-- Version 1.5.0 -->
+                <div class="version-card featured">
+                    <div class="version-header">
+                        <span class="version-number">v1.5.0</span>
+                        <span class="new-badge">NEW</span>
+                    </div>
+                    <div class="version-date">Released: February 2024</div>
+                    <div class="version-description">
+                        <strong>NIIRS Support Added!</strong> Comprehensive National Imagery Interpretability Rating Scale metadata for imagery quality assessment.
+                    </div>
+                    <ul class="version-features">
+                        <li>NIIRS ratings (0-9 scale) for all sensor types</li>
+                        <li>GIQE (General Image Quality Equation) integration</li>
+                        <li>Task verification and evaluation metadata</li>
+                        <li>Multi-sensor support (Visible, Radar, IR, MS)</li>
+                        <li>Full backward compatibility with v1.4.0</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="v1.5.0/schema.json" class="btn btn-primary">📄 Schema</a>
+                        <a href="v1.5.0/README.md" class="btn btn-secondary">📖 Documentation</a>
+                        <a href="v1.5.0/examples/" class="btn btn-secondary">💡 Examples</a>
+                    </div>
+                </div>
+                
+                <!-- Version 1.4.0 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-number">v1.4.0</span>
+                    </div>
+                    <div class="version-date">Released: January 2024</div>
+                    <div class="version-description">
+                        EOVOC v0.0.2 ISO schemas alignment with stepDateTime fixes per ISO 19115-2:2019 standard.
+                    </div>
+                    <ul class="version-features">
+                        <li>ISO 19157-1:2023 quality reports</li>
+                        <li>W3C PROV-JSON provenance</li>
+                        <li>CEOS-ARD compliance metrics</li>
+                        <li>EOVOC dual namespace support</li>
+                        <li>Liability claims tracking</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="v1.4.0/schema.json" class="btn btn-primary">📄 Schema</a>
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/v1.4.0_RELEASE_NOTES.md" class="btn btn-secondary">📖 Release Notes</a>
+                    </div>
+                </div>
+                
+                <!-- Version 1.3.0 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-number">v1.3.0</span>
+                    </div>
+                    <div class="version-date">Released: 2023</div>
+                    <div class="version-description">
+                        Canonical ISO 19157 and ISO 19115 schemas adoption for improved interoperability.
+                    </div>
+                    <ul class="version-features">
+                        <li>OGC Building Blocks integration</li>
+                        <li>Canonical ISO schema references</li>
+                        <li>Resolved circular dependencies</li>
+                        <li>Enhanced STAC EO compatibility</li>
+                        <li>Improved validation performance</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="v1.3.0/schema.json" class="btn btn-primary">📄 Schema</a>
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/COMPLIANCE_ANALYSIS_v1.3.0.md" class="btn btn-secondary">📖 Compliance Analysis</a>
+                    </div>
+                </div>
+                
+                <!-- Version 1.2.0 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-number">v1.2.0</span>
+                    </div>
+                    <div class="version-date">Released: 2023</div>
+                    <div class="version-description">
+                        ISO TC211 Geographic Metadata Integration with comprehensive quality tracking.
+                    </div>
+                    <ul class="version-features">
+                        <li>dq:lineage data lineage tracking</li>
+                        <li>dq:quality comprehensive metadata</li>
+                        <li>mdj:qualityInfo extended quality</li>
+                        <li>Enhanced provenance support</li>
+                        <li>ARD specifications integration</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/tree/main/v1.2.0" class="btn btn-primary">📄 Schema</a>
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/ISO-TC211-ALIGNMENT.md" class="btn btn-secondary">📖 ISO Alignment</a>
+                    </div>
+                </div>
+                
+                <!-- Version 1.1.0 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-number">v1.1.0</span>
+                    </div>
+                    <div class="version-date">Released: 2023</div>
+                    <div class="version-description">
+                        <strong>Initial Stable Release</strong> - Foundation for liability claims and quality metadata.
+                    </div>
+                    <ul class="version-features">
+                        <li>Liability claim tracking fields</li>
+                        <li>Basic quality metadata</li>
+                        <li>Provenance foundations</li>
+                        <li>STAC 1.0.0 compliance</li>
+                        <li>JSON Schema Draft-07</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/tree/main/v1.1.0" class="btn btn-primary">📄 Schema</a>
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims/blob/main/RELEASE-v1.1.0.md" class="btn btn-secondary">📖 Release Notes</a>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="info-section">
+                <h2>🚀 Quick Start</h2>
+                <p style="margin-bottom: 15px;">Add the extension to your STAC Item or Collection:</p>
+                <pre style="background: white; padding: 20px; border-radius: 8px; overflow-x: auto; border: 1px solid #ddd;"><code>{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json"
+  ],
+  "properties": {
+    "liability:niirs": {
+      "overall": 6,
+      "variants": {
+        "visible": 6,
+        "multispectral": 5
+      },
+      "evaluation_method": "giqe4_prediction"
+    }
+  }
+}</code></pre>
+            </section>
+            
+            <section class="info-section">
+                <h2>� Version Comparison Matrix</h2>
+                <p style="margin-bottom: 20px;">Feature evolution across all releases:</p>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden;">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                <th style="padding: 15px; text-align: left; border-bottom: 2px solid #ddd;">Feature</th>
+                                <th style="padding: 15px; text-align: center; border-bottom: 2px solid #ddd;">v1.1.0</th>
+                                <th style="padding: 15px; text-align: center; border-bottom: 2px solid #ddd;">v1.2.0</th>
+                                <th style="padding: 15px; text-align: center; border-bottom: 2px solid #ddd;">v1.3.0</th>
+                                <th style="padding: 15px; text-align: center; border-bottom: 2px solid #ddd;">v1.4.0</th>
+                                <th style="padding: 15px; text-align: center; border-bottom: 2px solid #ddd; background: rgba(0, 212, 170, 0.2);">v1.5.0</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>Basic Liability Claims</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.1);">✅</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>ISO 19157 Quality</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.1);">✅</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>W3C PROV Provenance</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">⚠️</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.1);">✅</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>Canonical ISO Schemas</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.1);">✅</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>EOVOC Alignment</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.1);">✅</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>NIIRS Imagery Quality</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.3);"><strong>✅ NEW</strong></td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>Sensor-Specific NIIRS</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.3);"><strong>✅ NEW</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border-bottom: 1px solid #ddd;"><strong>GIQE Integration</strong></td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd; background: rgba(0, 212, 170, 0.3);"><strong>✅ NEW</strong></td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 12px;"><strong>Task Verification</strong></td>
+                                <td style="padding: 12px; text-align: center;">❌</td>
+                                <td style="padding: 12px; text-align: center;">❌</td>
+                                <td style="padding: 12px; text-align: center;">❌</td>
+                                <td style="padding: 12px; text-align: center;">❌</td>
+                                <td style="padding: 12px; text-align: center; background: rgba(0, 212, 170, 0.3);"><strong>✅ NEW</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                    Legend: ✅ Fully supported • ⚠️ Partial support • ❌ Not available
+                </p>
+            </section>
+            
+            <section class="info-section">
+                <h2>�📚 Resources</h2>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 10px 0;">
+                        <strong>GitHub Repository:</strong> 
+                        <a href="https://github.com/luciocola/stac-extension-liability-claims" target="_blank">
+                            luciocola/stac-extension-liability-claims
+                        </a>
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <strong>STAC Specification:</strong> 
+                        <a href="https://github.com/radiantearth/stac-spec" target="_blank">
+                            radiantearth/stac-spec
+                        </a>
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <strong>ISO 19157-1:2023:</strong> 
+                        <a href="https://www.iso.org/standard/78900.html" target="_blank">
+                            Data Quality Standard
+                        </a>
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <strong>W3C PROV:</strong> 
+                        <a href="https://www.w3.org/TR/prov-overview/" target="_blank">
+                            Provenance Standard
+                        </a>
+                    </li>
+                    <li style="padding: 10px 0;">
+                        <strong>NIIRS Reference:</strong> 
+                        <a href="https://irp.fas.org/imint/niirs.htm" target="_blank">
+                            National Imagery Interpretability Rating Scale
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>
+                STAC Extension: Liability and Claims •
+                <a href="https://github.com/luciocola/stac-extension-liability-claims">GitHub</a> •
+                Licensed under MIT
+            </p>
+            <p style="margin-top: 10px; opacity: 0.8; font-size: 0.9em;">
+                Compatible with STAC 1.0.0 • Last updated: February 2024
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

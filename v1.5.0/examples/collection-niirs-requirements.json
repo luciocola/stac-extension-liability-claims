@@ -1,0 +1,121 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json"
+  ],
+  "type": "Collection",
+  "id": "tactical-reconnaissance-collection",
+  "title": "Tactical Reconnaissance Imagery Collection",
+  "description": "Collection of tactical reconnaissance imagery with minimum NIIRS 5 requirement for operational effectiveness. All items in this collection must meet or exceed NIIRS 5 for visible spectrum or NIIRS 4 for SAR/IR sensors.",
+  "keywords": [
+    "reconnaissance",
+    "tactical",
+    "high-resolution",
+    "NIIRS",
+    "interpretability"
+  ],
+  "license": "proprietary",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -10.0,
+          35.0,
+          40.0,
+          70.0
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "2024-01-01T00:00:00Z",
+          null
+        ]
+      ]
+    }
+  },
+  "summaries": {
+    "platform": [
+      "aerial-survey-001",
+      "aerial-survey-002",
+      "satellite-recon-007",
+      "satellite-recon-008"
+    ],
+    "instruments": [
+      "RGB-CAMERA",
+      "SAR-X-BAND",
+      "THERMAL-IR",
+      "MULTISPECTRAL-SENSOR"
+    ],
+    "gsd": {
+      "minimum": 0.15,
+      "maximum": 2.0
+    },
+    "liability:niirs": {
+      "overall": {
+        "minimum": 4,
+        "maximum": 7
+      },
+      "variants": {
+        "visible": {
+          "minimum": 5,
+          "maximum": 7
+        },
+        "radar": {
+          "minimum": 4,
+          "maximum": 6
+        },
+        "infrared": {
+          "minimum": 3,
+          "maximum": 5
+        },
+        "multispectral": {
+          "minimum": 4,
+          "maximum": 6
+        }
+      },
+      "evaluation_method": [
+        "subjective_analyst_rating",
+        "giqe_prediction",
+        "operational_validation"
+      ]
+    }
+  },
+  "providers": [
+    {
+      "name": "Defense Imagery Agency",
+      "roles": ["producer", "licensor"],
+      "url": "https://example.gov/imagery"
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/tactical-reconnaissance-collection.json"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://example.com/stac/catalog.json"
+    },
+    {
+      "rel": "license",
+      "href": "https://example.gov/imagery/license",
+      "title": "Imagery Usage License"
+    },
+    {
+      "rel": "item",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/imagery-niirs6-example.json",
+      "title": "NIIRS 6 Visible Example"
+    },
+    {
+      "rel": "item",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/multiband-sar-ir-niirs.json",
+      "title": "Multi-Sensor Example"
+    }
+  ]
+}

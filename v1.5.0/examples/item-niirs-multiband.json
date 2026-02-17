@@ -1,0 +1,101 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.1.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "multiband-sar-ir-niirs",
+  "bbox": [
+    12.4824,
+    41.8902,
+    12.5034,
+    41.9102
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [12.4824, 41.8902],
+        [12.5034, 41.8902],
+        [12.5034, 41.9102],
+        [12.4824, 41.9102],
+        [12.4824, 41.8902]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2024-02-20T02:15:00Z",
+    "title": "Multi-Sensor Collection - SAR + Thermal IR",
+    "description": "Simultaneous synthetic aperture radar and thermal infrared acquisition demonstrating sensor-specific NIIRS ratings",
+    "instruments": ["SAR-X-BAND", "THERMAL-IR"],
+    "platform": "satellite-recon-007",
+    "eo:cloud_cover": 85,
+    "liability:niirs": {
+      "overall": 5,
+      "variants": {
+        "visible": null,
+        "radar": 5,
+        "infrared": 4,
+        "multispectral": null
+      },
+      "evaluation_method": "giqe_prediction",
+      "evaluation_date": "2024-02-20T08:45:00Z",
+      "evaluated_by": "Automated GIQE Assessment System v2.3",
+      "tasks_verified": [
+        "Distinguish between cars and trucks (NIIRS 4 - both sensors)",
+        "Detect large buildings (NIIRS 3 - both sensors)",
+        "Identify radar polarization-specific features (NIIRS 5 - SAR only)",
+        "Detect thermal anomalies in structures (NIIRS 4 - IR only)"
+      ],
+      "giqe_predicted": 5.2,
+      "giqe_parameters": {
+        "gsd": 1.0,
+        "rer": 0.78,
+        "snr": 38.0,
+        "overshoot": 0.08
+      },
+      "confidence": "medium",
+      "notes": "SAR NIIRS 5 achieved despite 85% cloud cover. Infrared NIIRS 4 limited by atmospheric water vapor absorption. Overall rating derived from SAR as primary sensor for this operational requirement."
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://example.com/stac/items/multiband-sar-ir-niirs.json"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://example.com/stac/collections/all-weather-surveillance.json"
+    }
+  ],
+  "assets": {
+    "sar": {
+      "href": "https://example.com/data/multiband-sar-ir-niirs-sar.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "X-Band SAR",
+      "roles": ["data"],
+      "eo:bands": [
+        {
+          "name": "HH",
+          "description": "Horizontal transmit, horizontal receive polarization"
+        }
+      ]
+    },
+    "thermal": {
+      "href": "https://example.com/data/multiband-sar-ir-niirs-thermal.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Thermal Infrared",
+      "roles": ["data"],
+      "eo:bands": [
+        {
+          "name": "LWIR",
+          "common_name": "lwir",
+          "description": "Long-wave infrared (8-14 μm)"
+        }
+      ]
+    }
+  }
+}
