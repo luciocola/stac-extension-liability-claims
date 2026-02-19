@@ -1,0 +1,56 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "iso19115-4-scope-example",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.4.0/schema.json"
+  ],
+  "geometry": {
+    "type": "Point",
+    "coordinates": [0, 0]
+  },
+  "bbox": [0, 0, 0, 0],
+  "properties": {
+    "datetime": "2026-02-19T12:00:00Z",
+    "dq:quality": [
+      {
+        "scope": {"level": "series"},
+        "report": [{
+          "type": "Commission",
+          "measure": {
+            "nameOfMeasure": ["Data completeness"],
+            "measureDescription": "Percentage of expected data present"
+          },
+          "result": [{
+            "type": "ConformanceResult",
+            "pass": true,
+            "explanation": "All expected data is present"
+          }]
+        }]
+      },
+      {
+        "scope": "dataset",
+        "report": [{
+          "type": "Commission",
+          "measure": {
+            "nameOfMeasure": ["Feature completeness"],
+            "measureDescription": "Percentage of expected features present"
+          },
+          "result": [{
+            "type": "ConformanceResult",
+            "pass": true,
+            "explanation": "All expected features are present"
+          }]
+        }]
+      }
+    ]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "./iso19115-4-scope-example.json",
+      "type": "application/geo+json"
+    }
+  ],
+  "assets": {}
+}

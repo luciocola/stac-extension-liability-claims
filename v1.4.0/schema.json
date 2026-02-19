@@ -419,7 +419,25 @@
       "type": "object",
       "properties": {
         "type": { "const": "completeness" },
-        "scope": { "type": "string", "description": "Scope of completeness (dataset, feature, attribute)" },
+        "scope": { 
+          "oneOf": [
+            {
+              "type": "string", 
+              "description": "Simple scope string (dataset, feature, attribute)"
+            },
+            {
+              "type": "object",
+              "description": "ISO 19115-4 compliant scope object",
+              "properties": {
+                "level": { "type": "string" },
+                "extent": { "type": "object" },
+                "levelDescription": { "type": "string" }
+              },
+              "required": ["level"]
+            }
+          ],
+          "description": "Scope of completeness - accepts either string or object format"
+        },
         "measure": { "$ref": "#/definitions/iso19115_measure" },
         "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
       },
@@ -922,11 +940,39 @@
       "additionalProperties": true
     },
     "iso19115_quality_report": {
-      "$comment": "Top-level ISO 19115-like quality report structure (expanded)",
+      "$comment": "Top-level ISO 19115-like quality report structure (expanded) - ISO 19115-4 compliant scope",
       "type": "object",
       "properties": {
         "reportId": { "type": "string", "description": "Identifier for the quality report" },
-        "scope": { "type": "string", "description": "Scope of the report (e.g., dataset, series, feature)" },
+        "scope": { 
+          "oneOf": [
+            {
+              "type": "string", 
+              "description": "Simple scope string (e.g., dataset, series, feature)"
+            },
+            {
+              "type": "object",
+              "description": "ISO 19115-4 compliant scope object with level and optional extent",
+              "properties": {
+                "level": { 
+                  "type": "string", 
+                  "enum": ["dataset", "series", "feature", "attribute", "featureType", "propertyType", "fieldSession", "software", "service", "model", "tile", "metadata", "initiative", "sample", "document", "repository", "aggregate", "product", "collection", "coverage", "application"],
+                  "description": "Hierarchical level of the data specified by the scope"
+                },
+                "extent": { 
+                  "type": "object", 
+                  "description": "GeoJSON geometry defining the extent to which the quality applies" 
+                },
+                "levelDescription": { 
+                  "type": "string",
+                  "description": "Detailed description about the level of the data"
+                }
+              },
+              "required": ["level"]
+            }
+          ],
+          "description": "Scope of the report - accepts either simple string or ISO 19115-4 object format"
+        },
         "date": { "type": "string", "format": "date-time", "description": "Date when the quality report was generated" },
         "version": { "type": "string", "description": "Version of the quality report" },
         "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_element" }, "description": "List of data quality elements and their measures" },
