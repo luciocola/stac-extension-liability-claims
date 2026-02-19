@@ -719,7 +719,6 @@
           }
         }
       },
-      "required": ["type"],
       "additionalProperties": true
     },
     "iso19115_4_radiometric_accuracy": {
