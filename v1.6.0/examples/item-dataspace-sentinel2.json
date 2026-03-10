@@ -1,0 +1,203 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.6.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "sentinel2-l2a-20260115-flood-mosul",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [43.0, 35.5], [44.5, 35.5], [44.5, 36.8], [43.0, 36.8], [43.0, 35.5]
+      ]
+    ]
+  },
+  "bbox": [43.0, 35.5, 44.5, 36.8],
+  "properties": {
+    "datetime": "2026-01-15T09:22:00Z",
+    "gsd": 10.0,
+    "platform": "sentinel-2b",
+    "instruments": ["msi"],
+    "constellation": "sentinel-2",
+
+    "liability:responsible_party": {
+      "name": "4113 Engineering",
+      "role": "originator",
+      "email": "data@4113engineering.com",
+      "did": "did:web:4113engineering.com"
+    },
+    "liability:claim_id": "LC-2026-0115-S2B-FLOOD",
+    "liability:claim_date": "2026-01-15T12:00:00Z",
+    "liability:claim_status": "active",
+    "liability:claim_type": "data_provision",
+    "liability:legal_jurisdiction": "EU",
+
+    "liability:data_space": {
+      "id": "https://gaia-x.eu/spaces/copernicus-emergency-data-space",
+      "name": "Copernicus Emergency Management Data Space",
+      "operator": "did:web:dataspace-operator.copernicus.eu",
+      "connector_url": "https://connector.4113engineering.com/ids/data",
+      "participant_role": "provider",
+      "self_description_url": "https://4113engineering.com/.well-known/gaia-x-self-description.jsonld"
+    },
+
+    "liability:usage_policy": {
+      "policy_id": "https://4113engineering.com/policies/sentinel2-emergency-research-2026",
+      "policy_type": "Offer",
+      "target": "sentinel2-l2a-20260115-flood-mosul",
+      "assigner": "did:web:4113engineering.com",
+      "permission": [
+        {
+          "action": "use",
+          "constraint": [
+            {
+              "leftOperand": "purpose",
+              "operator": "isA",
+              "rightOperand": "https://w3id.org/dpv#EmergencyManagement"
+            }
+          ]
+        },
+        {
+          "action": "reproduce",
+          "constraint": [
+            {
+              "leftOperand": "spatialArea",
+              "operator": "isPartOf",
+              "rightOperand": "ISO3166:EU"
+            }
+          ]
+        }
+      ],
+      "prohibition": [
+        { "action": "commercialize" },
+        { "action": "sublicense" }
+      ],
+      "obligation": [
+        {
+          "action": "attribute",
+          "target": "did:web:4113engineering.com"
+        },
+        {
+          "action": "delete",
+          "constraint": [
+            {
+              "leftOperand": "elapsedTime",
+              "operator": "lteq",
+              "rightOperand": "P180D"
+            }
+          ]
+        }
+      ]
+    },
+
+    "liability:data_contract": {
+      "contract_id": "urn:uuid:3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+      "contract_date": "2026-01-15T10:00:00Z",
+      "expiry_date": "2026-07-14T23:59:59Z",
+      "policy_ref": "https://4113engineering.com/policies/sentinel2-emergency-research-2026",
+      "signed_by": [
+        "did:web:4113engineering.com",
+        "did:web:consumer.research-institute.eu"
+      ],
+      "status": "active"
+    },
+
+    "liability:sovereignty": {
+      "data_residency": ["EU"],
+      "purpose": "https://w3id.org/dpv#EmergencyManagement",
+      "purpose_description": "Flood extent mapping for humanitarian emergency response in the Tigris valley",
+      "retention_days": 180,
+      "export_restrictions": ["RU", "KP"],
+      "redistribution_allowed": false,
+      "anonymisation_required": false,
+      "gdpr_basis": "public_task",
+      "data_classification": "official-sensitive"
+    },
+
+    "liability:quality": {
+      "scope": { "level": "dataset" },
+      "report": [
+        {
+          "type": "AbsoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "authority": {
+                "title": "ISO 19157-3",
+                "onlineResource": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/28"
+              },
+              "codeSpace": "https://standards.isotc211.org/19157/-3/1/dqc/content/qualityMeasure/"
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties"]
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directExternal",
+            "evaluationMethodDescription": "ICESat-2 altimetry ground control comparison"
+          },
+          "result": [
+            {
+              "type": "QuantitativeResult",
+              "valueUnit": "m",
+              "value": ["8.3"]
+            }
+          ]
+        }
+      ]
+    },
+
+    "liability:prov": {
+      "prefix": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#"
+      },
+      "entity": {
+        "sentinel2-l2a-20260115-flood-mosul": {
+          "prov:type": "prov:Entity"
+        },
+        "sentinel2-l1c-raw": {
+          "prov:type": "prov:Entity"
+        }
+      },
+      "activity": {
+        "sen2cor-l2a-processing": {
+          "prov:type": "prov:Activity",
+          "prov:startTime": "2026-01-15T08:00:00Z",
+          "prov:endTime": "2026-01-15T09:22:00Z"
+        }
+      },
+      "agent": {
+        "did:web:4113engineering.com": {
+          "prov:type": "prov:Organization"
+        }
+      },
+      "wasGeneratedBy": {
+        "_": {
+          "prov:entity": "sentinel2-l2a-20260115-flood-mosul",
+          "prov:activity": "sen2cor-l2a-processing"
+        }
+      },
+      "wasAttributedTo": {
+        "_": {
+          "prov:entity": "sentinel2-l2a-20260115-flood-mosul",
+          "prov:agent": "did:web:4113engineering.com"
+        }
+      }
+    }
+  },
+  "links": [],
+  "assets": {
+    "visual": {
+      "href": "s3://copernicus-ds/sentinel-2b/2026/01/15/T38SMB/visual.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "True-colour COG",
+      "roles": ["visual"]
+    },
+    "metadata": {
+      "href": "https://4113engineering.com/stac/sentinel2-l2a-20260115/metadata.json",
+      "type": "application/json",
+      "title": "ISO 19115-4 metadata record",
+      "roles": ["metadata"]
+    }
+  }
+}

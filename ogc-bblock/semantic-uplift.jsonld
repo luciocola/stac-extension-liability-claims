@@ -1,0 +1,194 @@
+{
+  "@context": {
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "http://schema.org/",
+    "legal": "http://www.w3.org/ns/legal#",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dqv": "http://www.w3.org/ns/dqv#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "fibo-fnd": "https://spec.edmcouncil.org/fibo/ontology/FND/",
+    "ceosard": "https://ceos.org/ard/ontology#",
+    "iso19157": "https://def.isotc211.org/iso19157/-3/dqm/1.0/",
+    "liability": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#liability:",
+    "ard": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#ard:"
+  },
+  "@graph": [
+    {
+      "@id": "liability:responsible_party",
+      "owl:equivalentProperty": { "@id": "schema:accountablePerson" },
+      "rdfs:range": { "@id": "xsd:anyURI" }
+    },
+    {
+      "@id": "liability:claim_status",
+      "owl:equivalentProperty": { "@id": "legal:status" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:claim_id",
+      "owl:equivalentProperty": { "@id": "schema:identifier" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:claim_date",
+      "owl:equivalentProperty": { "@id": "schema:dateCreated" },
+      "rdfs:range": { "@id": "xsd:dateTime" }
+    },
+    {
+      "@id": "liability:claim_type",
+      "owl:equivalentProperty": { "@id": "schema:additionalType" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:coverage_area",
+      "owl:equivalentProperty": { "@id": "schema:spatialCoverage" }
+    },
+    {
+      "@id": "liability:affected_parties",
+      "owl:equivalentProperty": { "@id": "schema:participant" },
+      "rdfs:range": { "@id": "xsd:anyURI" }
+    },
+    {
+      "@id": "liability:damages_estimated",
+      "owl:equivalentProperty": { "@id": "fibo-fnd:monetaryAmount" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    },
+    {
+      "@id": "liability:damages_currency",
+      "owl:equivalentProperty": { "@id": "fibo-fnd:currency" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:legal_jurisdiction",
+      "owl:equivalentProperty": { "@id": "legal:jurisdiction" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:incident_date",
+      "owl:equivalentProperty": { "@id": "schema:startDate" },
+      "rdfs:range": { "@id": "xsd:dateTime" }
+    },
+    {
+      "@id": "liability:resolution_date",
+      "owl:equivalentProperty": { "@id": "schema:endDate" },
+      "rdfs:range": { "@id": "xsd:dateTime" }
+    },
+    {
+      "@id": "liability:resolution_status",
+      "owl:equivalentProperty": { "@id": "legal:outcome" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:insurance_provider",
+      "owl:equivalentProperty": { "@id": "schema:provider" },
+      "rdfs:range": { "@id": "xsd:anyURI" }
+    },
+    {
+      "@id": "liability:policy_number",
+      "owl:equivalentProperty": { "@id": "schema:serialNumber" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:evidence_refs",
+      "owl:equivalentProperty": { "@id": "legal:evidence" },
+      "rdfs:range": { "@id": "xsd:anyURI" }
+    },
+    {
+      "@id": "liability:notes",
+      "owl:equivalentProperty": { "@id": "schema:description" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:origin",
+      "owl:equivalentProperty": { "@id": "dcat:contactPoint" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:quality",
+      "owl:equivalentProperty": { "@id": "dqv:hasQualityMeasurement" },
+      "rdfs:comment": "Nested DQV quality measurement object. Sub-properties map scope→dqv:scope, report→dqv:QualityMeasurement, measure→dqv:isMeasurementOf, result→dqv:value, evaluationMethod→dqv:computedOn, lineage→prov:has_provenance."
+    },
+    {
+      "@id": "liability:lineage",
+      "owl:equivalentProperty": { "@id": "prov:has_provenance" },
+      "rdfs:comment": "Nested PROV provenance object. Sub-properties map statement→prov:value, processStep→prov:Activity, source→prov:Entity, scope→prov:hadPlan."
+    },
+    {
+      "@id": "liability:dataQualityInfo",
+      "owl:equivalentProperty": { "@id": "dqv:hasQualityAnnotation" },
+      "rdfs:comment": "Nested ISO 19157 quality annotation. Sub-properties map scope→dqv:inCategory, report→dqv:QualityMeasurement, lineage→prov:has_provenance."
+    },
+    {
+      "@id": "liability:prov",
+      "owl:equivalentProperty": { "@id": "prov:has_provenance" },
+      "rdfs:comment": "W3C PROV-JSON graph. Values should be interpreted using https://www.w3.org/ns/prov-jsonld context."
+    },
+    {
+      "@id": "liability:security_classification",
+      "owl:equivalentProperty": { "@id": "schema:securityLevel" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:access_restrictions",
+      "owl:equivalentProperty": { "@id": "schema:accessMode" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "liability:required_roles",
+      "owl:equivalentProperty": { "@id": "schema:requiredRole" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "ard:geometric_accuracy",
+      "owl:equivalentProperty": { "@id": "iso19157:DQ_AbsoluteExternalPositionalAccuracy" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    },
+    {
+      "@id": "ard:geometric_accuracy_unit",
+      "owl:equivalentProperty": { "@id": "iso19157:valueUnit" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "ard:geometric_accuracy_type",
+      "owl:equivalentProperty": { "@id": "iso19157:measureDescription" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "ard:radiometric_accuracy",
+      "owl:equivalentProperty": { "@id": "iso19157:DQ_ThematicClassificationCorrectness" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    },
+    {
+      "@id": "ard:radiometric_accuracy_unit",
+      "owl:equivalentProperty": { "@id": "iso19157:valueUnit" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "ard:cloud_coverage",
+      "owl:equivalentProperty": { "@id": "ceosard:cloudCoveragePercentage" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    },
+    {
+      "@id": "ard:data_mask_coverage",
+      "owl:equivalentProperty": { "@id": "ceosard:dataMaskPercentage" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    },
+    {
+      "@id": "ard:specification_compliance",
+      "owl:equivalentProperty": { "@id": "ceosard:conformsToSpecification" },
+      "rdfs:range": { "@id": "xsd:boolean" }
+    },
+    {
+      "@id": "ard:pfs_threshold_compliance",
+      "owl:equivalentProperty": { "@id": "ceosard:thresholdRequirementsStatus" },
+      "rdfs:range": { "@id": "xsd:string" }
+    },
+    {
+      "@id": "ard:pfs_target_compliance",
+      "owl:equivalentProperty": { "@id": "ceosard:targetRequirementsAchievement" },
+      "rdfs:range": { "@id": "xsd:decimal" }
+    }
+  ]
+}

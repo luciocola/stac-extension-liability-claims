@@ -8,8 +8,8 @@
   "dateTimeAddition": "2025-12-13T00:00:00Z",
   "itemClass": "schema",
   "register": "ogc-incubator-building-block-register",
-  "version": "1.1.0",
-  "dateOfLastChange": "2025-12-13",
+  "version": "1.6.0",
+  "dateOfLastChange": "2026-03-10",
   "link": "https://github.com/luciocola/stac-extension-liability-claims",
   "sources": [
     {
@@ -52,11 +52,17 @@
     "validation",
     "iso19115",
     "iso19115-4",
+    "iso19157",
     "dgiwg",
     "prov",
     "prov-json",
     "metadata",
-    "compliance"
+    "compliance",
+    "niirs",
+    "iso20151",
+    "data-spaces",
+    "odrl",
+    "data-sovereignty"
   ],
   "shaclShapes": {},
   "dependsOn": [
@@ -64,14 +70,14 @@
     "ogc.contrib.stac.collection",
     "ogc.ogc-utils.prov"
   ],
-  "ldContext": "https://stac-extensions.github.io/liability-claims/v1.1.0/context.jsonld",
+  "ldContext": "https://luciocola.github.io/stac-extension-liability-claims/v1.6.0/context.jsonld",
   "schema": {
-    "application/yaml": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.yaml",
-    "application/json": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json"
+    "application/json": "https://luciocola.github.io/stac-extension-liability-claims/v1.6.0/schema.json"
   },
   "sourceLdContext": "context.jsonld",
   "sourceSchema": "schema.json",
-  "description": "This STAC extension provides comprehensive fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, insurance information, and data quality/provenance related to spatial data assets.\n\nKey features:\n- **Liability Claims Management**: Track claim status, types, jurisdictions, damages, and affected parties\n- **ISO 19115/19115-4 Quality**: Full support for completeness, accuracy, lineage, and imagery quality\n- **DGIWG Compliance**: Defence geospatial quality elements\n- **W3C PROV Provenance**: Complete PROV-JSON support for semantic web integration\n- **Legal/Insurance**: Policy numbers, providers, evidence references, resolution tracking\n- **Semantic Web**: JSON-LD context with Schema.org, FIBO, DQV, and PROV mappings",
+  "semanticUplift": "semantic-uplift.jsonld",
+  "description": "This STAC extension provides comprehensive fields for documenting liability information and claims associated with geospatial data. It is designed to track incidents, damages, legal proceedings, insurance information, data quality/provenance, and ISO/IEC 20151 data-space governance for spatial data assets.\n\nKey features:\n- **Liability Claims Management**: Track claim status, types, jurisdictions, damages, and affected parties\n- **ISO 19115/19115-4/ISO 19157 Quality**: Full support for completeness, accuracy, lineage, and imagery quality\n- **NIIRS**: Sensor-specific National Imagery Interpretability Rating Scale ratings\n- **DGIWG Compliance**: Defence geospatial quality elements\n- **W3C PROV Provenance**: Complete PROV-JSON support for semantic web integration\n- **Legal/Insurance**: Policy numbers, providers, evidence references, resolution tracking\n- **ISO/IEC 20151 Data Spaces**: Data space identity, W3C ODRL usage policies, data contracts, and sovereignty constraints (GDPR Art.6, data residency)\n- **Semantic Web**: JSON-LD context (valid prefix-only) + semantic-uplift.jsonld with OWL equivalentProperty mappings to Schema.org, FIBO, DQV, PROV, and CEOS ARD ontologies",
   "examples": [
     {
       "title": "Basic Environmental Liability Claim",
@@ -108,7 +114,5 @@
     "ogc.contrib.stac.extensions.liability-claims": [
       "shacl/liability-claims-shapes.ttl"
     ]
-  },
-  "validationPassed": true,
-  "testOutputs": "https://github.com/luciocola/stac-extension-liability-claims/tree/main/tests"
+  }
 }

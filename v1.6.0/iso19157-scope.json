@@ -1,0 +1,304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-scope.json#",
+  "title": "ISO 19157 Data Quality Scope and Extent",
+  "description": "JSON Schema for ISO 19157 DQ_Scope and related extent elements with DQV semantic annotations",
+  "oneOf": [
+    {"$ref": "#/definitions/data_quality"},
+    {
+      "type": "array",
+      "items": {"$ref": "#/definitions/data_quality"}
+    }
+  ],
+  "definitions": {
+    "data_quality": {
+      "type": "object",
+      "description": "ISO 19157 DQ_DataQuality - Overall quality information container",
+      "properties": {
+        "scope": {
+          "$ref": "#/definitions/scope",
+          "description": "Extent and characteristics of the data for which quality is reported"
+        },
+        "report": {
+          "type": "array",
+          "description": "Quality reports (see iso19157-quality.json for detailed schema)"
+        },
+        "standaloneQualityReport": {
+          "$ref": "#/definitions/standalone_quality_report",
+          "description": "Reference to an external quality report"
+        },
+        "derivedElement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Derived quality element from aggregation or calculation"
+          }
+        }
+      },
+      "required": ["scope"]
+    },
+    "scope": {
+      "type": "object",
+      "description": "ISO 19157 DQ_Scope - Extent or characteristics of the data specified by the scope. Maps to dqv:inCategory for semantic lifting.",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "dataset",
+            "series",
+            "feature",
+            "featureType",
+            "attribute",
+            "attributeType",
+            "propertyType",
+            "fieldSession",
+            "software",
+            "service",
+            "model",
+            "tile",
+            "metadata",
+            "initiative",
+            "sample",
+            "document",
+            "repository",
+            "aggregate",
+            "product",
+            "collection",
+            "coverage",
+            "application",
+            "dimensionGroup",
+            "nonGeographicDataset"
+          ],
+          "description": "Hierarchical level of the data specified by the scope"
+        },
+        "extent": {
+          "$ref": "#/definitions/ex_extent",
+          "description": "Information about the horizontal, vertical and temporal extent of the data"
+        },
+        "levelDescription": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Detailed description about the level of the data",
+                "properties": {
+                  "features": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Feature instances to which the data quality scope applies"
+                  },
+                  "featureTypes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Feature types to which the data quality scope applies"
+                  },
+                  "attributeInstances": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Attribute instances to which the data quality scope applies"
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Attribute types to which the data quality scope applies"
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "description": "Dataset to which the data quality scope applies"
+                  },
+                  "other": {
+                    "type": "string",
+                    "description": "Other description of the data quality scope"
+                  }
+                }
+              },
+              {"type": "string"}
+            ]
+          }
+        }
+      },
+      "required": ["level"]
+    },
+    "ex_extent": {
+      "type": "object",
+      "description": "ISO 19115 EX_Extent - Extent of the resource",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Sets of points defining the extent of the resource"
+        },
+        "geographicExtent": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"$ref": "#/definitions/ex_geographic_bounding_box"},
+              {"$ref": "#/definitions/ex_geographic_description"},
+              {"$ref": "#/definitions/ex_bounding_polygon"}
+            ]
+          },
+          "description": "Provides geographic component of the extent"
+        },
+        "temporalExtent": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ex_temporal_extent"},
+          "description": "Provides temporal component of the extent"
+        },
+        "verticalExtent": {
+          "type": "array",
+          "items": {"$ref": "#/definitions/ex_vertical_extent"},
+          "description": "Provides vertical component of the extent"
+        }
+      }
+    },
+    "ex_geographic_bounding_box": {
+      "type": "object",
+      "description": "ISO 19115 EX_GeographicBoundingBox - Geographic position of the resource",
+      "properties": {
+        "extentTypeCode": {
+          "type": "boolean",
+          "description": "Indication of whether the bounding box encompasses an area covered by the data or an area where data is not present",
+          "default": true
+        },
+        "westBoundLongitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Western-most coordinate of the limit of the extent, expressed in longitude in decimal degrees"
+        },
+        "eastBoundLongitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Eastern-most coordinate of the limit of the extent, expressed in longitude in decimal degrees"
+        },
+        "southBoundLatitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Southern-most coordinate of the limit of the extent, expressed in latitude in decimal degrees"
+        },
+        "northBoundLatitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Northern-most coordinate of the limit of the extent, expressed in latitude in decimal degrees"
+        }
+      },
+      "required": ["westBoundLongitude", "eastBoundLongitude", "southBoundLatitude", "northBoundLatitude"]
+    },
+    "ex_geographic_description": {
+      "type": "object",
+      "description": "ISO 19115 EX_GeographicDescription - Description of the geographic area using identifiers",
+      "properties": {
+        "extentTypeCode": {
+          "type": "boolean",
+          "default": true
+        },
+        "geographicIdentifier": {
+          "type": "object",
+          "description": "Identifier used to represent a geographic area",
+          "properties": {
+            "code": {"type": "string"},
+            "codeSpace": {"type": "string"},
+            "version": {"type": "string"},
+            "authority": {
+              "type": "object",
+              "description": "Authority responsible for the geographic identifier"
+            }
+          },
+          "required": ["code"]
+        }
+      },
+      "required": ["geographicIdentifier"]
+    },
+    "ex_bounding_polygon": {
+      "type": "object",
+      "description": "ISO 19115 EX_BoundingPolygon - Boundary enclosing the dataset using GeoJSON geometry",
+      "properties": {
+        "extentTypeCode": {
+          "type": "boolean",
+          "default": true
+        },
+        "polygon": {
+          "type": "object",
+          "description": "GeoJSON Polygon or MultiPolygon geometry"
+        }
+      },
+      "required": ["polygon"]
+    },
+    "ex_temporal_extent": {
+      "type": "object",
+      "description": "ISO 19115 EX_TemporalExtent - Time period covered by the content of the resource",
+      "properties": {
+        "extent": {
+          "type": "object",
+          "description": "Date and time for the content of the resource",
+          "oneOf": [
+            {
+              "type": "object",
+              "description": "Time instant",
+              "properties": {
+                "instant": {"type": "string", "format": "date-time"}
+              },
+              "required": ["instant"]
+            },
+            {
+              "type": "object",
+              "description": "Time period",
+              "properties": {
+                "begin": {"type": "string", "format": "date-time"},
+                "end": {"type": "string", "format": "date-time"}
+              }
+            }
+          ]
+        }
+      },
+      "required": ["extent"]
+    },
+    "ex_vertical_extent": {
+      "type": "object",
+      "description": "ISO 19115 EX_VerticalExtent - Vertical domain of resource",
+      "properties": {
+        "minimumValue": {
+          "type": "number",
+          "description": "Lowest vertical extent contained in the resource"
+        },
+        "maximumValue": {
+          "type": "number",
+          "description": "Highest vertical extent contained in the resource"
+        },
+        "verticalCRSId": {
+          "type": "object",
+          "description": "Identifier of the vertical coordinate reference system used",
+          "properties": {
+            "code": {"type": "string"},
+            "codeSpace": {"type": "string"},
+            "version": {"type": "string"}
+          }
+        },
+        "verticalCRS": {
+          "type": "object",
+          "description": "Vertical coordinate reference system used for the vertical extent values"
+        }
+      },
+      "required": ["minimumValue", "maximumValue"]
+    },
+    "standalone_quality_report": {
+      "type": "object",
+      "description": "ISO 19157 DQ_StandaloneQualityReport - Reference to an external quality report",
+      "properties": {
+        "reportReference": {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to the quality report document"
+        },
+        "abstract": {
+          "type": "string",
+          "description": "Abstract or summary of the quality report"
+        }
+      },
+      "required": ["reportReference"]
+    }
+  }
+}
