@@ -2,14 +2,14 @@
 
 [project]
 name = "stac-liability-claims"
-version = "1.0.0"
+version = "1.1.0"
 description = "STAC Extension for Liability and Claims Management"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "Apache-2.0"}
 keywords = ["stac", "geospatial", "liability", "claims", "insurance"]
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Lucio Colaiacomo", email = "lucio@secure-dimensions.de"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -34,10 +34,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/stac-extension-liability-claims"
-Documentation = "https://github.com/yourusername/stac-extension-liability-claims/blob/main/README.md"
-Repository = "https://github.com/yourusername/stac-extension-liability-claims"
-Issues = "https://github.com/yourusername/stac-extension-liability-claims/issues"
+Homepage = "https://github.com/luciocola/stac-extension-liability-claims"
+Documentation = "https://github.com/luciocola/stac-extension-liability-claims/blob/main/README.md"
+Repository = "https://github.com/luciocola/stac-extension-liability-claims"
+Issues = "https://github.com/luciocola/stac-extension-liability-claims/issues"
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
