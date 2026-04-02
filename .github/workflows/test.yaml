@@ -10,9 +10,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
@@ -41,7 +44,7 @@ jobs:
         run: pytest --cov=. --cov-report=xml
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           file: ./coverage.xml
           fail_ci_if_error: false
