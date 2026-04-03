@@ -217,8 +217,34 @@
       "type": "object",
       "properties": {
         "liability:responsible_party": {
-          "type": "string",
-          "description": "Name or identifier of the party responsible for the liability or claim"
+          "type": "object",
+          "description": "Party responsible for the liability or claim",
+          "required": ["name"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the responsible party"
+            },
+            "role": {
+              "type": "string",
+              "description": "ISO 19115 responsible party role (e.g. originator, custodian, publisher, distributor, pointOfContact, owner)"
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "description": "Contact email address"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "Organisation or contact URL"
+            },
+            "did": {
+              "type": "string",
+              "description": "Decentralised identifier (DID) for the party"
+            }
+          },
+          "additionalProperties": false
         },
         "liability:claim_status": {
           "type": "string",
@@ -2712,9 +2738,18 @@
         "liability:responsible_party": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "type": "string" },
+              "email": { "type": "string", "format": "email" },
+              "url": { "type": "string", "format": "uri" },
+              "did": { "type": "string" }
+            },
+            "additionalProperties": false
           },
-          "description": "Array of unique responsible parties in the collection"
+          "description": "Array of responsible parties summarised across the collection"
         },
         "liability:damages_estimated": {
           "oneOf": [

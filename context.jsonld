@@ -1,7 +1,7 @@
 {
   "@context": {
     "@version": 1.1,
-    "@vocab": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#",
+    "@vocab": "https://stac-extensions.github.io/liability-claims/v1.6.0/schema.json#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "dcat": "http://www.w3.org/ns/dcat#",
     "dqv": "http://www.w3.org/ns/dqv#",
@@ -13,8 +13,8 @@
     "ceosard": "https://ceos.org/ard/ontology#",
     "iso19157": "https://def.isotc211.org/iso19157/-3/dqm/1.0/",
 
-    "liability": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#liability:",
-    "ard": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#ard:",
-    "dq": "https://stac-extensions.github.io/liability-claims/v1.1.0/schema.json#dq:"
+    "liability": "https://stac-extensions.github.io/liability-claims/v1.6.0/schema.json#liability:",
+    "ard": "https://stac-extensions.github.io/liability-claims/v1.6.0/schema.json#ard:",
+    "dq": "https://stac-extensions.github.io/liability-claims/v1.6.0/schema.json#dq:"
   }
 }
