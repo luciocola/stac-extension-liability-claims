@@ -109,7 +109,9 @@
         {"required": ["liability:notes"]},
         {"required": ["liability:origin"]},
         {"required": ["liability:quality"]},
-        {"required": ["liability:prov"]}
+        {"required": ["liability:prov"]},
+        {"required": ["liability:ownership_did"]},
+        {"required": ["liability:resolver_url"]}
       ]
     },
     "fields": {
@@ -226,8 +228,17 @@
         "liability:origin": {
           "type": "string",
           "description": "Origin or source organization of the claim data"
-        }
-        ,
+        },
+        "liability:ownership_did": {
+          "type": "string",
+          "pattern": "^did:[a-z]+:.+",
+          "description": "Decentralized Identifier (DID) of the data owner. Supports did:web, did:key, and did:ion methods."
+        },
+        "liability:resolver_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the DID resolver endpoint used to resolve the ownership_did. Defaults to the W3C Universal Resolver at https://dev.uniresolver.io/1.0/identifiers/ if omitted."
+        },
         "liability:quality": {
           "oneOf": [
             {"$ref": "https://luciocola.github.io/stac-extension-liability-claims/json-schema/iso19157-quality.json#/definitions/iso19157_data_quality"},
