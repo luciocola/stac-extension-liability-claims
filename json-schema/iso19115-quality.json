@@ -13,8 +13,12 @@
   "definitions": {
     "iso19115_conformance_result": {
       "type": "object",
+      "description": "ISO 19115 DQ_ConformanceResult - Result of applying a conformance test",
       "properties": {
-        "specification": { "type": "string" },
+        "specification": {
+          "$ref": "#/definitions/ci_citation",
+          "description": "Citation of product specification or user requirement against which data is evaluated"
+        },
         "explanation": { "type": "string" },
         "pass": { "type": "boolean" }
       },
@@ -40,7 +44,10 @@
       "type": "object",
       "properties": {
         "type": { "const": "completeness" },
-        "scope": { "type": "string" },
+        "scope": {
+          "$ref": "#/definitions/md_scope",
+          "description": "Extent or characteristics of the data to which quality applies"
+        },
         "measure": { "$ref": "#/definitions/iso19115_measure" },
         "conformance": { "$ref": "#/definitions/iso19115_conformance_result" }
       },
@@ -113,10 +120,28 @@
     },
     "iso19115_lineage": {
       "type": "object",
+      "description": "ISO 19115 LI_Lineage - Information about the events or source data used in constructing the resource",
       "properties": {
         "type": { "const": "lineage" },
-        "statement": { "type": "string" },
-        "sources": { "type": "array", "items": { "type": "string" } }
+        "statement": {
+          "type": "string",
+          "description": "General explanation of the data producer's knowledge about the lineage of a dataset"
+        },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/li_source" },
+          "description": "Information about the source data used in creating the resource"
+        },
+        "processSteps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/li_process_step" },
+          "description": "Information about events in the life of the resource"
+        },
+        "additionalDocumentation": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ci_citation" },
+          "description": "Citations to additional documentation for the lineage"
+        }
       },
       "required": ["type"],
       "additionalProperties": true
@@ -350,11 +375,137 @@
       "required": ["elementType"],
       "additionalProperties": true
     },
+    "md_scope": {
+      "type": "object",
+      "description": "ISO 19115 MD_Scope - The extent or characteristics of the resource to which quality information applies",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "dataset", "series", "feature", "featureType",
+            "attribute", "attributeType", "tile", "model",
+            "collection", "coverage", "nonGeographicDataset"
+          ],
+          "description": "Hierarchical level of the resource to which the quality applies"
+        },
+        "extent": {
+          "type": "object",
+          "description": "Geographic, temporal or vertical extent of the scope",
+          "properties": {
+            "description": { "type": "string" },
+            "geographicExtent": { "type": "object" },
+            "temporalExtent": { "type": "object" },
+            "verticalExtent": { "type": "object" }
+          }
+        },
+        "levelDescription": {
+          "type": "string",
+          "description": "Detailed description of the level of the resource"
+        }
+      },
+      "required": ["level"]
+    },
+    "ci_citation": {
+      "type": "object",
+      "description": "ISO 19115 CI_Citation - Standardized resource reference",
+      "properties": {
+        "title": { "type": "string", "description": "Name by which the cited resource is known" },
+        "alternateTitle": { "type": "array", "items": { "type": "string" } },
+        "date": { "type": "string", "format": "date-time", "description": "Reference date for the cited resource" },
+        "dateType": {
+          "type": "string",
+          "enum": ["creation", "publication", "revision"],
+          "description": "Event used for the reference date"
+        },
+        "edition": { "type": "string", "description": "Version of the cited resource" },
+        "identifier": { "type": "string", "description": "Value uniquely identifying the resource" },
+        "citedResponsibleParty": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "organisationName": { "type": "string" },
+              "individualName": { "type": "string" },
+              "role": { "type": "string" }
+            }
+          },
+          "description": "Name and position of an individual or organisation responsible for the resource"
+        },
+        "onlineResource": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "linkage": { "type": "string", "format": "uri" },
+              "name": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "required": ["linkage"]
+          }
+        }
+      },
+      "required": ["title"]
+    },
+    "li_source": {
+      "type": "object",
+      "description": "ISO 19115 LI_Source - Information about the source data used in creating the resource",
+      "properties": {
+        "description": { "type": "string", "description": "Detailed description of the level of the source data" },
+        "sourceCitation": {
+          "$ref": "#/definitions/ci_citation",
+          "description": "Recommended reference for the source data"
+        },
+        "sourceExtent": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "Spatial, vertical and temporal extent of the source"
+        },
+        "sourceStep": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/li_process_step" },
+          "description": "Process steps in which this source was used"
+        }
+      },
+      "anyOf": [
+        { "required": ["description"] },
+        { "required": ["sourceCitation"] }
+      ]
+    },
+    "li_process_step": {
+      "type": "object",
+      "description": "ISO 19115 LI_ProcessStep - Information about an event or transformation in the life of the resource",
+      "properties": {
+        "description": { "type": "string", "description": "Description of the event, including related parameters or tolerances" },
+        "rationale": { "type": "string", "description": "Requirement or purpose for the process step" },
+        "dateTime": { "type": "string", "format": "date-time", "description": "Date and time when the process step occurred" },
+        "processor": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "organisationName": { "type": "string" },
+              "individualName": { "type": "string" },
+              "role": { "type": "string" }
+            }
+          },
+          "description": "Identification of, and means of communication with, persons and organisations associated with the process step"
+        },
+        "source": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/li_source" },
+          "description": "Information about the source data used in creating the output of the process step"
+        }
+      },
+      "required": ["description"]
+    },
     "iso19115_quality_report": {
       "type": "object",
       "properties": {
         "reportId": { "type": "string" },
-        "scope": { "type": "string" },
+        "scope": {
+          "$ref": "#/definitions/md_scope",
+          "description": "Extent or characteristics of the data to which quality information applies"
+        },
         "date": { "type": "string", "format": "date-time" },
         "version": { "type": "string" },
         "elements": { "type": "array", "items": { "$ref": "#/definitions/iso19115_element" } },
