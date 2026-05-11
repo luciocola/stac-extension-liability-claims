@@ -1,0 +1,237 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.7.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "sentinel2-l2a-20260115-flood-mosul-v17",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [43.0, 35.5],
+        [44.5, 35.5],
+        [44.5, 37.0],
+        [43.0, 37.0],
+        [43.0, 35.5]
+      ]
+    ]
+  },
+  "bbox": [43.0, 35.5, 44.5, 37.0],
+  "properties": {
+    "datetime": "2026-01-15T09:45:00Z",
+    "platform": "Sentinel-2A",
+    "constellation": "Sentinel-2",
+    "instruments": ["MSI"],
+    "gsd": 10.0,
+    "liability:responsible_party": {
+      "name": "Copernicus Emergency Management Service",
+      "role": "originator",
+      "email": "copernicus@esa.int",
+      "url": "https://emergency.copernicus.eu"
+    },
+    "liability:claim_status": "under_investigation",
+    "liability:claim_id": "FLOOD-MOSUL-2026-0115",
+    "liability:claim_date": "2026-01-15T12:00:00Z",
+    "liability:claim_type": "flood_damage",
+    "liability:conformsTo": [
+      {
+        "uri": "http://www.opengis.net/spec/eo-geojson/1.0",
+        "title": "OGC 17-003r2 GeoJSON encoding of ISO 19115 metadata",
+        "version": "1.0"
+      },
+      {
+        "uri": "http://www.opengis.net/spec/eo-dataset-json/1.0",
+        "title": "OGC 17-084r1 EO Dataset Metadata GeoJSON-LD Encoding",
+        "version": "1.0"
+      },
+      {
+        "uri": "http://www.opengis.net/def/conformance/OGC/0/eo-metadata",
+        "title": "ISO 19115-4 JSON encoding (mdj)"
+      }
+    ],
+    "liability:eo_metadata": {
+      "metadataIdentifier": "COPERNICUS-S2A-20260115-MOSUL-META",
+      "dateInfo": [
+        {
+          "date": "2026-01-15T09:45:00Z",
+          "dateType": "creation"
+        }
+      ],
+      "identificationInfo": [
+        {
+          "type": "MD_DataIdentification",
+          "citation": {
+            "title": "Sentinel-2A L2A Flood Mosul 2026-01-15",
+            "date": [{"date": "2026-01-15T09:45:00Z", "dateType": "creation"}]
+          },
+          "abstract": "Sentinel-2A Level-2A surface reflectance image over Mosul, Iraq acquired during flood event on 15 January 2026. Used for flood extent mapping in support of emergency response operations.",
+          "status": "completed",
+          "topicCategory": ["imageryBaseMapsEarthCover"],
+          "spatialResolution": [{"equivalentScale": {"denominator": 50000}}]
+        }
+      ],
+      "acquisitionInformation": [
+        {
+          "platform": [
+            {
+              "identifier": "Sentinel-2A",
+              "description": "ESA Copernicus Sentinel-2A multispectral imaging satellite",
+              "orbitType": "solarSynchronous",
+              "instrument": [
+                {
+                  "identifier": "MSI",
+                  "type": "push-broom",
+                  "sensorType": "multispectral",
+                  "description": "Multi-Spectral Instrument (MSI) — 13 spectral bands, 10m-60m GSD",
+                  "operationalMode": "Normal"
+                }
+              ]
+            }
+          ],
+          "operation": [
+            {
+              "identifier": "ORBIT-R047-T37SFB",
+              "description": "Relative orbit 47, tile T37SFB, descending node pass",
+              "status": "completed"
+            }
+          ],
+          "environmentalConditions": {
+            "cloudCoverage": 3.2,
+            "solarAzimuth": 162.4,
+            "solarElevation": 28.7
+          }
+        }
+      ],
+      "conformsTo": [
+        {
+          "uri": "http://www.opengis.net/spec/eo-geojson/1.0",
+          "title": "OGC 17-003r2 GeoJSON encoding"
+        },
+        {
+          "uri": "http://www.opengis.net/spec/eo-dataset-json/1.0",
+          "title": "OGC 17-084r1 EO Dataset Metadata GeoJSON-LD"
+        }
+      ]
+    },
+    "liability:quality": {
+      "scope": {
+        "level": "dataset"
+      },
+      "report": [
+        {
+          "category": "completeness",
+          "subcategory": "omission",
+          "measure": {
+            "measureIdentification": {
+              "code": "60",
+              "codeSpace": "ISO 19157:2023",
+              "version": "2023"
+            },
+            "nameOfMeasure": ["Rate of missing items"],
+            "measureDescription": "Percentage of features missing from the dataset relative to the universe of discourse"
+          },
+          "evaluationMethod": {
+            "evaluationMethodType": "directInternal",
+            "evaluationMethodDescription": "Automatic scene classification using ESA Sen2Cor processor v2.11"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [3.2],
+              "valueUnit": "%",
+              "errorStatistic": "mean"
+            }
+          ]
+        },
+        {
+          "category": "positionalAccuracy",
+          "subcategory": "absoluteExternalPositionalAccuracy",
+          "measure": {
+            "measureIdentification": {
+              "code": "28",
+              "codeSpace": "ISO 19157:2023"
+            },
+            "nameOfMeasure": ["Mean value of positional uncertainties"],
+            "measureDescription": "Horizontal positional accuracy RMSE against DGED ground control points"
+          },
+          "result": [
+            {
+              "resultType": "quantitative",
+              "value": [8.5],
+              "valueUnit": "m",
+              "errorStatistic": "RMSE"
+            }
+          ]
+        }
+      ],
+      "lineage": {
+        "statement": "Sentinel-2A L1C TOA radiances processed to L2A BOA surface reflectance using ESA Sen2Cor v2.11. Atmospheric correction applied using LUT-based method. Cloud/shadow masking via SCL layer.",
+        "scope": {"level": "dataset"},
+        "processSteps": [
+          {
+            "description": "L1C to L2A atmospheric correction (Sen2Cor v2.11)",
+            "dateTime": "2026-01-15T14:30:00Z",
+            "processor": {"name": "ESA Sentinel-2 Ground Segment"},
+            "processingInformation": {
+              "software": "Sen2Cor 2.11",
+              "algorithm": "LUT-based atmospheric correction with SMAC adjacency effect",
+              "runTimeParameters": "PROCESSING_BASELINE=05.10"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.org/stac/items/sentinel2-l2a-20260115-flood-mosul-v17",
+      "type": "application/geo+json"
+    },
+    {
+      "rel": "root",
+      "href": "https://example.org/stac",
+      "type": "application/json"
+    },
+    {
+      "rel": "describedby",
+      "href": "http://www.opengis.net/spec/eo-geojson/1.0",
+      "title": "OGC 17-003r2 GeoJSON encoding of ISO 19115",
+      "type": "text/html"
+    },
+    {
+      "rel": "describedby",
+      "href": "http://www.opengis.net/spec/eo-dataset-json/1.0",
+      "title": "OGC 17-084r1 EO Dataset Metadata GeoJSON-LD",
+      "type": "text/html"
+    }
+  ],
+  "assets": {
+    "visual": {
+      "href": "https://example.org/assets/sentinel2-mosul-20260115-tci.tif",
+      "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "title": "True Color Image (TCI) — Bands 4,3,2",
+      "roles": ["visual"],
+      "eo:bands": [
+        {"name": "B04", "common_name": "red", "center_wavelength": 0.6646, "full_width_half_max": 0.031},
+        {"name": "B03", "common_name": "green", "center_wavelength": 0.5598, "full_width_half_max": 0.036},
+        {"name": "B02", "common_name": "blue", "center_wavelength": 0.4921, "full_width_half_max": 0.066}
+      ]
+    },
+    "metadata_ogc17003r2": {
+      "href": "https://example.org/assets/sentinel2-mosul-20260115-metadata.geo+json",
+      "type": "application/geo+json;profile=\"http://www.opengis.net/spec/eo-geojson/1.0\"",
+      "title": "OGC 17-003r2 EO GeoJSON metadata",
+      "roles": ["metadata"],
+      "description": "ISO 19115 quality metadata encoded as OGC EO GeoJSON per OGC 17-003r2"
+    },
+    "metadata_ogc17084r1": {
+      "href": "https://example.org/assets/sentinel2-mosul-20260115-eo-dataset.jsonld",
+      "type": "application/ld+json",
+      "title": "OGC 17-084r1 EO Dataset Metadata GeoJSON-LD",
+      "roles": ["metadata"],
+      "description": "Full EO dataset metadata including MI_AcquisitionInformation per OGC 17-084r1"
+    }
+  }
+}

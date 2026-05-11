@@ -274,11 +274,35 @@
             <h2 style="margin: 40px 0 20px 0; color: #667eea;">📦 Available Versions</h2>
             
             <div class="version-grid">
-                <!-- Version 1.5.0 -->
+                <!-- Version 1.7.0 -->
                 <div class="version-card featured">
                     <div class="version-header">
-                        <span class="version-number">v1.5.0</span>
+                        <span class="version-number">v1.7.0</span>
                         <span class="new-badge">NEW</span>
+                    </div>
+                    <div class="version-date">Released: May 2026</div>
+                    <div class="version-description">
+                        <strong>OGC 17-003r2 &amp; OGC 17-084r1 EO Imagery Metadata!</strong> Full ISO 19115-2 MI_Metadata support with sensor/platform acquisition information and OGC conformance declarations aligned with ISO 19115-4.
+                    </div>
+                    <ul class="version-features">
+                        <li>New <code>liability:eo_metadata</code> — ISO 19115-2 MI_Metadata (OGC 17-084r1)</li>
+                        <li>New <code>liability:conformsTo</code> — OGC/ISO conformance class URI declarations</li>
+                        <li>MI_AcquisitionInformation: platform, sensor, mission, band radiometry</li>
+                        <li>16 canonical DQ_* class aliases in iso19157-quality.json (OGC 17-003r2)</li>
+                        <li>MI_Band: spectral radiometry, polarisation, nominal resolution</li>
+                        <li>Full backward compatibility with v1.6.0</li>
+                    </ul>
+                    <div class="version-links">
+                        <a href="v1.7.0/schema.json" class="btn btn-primary">📄 Schema</a>
+                        <a href="v1.7.0/README.md" class="btn btn-secondary">📖 Documentation</a>
+                        <a href="v1.7.0/examples/" class="btn btn-secondary">💡 Examples</a>
+                    </div>
+                </div>
+
+                <!-- Version 1.5.0 -->
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-number">v1.5.0</span>
                     </div>
                     <div class="version-date">Released: February 2024</div>
                     <div class="version-description">
@@ -292,7 +316,7 @@
                         <li>Full backward compatibility with v1.4.0</li>
                     </ul>
                     <div class="version-links">
-                        <a href="v1.5.0/schema.json" class="btn btn-primary">📄 Schema</a>
+                        <a href="v1.7.0/schema.json" class="btn btn-primary">📄 Schema</a>
                         <a href="v1.5.0/README.md" class="btn btn-secondary">📖 Documentation</a>
                         <a href="v1.5.0/examples/" class="btn btn-secondary">💡 Examples</a>
                     </div>
@@ -393,7 +417,7 @@
                 <pre style="background: white; padding: 20px; border-radius: 8px; overflow-x: auto; border: 1px solid #ddd;"><code>{
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://luciocola.github.io/stac-extension-liability-claims/v1.5.0/schema.json"
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.7.0/schema.json"
   ],
   "properties": {
     "liability:niirs": {

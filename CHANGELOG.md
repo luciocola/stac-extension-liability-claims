@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-05-11
+
+### Added — OGC 17-003r2 & OGC 17-084r1 EO Imagery Metadata
+
+#### New Fields
+- `liability:eo_metadata` — ISO 19115-2 `MI_Metadata` with `MI_AcquisitionInformation` (sensor, platform, band radiometry, mission). Conformant with OGC 17-084r1.
+- `liability:conformsTo` — Array of OGC / ISO conformance class URIs (e.g. OGC 17-003r2, OGC 17-084r1).
+
+#### Schema additions in `mdj.json`
+- `MI_Metadata`, `MI_AcquisitionInformation`, `MI_Platform`, `MI_Sensor`, `MI_Operation`, `MI_Band`, `MI_GeoRectified`, `MI_Georeferenceable`
+
+#### Canonical DQ_* aliases in `iso19157-quality.json`
+- `DQ_DataQuality`, `DQ_Element`, `DQ_QuantitativeResult`, `DQ_ConformanceResult`, `DQ_DescriptiveResult`, `DQ_CoverageResult`, `DQ_Completeness`, `DQ_LogicalConsistency`, `DQ_PositionalAccuracy`, `DQ_TemporalQuality`, `DQ_ThematicQuality`, `DQ_Metaquality`, `DQ_MeasureReference`, `DQ_EvaluationMethod`, `QE_Usability`, `QE_MetaqualityElement`
+
+#### New Example
+- `item-eo-imagery-mi-metadata.json` — Sentinel-2A flood response item with MI_Metadata, OGC conformsTo URIs, DQ quality reports, and OGC 17-003r2/17-084r1 asset MIME types
+
 ## [1.3.0] - 2026-02-03
 
 ### Critical Fixes
