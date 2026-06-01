@@ -226,6 +226,20 @@
         "liability:origin": {
           "type": "string",
           "description": "Origin or source organization of the claim data"
+        },
+        "liability:tenant_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "description": "Tenant identifier used for multi-tenant data isolation in STAC APIs"
+        },
+        "liability:shared_with_tenants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+          },
+          "uniqueItems": true,
+          "description": "Optional list of tenant identifiers allowed to access this claim metadata"
         }
         ,
         "liability:quality": {
@@ -267,6 +281,20 @@
             "type": "string"
           },
           "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
+        },
+        "liability:tenant_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "description": "Tenant identifier used for multi-tenant asset isolation"
+        },
+        "liability:shared_with_tenants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+          },
+          "uniqueItems": true,
+          "description": "Optional list of tenant identifiers allowed to access this asset"
         }
       },
       "patternProperties": {
@@ -317,6 +345,20 @@
             "type": "string"
           },
           "description": "Roles required to access this asset (enforced at API level via OpenAPI security schemes)"
+        },
+        "liability:tenant_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$",
+          "description": "Tenant identifier used for multi-tenant asset isolation"
+        },
+        "liability:shared_with_tenants": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+          },
+          "uniqueItems": true,
+          "description": "Optional list of tenant identifiers allowed to access this asset"
         }
       },
       "patternProperties": {
@@ -1076,4 +1118,3 @@
     }
   }
 }
-

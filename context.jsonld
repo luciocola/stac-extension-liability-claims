@@ -87,6 +87,15 @@
       "@id": "dcat:contactPoint",
       "@type": "xsd:string"
     },
+    "liability:tenant_id": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "liability:shared_with_tenants": {
+      "@id": "schema:audience",
+      "@type": "xsd:string",
+      "@container": "@list"
+    },
     "liability:quality": {
       "@id": "dqv:hasQualityMeasurement",
       "@type": "@json",

@@ -44,7 +44,11 @@
     "liability:insurance_provider": "Maritime Insurance Group",
     "liability:policy_number": "MIG-2025-78945",
     "liability:notes": "Preliminary assessment indicates moderate environmental impact. Full investigation pending.",
-    "liability:origin": "State Environmental Protection Agency"
+    "liability:origin": "State Environmental Protection Agency",
+    "liability:tenant_id": "state-environment-agency",
+    "liability:shared_with_tenants": [
+      "coastal-regulator"
+    ]
   },
   "assets": {
     "incident_report": {
@@ -53,14 +57,19 @@
       "title": "Official Incident Report",
       "roles": ["data"],
       "liability:security_classification": "internal",
-      "liability:access_restrictions": ["regulatory_review_only"]
+      "liability:access_restrictions": ["regulatory_review_only"],
+      "liability:tenant_id": "state-environment-agency",
+      "liability:shared_with_tenants": [
+        "coastal-regulator"
+      ]
     },
     "satellite_imagery": {
       "href": "./assets/oil_spill_20251208.tif",
       "type": "image/tiff; application=geotiff",
       "title": "Satellite Imagery of Spill Area",
       "roles": ["data"],
-      "liability:security_classification": "public"
+      "liability:security_classification": "public",
+      "liability:tenant_id": "state-environment-agency"
     }
   },
   "links": [

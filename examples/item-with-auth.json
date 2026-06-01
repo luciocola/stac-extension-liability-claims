@@ -39,6 +39,10 @@
     "liability:legal_jurisdiction": "State of California",
     "liability:insurance_provider": "Global Insurance Inc.",
     "liability:policy_number": "ENV-POL-123456",
+    "liability:tenant_id": "claims-west-division",
+    "liability:shared_with_tenants": [
+      "regulator-ca"
+    ],
     "liability:evidence_refs": [
       "satellite-imagery-secure",
       "investigation-report"
@@ -58,6 +62,10 @@
         "legal_hold",
         "authorized_investigators_only",
         "privacy_act_protected"
+      ],
+      "liability:tenant_id": "claims-west-division",
+      "liability:shared_with_tenants": [
+        "regulator-ca"
       ],
       "liability:access_control": {
         "required_auth": true,
@@ -109,6 +117,7 @@
         "work_product_doctrine",
         "court_sealed"
       ],
+      "liability:tenant_id": "claims-west-division",
       "liability:access_control": {
         "required_auth": true,
         "auth_methods": ["oauth2"],
@@ -170,6 +179,7 @@
       "type": "text/html",
       "roles": ["metadata"],
       "liability:security_classification": "public",
+      "liability:tenant_id": "claims-west-division",
       "liability:access_control": {
         "required_auth": false
       }

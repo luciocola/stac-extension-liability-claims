@@ -8,6 +8,7 @@ info:
     This demonstrates the **recommended v1.1.0 approach** where:
     - Authentication is defined at the API level (this file)
     - STAC Items contain only security metadata (classification, restrictions, required roles)
+    - Tenant routing is enforced via `X-Tenant-Id` request headers
     - API enforces access control based on user roles and security schemes
     
     See the Liability Claims Extension documentation for details:
@@ -27,6 +28,15 @@ servers:
 
 # Security Schemes - Authentication Methods
 components:
+  parameters:
+    TenantIdHeader:
+      name: X-Tenant-Id
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$'
+      description: Tenant identifier used by the API for multi-tenant data isolation.
   securitySchemes:
     # API Key authentication for authorized investigators
     ClaimsApiKey:
@@ -146,6 +156,7 @@ paths:
         - Confidential items: Requires investigator or legal_counsel role
         - Restricted items: Requires legal_counsel role
       parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
         - name: bbox
           in: query
           schema:
@@ -189,6 +200,8 @@ paths:
     post:
       summary: Search STAC items (POST)
       description: Search with POST body for complex queries
+      parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
       requestBody:
         required: true
         content:
@@ -208,6 +221,8 @@ paths:
     get:
       summary: List collections
       description: List all STAC collections accessible to the authenticated user
+      parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
       security:
         - ClaimsApiKey: []
         - ClaimsOAuth2: [read:items]
@@ -225,6 +240,7 @@ paths:
     get:
       summary: Get collection by ID
       parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
         - name: collectionId
           in: path
           required: true
@@ -241,6 +257,7 @@ paths:
     get:
       summary: Get items in collection
       parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
         - name: collectionId
           in: path
           required: true
@@ -267,6 +284,7 @@ paths:
         - restricted: Requires legal_counsel role
         - classified: Requires special clearance (contact administrator)
       parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
         - name: collectionId
           in: path
           required: true
@@ -306,6 +324,7 @@ paths:
         - ClaimsOAuth2: [write:items]
         - ServiceToken: []
       parameters:
+        - $ref: '#/components/parameters/TenantIdHeader'
         - name: collectionId
           in: path
           required: true

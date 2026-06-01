@@ -133,6 +133,8 @@ The fields in the table below can be used in these parts of STAC documents:
 | liability:evidence_refs           | \[string\]                | References to evidence documents, images, or other supporting materials (URIs or STAC Asset keys) |
 | liability:notes                   | string                    | Additional notes or comments about the claim |
 | liability:origin                  | string                    | Origin or source organization of the claim data |
+| liability:tenant_id               | string                    | **NEW.** Tenant identifier for multi-tenant isolation (e.g., insurer, agency, partner org) |
+| liability:shared_with_tenants     | \[string\]                | **NEW.** Optional tenant IDs that may access shared claim metadata across tenant boundaries |
 | liability:quality                 | Quality Report Object or \[Quality Report Object\] | ISO 19157-1:2023 (RECOMMENDED) or ISO 19115/19115-4/DGIWG-compliant data quality report(s). See [ISO 19157 Schema](json-schema/iso19157-quality.json) and [ISO 19115 Schema](json-schema/iso19115-quality.json). ISO 19157 provides metaquality, usability assessment, and standardized measures. Both formats maintain full provenance compatibility with W3C PROV. |
 | liability:prov                    | PROV Document Object      | **NEW in v1.1.0.** W3C PROV-JSON provenance information following PROV-DM model with entities, activities, and agents. See [W3C PROV](https://www.w3.org/TR/prov-overview/) |
 | liability:verifiable_credentials  | \[Verifiable Credential Object\] | **NEW in v1.2.0.** Array of W3C Verifiable Credentials 2.0 providing cryptographically signed assertions about quality, provenance, or liability claims. See [VC-2.0-INTEGRATION.md](VC-2.0-INTEGRATION.md) |
@@ -146,6 +148,8 @@ The following fields can be used in STAC Asset objects to specify security class
 | liability:security_classification      | string                    | Security classification level. One of: `public`, `internal`, `confidential`, `restricted`, `classified` |
 | liability:access_restrictions          | \[string\]                | List of access restrictions (e.g., `legal_hold`, `court_order`, `privacy_constraints`) |
 | liability:required_roles               | \[string\]                | **NEW in v1.1.0.** Roles required to access this asset (enforced at API level via OpenAPI security schemes) |
+| liability:tenant_id                    | string                    | **NEW.** Tenant identifier for asset-level isolation in multi-tenant STAC APIs |
+| liability:shared_with_tenants          | \[string\]                | **NEW.** Optional tenant IDs allowed to access this asset when cross-tenant sharing is enabled |
 | ~~liability:access_control~~           | ~~Access Control Object~~ | **DEPRECATED in v1.1.0.** Use API-level security (OpenAPI `securitySchemes`) instead. Will be removed in v2.0.0. |
 | ~~liability:alternate~~                | ~~Map<string, Alternate>~~| **DEPRECATED in v1.1.0.** Use standard STAC assets with different hrefs or `links` with `rel='alternate'` instead. Will be removed in v2.0.0. |
 
@@ -155,6 +159,7 @@ Authentication and authorization are **API-level concerns** and should be config
 - **Security classification metadata** (what data this is)
 - **Access restrictions** (legal/policy constraints)
 - **Required roles** (who should have access)
+- **Tenant metadata** (`liability:tenant_id` and optional `liability:shared_with_tenants`)
 
 The actual authentication mechanisms (API keys, OAuth2, etc.) should be defined in your STAC API's `openapi.yaml`. See [examples/stac-api-openapi.yaml](examples/stac-api-openapi.yaml) for a complete example.
 
