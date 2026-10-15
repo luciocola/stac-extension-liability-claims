@@ -1,0 +1,313 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://luciocola.github.io/stac-extension-liability-claims/v1.9.0/schema.json"
+  ],
+  "id": "synthetic-publication",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      12,
+      41
+    ]
+  },
+  "bbox": [
+    12,
+    41,
+    12,
+    41
+  ],
+  "properties": {
+    "datetime": "2026-10-15T08:00:00Z",
+    "liability:job_provenance": {
+      "prefix": {
+        "prov": "http://www.w3.org/ns/prov#",
+        "wf4ever": "http://purl.org/wf4ever/wf4ever#",
+        "wfprov": "http://purl.org/wf4ever/wfprov#",
+        "wfdesc": "http://purl.org/wf4ever/wfdesc#",
+        "gbb": "https://luciocola.github.io/geospatial-building-block/terms/",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "run": "urn:uuid:00000000-0000-4000-8000-000000000001:"
+      },
+      "entity": {
+        "run:job": {
+          "prov:type": {
+            "$": "wfdesc:ProcessRun",
+            "type": "prov:QUALIFIED_NAME"
+          },
+          "prov:location": "https://example.org/jobs/00000000-0000-4000-8000-000000000001"
+        },
+        "run:process": {
+          "prov:type": {
+            "$": "wfdesc:Process",
+            "type": "prov:QUALIFIED_NAME"
+          },
+          "prov:location": "https://example.org/processes/trash-hotspot-publish",
+          "gbb:version": "0.1.0"
+        },
+        "run:input-0": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "wf4ever:File",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "gbb:inputId": "detections",
+          "prov:location": "urn:sha256:2dbbac98523e9930516ea41f352287b9e9f2ffe92fe79f3ee1bcce84650fdd2c",
+          "gbb:sha256": "2dbbac98523e9930516ea41f352287b9e9f2ffe92fe79f3ee1bcce84650fdd2c",
+          "prov:label": "reviewed.gpkg"
+        },
+        "run:input-1-0": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "gbb:inputId": "thresholds",
+          "prov:value": 0.2
+        },
+        "run:input-1-1": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "gbb:inputId": "thresholds",
+          "prov:value": 0.8
+        },
+        "run:input-1": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "prov:Collection",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "gbb:inputId": "thresholds",
+          "gbb:memberCount": 2
+        },
+        "run:input-2": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "prov:Collection",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "gbb:inputId": "empty",
+          "gbb:memberCount": 0
+        },
+        "run:output-0": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "wf4ever:File",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "prov:location": "https://example.org/jobs/00000000-0000-4000-8000-000000000001/artifacts/publication.json",
+          "gbb:outputId": "publication.json",
+          "gbb:sha256": "21a72b0c150a4a43f3ef1e6a2a2b3d3b17e22091e902b3fa150d3f1be7d0d380",
+          "gbb:checksumScope": "stored-artifact"
+        },
+        "run:output-1": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "wf4ever:File",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "prov:location": "https://example.org/jobs/00000000-0000-4000-8000-000000000001/artifacts/validation.json",
+          "gbb:outputId": "validation.json",
+          "gbb:sha256": "094a4a1a99ba792c63c6cf9e74d43628b7291e3bb35acf0eee4bf5e15244649d",
+          "gbb:checksumScope": "stored-artifact"
+        },
+        "run:output-2": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "wf4ever:File",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "prov:location": "https://example.org/jobs/00000000-0000-4000-8000-000000000001/artifacts/workflow_prov_profile.json",
+          "gbb:outputId": "workflow_prov_profile.json",
+          "gbb:sha256": "98edb81d558769c7620742dfd1b9b4393d3ac650bb3d5e089429cc1e99c8be36",
+          "gbb:checksumScope": "stored-artifact"
+        },
+        "run:output-3": {
+          "prov:type": [
+            {
+              "$": "wfprov:Artifact",
+              "type": "prov:QUALIFIED_NAME"
+            },
+            {
+              "$": "wf4ever:File",
+              "type": "prov:QUALIFIED_NAME"
+            }
+          ],
+          "prov:location": "https://example.org/jobs/00000000-0000-4000-8000-000000000001/artifacts/cop_item.json",
+          "gbb:outputId": "cop_item.json",
+          "gbb:sha256": "997674576933d68c16d74d23c295c9fdf0a737650834836ff1e7b06479eaf97b",
+          "gbb:checksumScope": "stored-artifact"
+        }
+      },
+      "activity": {
+        "run:execution": {
+          "prov:type": {
+            "$": "wfprov:ProcessRun",
+            "type": "prov:QUALIFIED_NAME"
+          },
+          "prov:startTime": "2026-10-15T08:43:46.861771+00:00",
+          "prov:endTime": "2026-10-15T08:43:46.861775+00:00",
+          "gbb:executionId": "00000000-0000-4000-8000-000000000001",
+          "gbb:processId": "trash-hotspot-publish",
+          "gbb:captureScope": "job-boundary",
+          "gbb:inputIds": [
+            "detections",
+            "thresholds",
+            "empty"
+          ],
+          "gbb:outputIds": [
+            "publication.json",
+            "validation.json",
+            "workflow_prov_profile.json",
+            "cop_item.json"
+          ]
+        }
+      },
+      "agent": {
+        "run:software": {
+          "prov:type": {
+            "$": "prov:SoftwareAgent",
+            "type": "prov:QUALIFIED_NAME"
+          },
+          "prov:label": "GBB kernel / trash-hotspot-publish",
+          "gbb:version": "0.1.0",
+          "gbb:backend": "native"
+        },
+        "run:submitter": {
+          "prov:type": {
+            "$": "prov:Agent",
+            "type": "prov:QUALIFIED_NAME"
+          },
+          "prov:label": "Authenticated API submitter (identity withheld)"
+        }
+      },
+      "used": {
+        "_:process": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:process"
+        },
+        "_:input-0": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:input-0",
+          "prov:role": {
+            "$": "gbb:input-detections",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        },
+        "_:input-1": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:input-1",
+          "prov:role": {
+            "$": "gbb:input-thresholds",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        },
+        "_:input-2": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:input-2",
+          "prov:role": {
+            "$": "gbb:input-empty",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        }
+      },
+      "wasGeneratedBy": {
+        "_:job": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:job"
+        },
+        "_:output-0": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:output-0",
+          "prov:role": {
+            "$": "gbb:output-publication.json",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        },
+        "_:output-1": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:output-1",
+          "prov:role": {
+            "$": "gbb:output-validation.json",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        },
+        "_:output-2": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:output-2",
+          "prov:role": {
+            "$": "gbb:output-workflow_prov_profile.json",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        },
+        "_:output-3": {
+          "prov:activity": "run:execution",
+          "prov:entity": "run:output-3",
+          "prov:role": {
+            "$": "gbb:output-cop_item.json",
+            "type": "prov:QUALIFIED_NAME"
+          }
+        }
+      },
+      "wasAssociatedWith": {
+        "_:software": {
+          "prov:activity": "run:execution",
+          "prov:agent": "run:software"
+        },
+        "_:submitter": {
+          "prov:activity": "run:execution",
+          "prov:agent": "run:submitter"
+        }
+      },
+      "hadMember": {
+        "_:run:input-1-0": {
+          "prov:collection": "run:input-1",
+          "prov:entity": "run:input-1-0"
+        },
+        "_:run:input-1-1": {
+          "prov:collection": "run:input-1",
+          "prov:entity": "run:input-1-1"
+        }
+      }
+    },
+    "liability:provenance_ref": "https://example.org/jobs/00000000-0000-4000-8000-000000000001/prov"
+  },
+  "links": [],
+  "assets": {}
+}

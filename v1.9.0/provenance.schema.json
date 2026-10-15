@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://luciocola.github.io/stac-extension-liability-claims/v1.9.0/provenance.schema.json",
+  "title": "GBB job provenance 1.1 - OGC 26-038 draft alignment",
+  "description": "A PROV-JSON exchange profile. Graph identities, roles and job correspondence require semantic validation. This is not an OGC certification claim.",
+  "type": "object",
+  "required": [
+    "prefix",
+    "entity",
+    "activity",
+    "agent",
+    "used",
+    "wasGeneratedBy",
+    "wasAssociatedWith"
+  ],
+  "properties": {
+    "prefix": {
+      "type": "object",
+      "required": [
+        "prov",
+        "wf4ever",
+        "wfprov",
+        "wfdesc",
+        "gbb"
+      ],
+      "properties": {
+        "prov": {
+          "const": "http://www.w3.org/ns/prov#"
+        },
+        "wf4ever": {
+          "const": "http://purl.org/wf4ever/wf4ever#"
+        },
+        "wfprov": {
+          "const": "http://purl.org/wf4ever/wfprov#"
+        },
+        "wfdesc": {
+          "const": "http://purl.org/wf4ever/wfdesc#"
+        },
+        "gbb": {
+          "const": "https://luciocola.github.io/geospatial-building-block/terms/"
+        }
+      },
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "entity": {
+      "$ref": "#/$defs/records"
+    },
+    "activity": {
+      "$ref": "#/$defs/records"
+    },
+    "agent": {
+      "$ref": "#/$defs/records"
+    },
+    "used": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasGeneratedBy": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasAssociatedWith": {
+      "$ref": "#/$defs/relations"
+    },
+    "hadMember": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasDerivedFrom": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasInformedBy": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasAttributedTo": {
+      "$ref": "#/$defs/relations"
+    },
+    "actedOnBehalfOf": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasStartedBy": {
+      "$ref": "#/$defs/relations"
+    },
+    "wasEndedBy": {
+      "$ref": "#/$defs/relations"
+    }
+  },
+  "$defs": {
+    "qualifiedName": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[^\\s:]+:.+$"
+        },
+        {
+          "type": "object",
+          "required": [
+            "$",
+            "type"
+          ],
+          "properties": {
+            "$": {
+              "type": "string",
+              "pattern": "^[^\\s:]+:.+$"
+            },
+            "type": {
+              "const": "prov:QUALIFIED_NAME"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "types": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/qualifiedName"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/qualifiedName"
+          }
+        }
+      ]
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "prov:type": {
+          "$ref": "#/$defs/types"
+        },
+        "prov:location": {
+          "type": "string",
+          "format": "uri"
+        },
+        "prov:label": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "prov:startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "prov:endTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    },
+    "records": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/record"
+          },
+          {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/record"
+            }
+          }
+        ]
+      }
+    },
+    "relation": {
+      "type": "object",
+      "properties": {
+        "prov:entity": {
+          "type": "string"
+        },
+        "prov:activity": {
+          "type": "string"
+        },
+        "prov:agent": {
+          "type": "string"
+        },
+        "prov:collection": {
+          "type": "string"
+        },
+        "prov:role": {
+          "$ref": "#/$defs/qualifiedName"
+        },
+        "prov:time": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/relation"
+      }
+    }
+  },
+  "additionalProperties": true
+}
